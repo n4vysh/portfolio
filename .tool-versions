@@ -1,0 +1,5 @@
+deno 1.13.2
+direnv 2.28.0
+just 0.10.1
+yarn 1.22.11
+buildpack 0.20.0

@@ -1,0 +1,21 @@
+.page p {
+  margin: 0;
+  line-height: 1.5;
+  text-align: center;
+  color: #333;
+}
+
+.links span {
+  color: #e0e0e0;
+}
+
+.links span::after {
+  content: '·';
+}
+
+.links a {
+  margin: 0 9px;
+  color: #2196f3;
+  text-decoration: none;
+  transition: 0.2s ease-in-out;
+}

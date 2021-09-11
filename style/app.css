@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: white;
+  background-color: black;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.page h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+}

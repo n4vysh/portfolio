@@ -1,0 +1,13 @@
+{
+  "imports": {
+    "~/": "./",
+    "aleph/": "https://deno.land/x/aleph@v0.3.0-beta.10/",
+    "aleph/types": "https://deno.land/x/aleph@v0.3.0-beta.10/types.d.ts",
+    "aleph/web": "https://deno.land/x/aleph@v0.3.0-beta.10/framework/core/mod.ts",
+    "aleph/react": "https://deno.land/x/aleph@v0.3.0-beta.10/framework/react/mod.ts",
+    "react": "https://esm.sh/react@17.0.2",
+    "react-dom": "https://esm.sh/react-dom@17.0.2",
+    "download": "https://deno.land/x/download@v1.0.1/mod.ts"
+  },
+  "scopes": {}
+}

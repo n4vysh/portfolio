@@ -1,0 +1,9 @@
+{
+  "packageManager": "yarn@3.0.1",
+  "dependencies": {
+    "@lhci/cli": "^0.8.1"
+  },
+  "scripts": {
+    "test": "lhci autorun"
+  }
+}
