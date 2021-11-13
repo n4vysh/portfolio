@@ -3,7 +3,6 @@
 ## Requirements
 
 * asdf
-* pre-commit
 * docker
 * Chromium for lighthouse
 
