@@ -1,8 +1,8 @@
 .page p {
   margin: 0;
   line-height: 1.5;
-  text-align: center;
   color: #333;
+  text-align: center;
 }
 
 .links span {
@@ -10,7 +10,7 @@
 }
 
 .links span::after {
-  content: '·';
+  content: "·";
 }
 
 .links a {
