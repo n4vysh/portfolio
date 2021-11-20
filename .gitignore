@@ -1,7 +1,4 @@
 .aleph/
 dist/
 public/images/
-.yarn/
-node_modules/
-yarn-error.log
 .lighthouseci/
