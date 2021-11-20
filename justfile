@@ -56,6 +56,7 @@ update-pre-commit:
     pre-commit autoupdate
 
 screenshot:
+    just build
     just start-background
     deno run \
         -A \
