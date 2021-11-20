@@ -1,10 +1,5 @@
 [build]
-include = [
-  "dist/",
-  "mime.types",
-  "nginx.conf",
-  "buildpack.yml",
-]
+include = ["dist/", "mime.types", "nginx.conf", "buildpack.yml"]
 
 [[build.buildpacks]]
 id = "paketo-buildpacks/nginx"
