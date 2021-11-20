@@ -13,13 +13,12 @@ build-aleph:
     aleph build
 
 build-pack:
-    pack build {{image}} --builder paketobuildpacks/builder:base
+    pack build {{ image }} --builder paketobuildpacks/builder:base
 
 init:
     asdf exec direnv allow
     deno run -A https://deno.land/x/aleph/install.ts
     pre-commit install --install-hooks
-    yarn install
 
 download:
     deno run \
@@ -28,23 +27,17 @@ download:
         --import-map ./import_map.json \
         scripts/download.ts
 
-fmt:
-    fd '\.ts(|x)$' -t f | xargs -t deno fmt
-
-lint:
-    fd '\.ts(|x)$' -t f | xargs -t deno lint
-
-test:
-    yarn test
+check:
+    pre-commit run -av
 
 start:
-    docker run --rm -t -e HOST=localhost -e PORT=8080 -p 8080:8080 {{image}}
+    docker run --rm -t -e HOST=localhost -e PORT=8080 -p 8080:8080 {{ image }}
 
 login:
-    docker login -u {{user}} {{registry}}
+    docker login -u {{ user }} {{ registry }}
 
 pull:
-    docker pull "{{image}}"
+    docker pull "{{ image }}"
 
 push:
-    docker push "{{image}}"
+    docker push "{{ image }}"
