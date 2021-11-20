@@ -81,3 +81,10 @@ repos:
         language: docker_image
         entry: mvdan/shfmt:v3.4.0 -w
         files: .envrc$
+      - id: shellharden
+        name: format .envrc with shellharden
+        minimum_pre_commit_version: 1.10.0
+        language: rust
+        entry: shellharden --replace
+        files: .envrc$
+        additional_dependencies: ["cli:shellharden:4.1.1"]
