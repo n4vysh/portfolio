@@ -13,7 +13,7 @@ export default function Link() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        Github
+        GitHub
       </a>
     </>
   );
