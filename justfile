@@ -51,3 +51,6 @@ push:
 update-asdf:
     awk '{print $1}' .tool-versions | \
       xargs -t -I {} sh -c 'asdf install {} latest && asdf local {} latest'
+
+update-pre-commit:
+    pre-commit autoupdate
