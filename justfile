@@ -4,27 +4,12 @@ project := "portfolio"
 version := "0.1.0"
 image := registry + "/" + user + "/" + project + ":" + version
 
-dev:
-    aleph dev
+dev: init download dev-aleph
 
-build: download build-aleph build-pack
+build: init download build-aleph build-pack
 
-build-aleph:
-    aleph build
-
-build-pack:
-    pack build {{ image }} --builder paketobuildpacks/builder:base
-
-init: init-direnv init-aleph init-pre-commit
-
-init-direnv:
-    asdf exec direnv allow
-
-init-aleph:
-    deno run -A https://deno.land/x/aleph/install.ts
-
-init-pre-commit:
-    pre-commit install --install-hooks
+init:
+    ./scripts/init.bash
 
 download:
     deno run \
@@ -33,20 +18,35 @@ download:
         --import-map ./import_map.json \
         scripts/download.ts
 
+dev-aleph:
+    aleph dev
+
 check:
     pre-commit run -av
 
-start:
-    docker run --rm -t -e HOST=localhost -e PORT=8080 -p 8080:8080 {{ image }}
+build-aleph:
+    aleph build
 
-login:
+build-pack:
+    pack build {{ image }} --builder paketobuildpacks/builder:base
+
+start *opt:
+    docker run {{ opt }} --rm -t -e HOST=localhost -e PORT=8080 -p 8080:8080 --name {{ project }} {{ image }}
+
+start-background: (start "-d")
+
+stop:
+    docker stop {{ project }}
+
+publish: login-docker push-docker
+
+login-docker:
     docker login -u {{ user }} {{ registry }}
 
-pull:
-    docker pull "{{ image }}"
-
-push:
+push-docker:
     docker push "{{ image }}"
+
+update: update-asdf update-pre-commit
 
 update-asdf:
     awk '{print $1}' .tool-versions | \
@@ -54,3 +54,12 @@ update-asdf:
 
 update-pre-commit:
     pre-commit autoupdate
+
+screenshot:
+    just start-background
+    deno run \
+        -A \
+        --unstable \
+        --import-map ./import_map.json \
+        scripts/screenshot.ts
+    just stop
