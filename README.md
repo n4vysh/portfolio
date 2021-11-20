@@ -2,9 +2,9 @@
 
 ## Requirements
 
-* asdf
-* docker
-* Chromium for lighthouse
+- asdf
+- docker
+- Chromium for lighthouse
 
 ```bash
 awk '{print $1}' .tool-versions |
