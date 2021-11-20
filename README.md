@@ -2,6 +2,9 @@
 
 ## Requirements
 
+- awk
+- grep
+- findutils
 - asdf
 - docker
 
