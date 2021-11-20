@@ -14,7 +14,7 @@ repos:
     rev: "v2.4.1"
     hooks:
       - id: prettier
-        types_or: [yaml]
+        types_or: [yaml, css]
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.26.3
     hooks:
@@ -43,6 +43,21 @@ repos:
         language: system
         entry: deno lint
         types_or: [ts, tsx]
+      - &stylelint
+        id: stylelint
+        name: format css files with stylelint
+        language: node
+        types: [css]
+        minimum_pre_commit_version: 0.7.0
+        additional_dependencies:
+          - "stylelint@14.1.0"
+          - "stylelint-config-standard@24.0.0"
+          - "stylelint-config-recess-order@3.0.0"
+          - "stylelint-config-prettier@9.0.3"
+        entry: stylelint --fix
+      - name: check css files with stylelint
+        entry: stylelint
+        <<: *stylelint
       - id: aleph-build
         name: check ts and tsx files with aleph build
         language: system
