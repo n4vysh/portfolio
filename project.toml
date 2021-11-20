@@ -3,8 +3,8 @@ include = ["dist/", "mime.types", "nginx.conf", "buildpack.yml"]
 
 [[build.buildpacks]]
 id = "paketo-buildpacks/nginx"
-version = "0.3.2"
+version = "0.5.1"
 
 [[build.env]]
 name = "BP_NGINX_VERSION"
-value = "1.21.1"
+value = "1.21.4"
