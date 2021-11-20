@@ -1,7 +1,7 @@
 registry := "ghcr.io"
 user := "n4vysh"
 project := "portfolio"
-version := "0.1.0"
+version := "0.1.1"
 image := registry + "/" + user + "/" + project + ":" + version
 
 dev: init download dev-aleph
