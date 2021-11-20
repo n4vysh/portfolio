@@ -2,6 +2,7 @@ import React, { ComponentType } from "react";
 import "./style/app.css";
 
 export default function App(
+  // deno-lint-ignore no-explicit-any
   { Page, pageProps }: { Page: ComponentType<any>; pageProps: any },
 ) {
   return (
