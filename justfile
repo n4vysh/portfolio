@@ -15,9 +15,15 @@ build-aleph:
 build-pack:
     pack build {{ image }} --builder paketobuildpacks/builder:base
 
-init:
+init: init-direnv init-aleph init-pre-commit
+
+init-direnv:
     asdf exec direnv allow
+
+init-aleph:
     deno run -A https://deno.land/x/aleph/install.ts
+
+init-pre-commit:
     pre-commit install --install-hooks
 
 download:
