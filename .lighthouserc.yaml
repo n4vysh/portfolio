@@ -1,5 +1,0 @@
-ci:
-  collect:
-    staticDistDir: ./dist
-    url:
-      - /
