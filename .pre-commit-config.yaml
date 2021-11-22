@@ -103,3 +103,12 @@ repos:
         entry: shellharden --replace
         files: .envrc$
         additional_dependencies: ["cli:shellharden:4.1.1"]
+      - id: commitlint
+        name: check commit message with commitlint
+        language: node
+        minimum_pre_commit_version: 0.7.0
+        additional_dependencies:
+          - "@commitlint/cli@15.0.0"
+          - "@commitlint/config-conventional@15.0.0"
+        stages: [commit-msg]
+        entry: commitlint --edit
