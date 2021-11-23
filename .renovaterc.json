@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "config:base",
+    ":automergePatch",
+    "schedule:weekends",
+    "group:allNonMajor"
+  ],
+  "timezone": "Asia/Tokyo",
+  "pre-commit": {
+    "enabled": true
+  }
+}
