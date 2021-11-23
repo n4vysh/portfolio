@@ -75,6 +75,17 @@ repos:
         types_or: [ts, tsx, css]
         exclude: scripts/*$
         pass_filenames: false
+      - id: build-pack
+        name: check nginx.conf, project.toml, and buildpack.yml with pack
+        language: system
+        entry: just build-pack
+        files: |
+          (?x)^(
+              nginx.conf|
+              project.toml|
+              buildpack.yml
+          )$
+        pass_filenames: false
       - id: lhci
         name: check with lhci
         language: node
