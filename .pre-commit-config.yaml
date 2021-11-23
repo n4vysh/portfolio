@@ -62,8 +62,8 @@ repos:
       - name: check css files with stylelint
         entry: stylelint
         <<: *stylelint
-      - id: aleph-build
-        name: check ts and tsx files with aleph build
+      - id: build-aleph
+        name: check ts, tsx, and css files with aleph build
         language: system
         entry: just build-aleph
         types_or: [ts, tsx, css]
