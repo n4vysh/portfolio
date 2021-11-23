@@ -20,8 +20,7 @@ repos:
     hooks:
       - id: yamllint
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    # use markdownlint-fix
-    rev: 2d2ba47
+    rev: v0.30.0
     hooks:
       - id: markdownlint
       - id: markdownlint-fix
