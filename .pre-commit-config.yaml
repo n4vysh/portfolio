@@ -20,9 +20,11 @@ repos:
     hooks:
       - id: yamllint
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.29.0
+    # use markdownlint-fix
+    rev: 2d2ba47
     hooks:
       - id: markdownlint
+      - id: markdownlint-fix
   - repo: https://github.com/koalaman/shellcheck-precommit
     rev: v0.8.0
     hooks:
