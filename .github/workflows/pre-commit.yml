@@ -1,4 +1,7 @@
 ---
+# NOTE:
+# pre-commit hook is too large to install in the free tier of pre-commit.ci
+# https://results.pre-commit.ci/run/github/403175452/1637443602.QYVDDkU4Sy-Dn2qTaTlSgg
 name: pre-commit
 "on": push
 jobs:
