@@ -62,6 +62,12 @@ repos:
       - name: check css files with stylelint
         entry: stylelint
         <<: *stylelint
+      - id: download-script
+        name: check download script
+        language: system
+        entry: just download
+        files: scripts/download.ts$
+        pass_filenames: false
       - id: build-aleph
         name: check ts, tsx, and css files with aleph build
         language: system
