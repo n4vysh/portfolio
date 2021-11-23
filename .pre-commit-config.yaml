@@ -29,6 +29,8 @@ repos:
     rev: v0.8.0
     hooks:
       - id: shellcheck
+        name: check shell scripts with shellcheck
+      - id: shellcheck
         name: check .envrc with shellcheck
         args: [-s, bash]
         files: .envrc$
@@ -114,11 +116,24 @@ repos:
         files: justfile$
         pass_filenames: false
       - id: shfmt
+        name: format shell scripts with shfmt
+        minimum_pre_commit_version: 2.4.0
+        language: docker_image
+        entry: mvdan/shfmt:v3.4.0 -w
+        types: [shell]
+      - id: shfmt
         name: format .envrc with shfmt
         minimum_pre_commit_version: 2.4.0
         language: docker_image
         entry: mvdan/shfmt:v3.4.0 -w
         files: .envrc$
+      - id: shellharden
+        name: format shell scripts with shellharden
+        minimum_pre_commit_version: 1.10.0
+        language: rust
+        entry: shellharden --replace
+        types: [shell]
+        additional_dependencies: ["cli:shellharden:4.1.1"]
       - id: shellharden
         name: format .envrc with shellharden
         minimum_pre_commit_version: 1.10.0
