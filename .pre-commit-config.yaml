@@ -1,57 +1,23 @@
 ---
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
-    hooks:
-      - id: check-merge-conflict
-      - id: check-case-conflict
-      - id: trailing-whitespace
-        exclude_types: [markdown]
-      - id: end-of-file-fixer
-      - id: check-added-large-files
-      - id: fix-byte-order-marker
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.4.1
-    hooks:
-      - id: prettier
-        types_or: [yaml, css]
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.26.3
-    hooks:
-      - id: yamllint
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.30.0
-    hooks:
-      - id: markdownlint
-      - id: markdownlint-fix
-  - repo: https://github.com/koalaman/shellcheck-precommit
-    rev: v0.8.0
-    hooks:
-      - id: shellcheck
-        name: check shell scripts with shellcheck
-      - id: shellcheck
-        name: check .envrc with shellcheck
-        args: [-s, bash]
-        files: .envrc$
-        types: []
-  - repo: https://github.com/rhysd/actionlint
-    rev: v1.6.8
-    hooks:
-      - id: actionlint-docker
+  # frontend
   - repo: local
     hooks:
       - id: deno-fmt
+        alias: frontend
         name: format js, ts, tsx, md, and json files with deno fmt
         language: system
         entry: deno fmt
         types_or: [javascript, ts, tsx, markdown, json]
       - id: deno-lint
+        alias: frontend
         name: check ts and tsx files with deno lint
         language: system
         entry: deno lint
         types_or: [ts, tsx]
       - &stylelint
         id: stylelint
+        alias: frontend
         name: format css files with stylelint
         language: node
         types: [css]
@@ -66,19 +32,70 @@ repos:
         entry: stylelint
         <<: *stylelint
       - id: download-script
+        alias: frontend
         name: check download script
         language: system
         entry: just download
         files: scripts/download.ts$
         pass_filenames: false
       - id: build-aleph
+        alias: frontend
         name: check ts, tsx, and css files with aleph build
         language: system
         entry: just build-aleph
         types_or: [ts, tsx, css]
         exclude: scripts/*$
         pass_filenames: false
+      - id: lhci
+        alias: frontend
+        name: check with lhci
+        language: node
+        # https://github.com/GoogleChrome/lighthouse/issues/13258
+        language_version: 16.13.0
+        entry: lhci autorun
+        types_or: [ts, tsx, css]
+        additional_dependencies: ["@lhci/cli@0.8.2", "puppeteer@11.0.0"]
+        pass_filenames: false
+  # config
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.4.1
+    hooks:
+      - id: prettier
+        alias: config
+        types_or: [yaml, css]
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.26.3
+    hooks:
+      - id: yamllint
+        alias: config
+  - repo: local
+    hooks:
+      - id: taplo-format
+        alias: config
+        name: format toml files with taplo format
+        language: node
+        entry: taplo format
+        types: [toml]
+        additional_dependencies: ["@taplo/cli@0.3.2"]
+      - id: taplo-lint
+        alias: config
+        name: check toml files with taplo lint
+        language: node
+        entry: taplo lint
+        types: [toml]
+        additional_dependencies: ["@taplo/cli@0.3.2"]
+      - id: just
+        alias: config
+        name: format justfile with just --fmt option
+        language: system
+        entry: just --fmt --unstable
+        files: justfile$
+        pass_filenames: false
+  # container
+  - repo: local
+    hooks:
       - id: build-pack
+        alias: container
         name: check nginx.conf, project.toml, and buildpack.yml with pack
         language: system
         entry: just build-pack
@@ -89,60 +106,18 @@ repos:
               buildpack.yml
           )$
         pass_filenames: false
-      - id: lhci
-        name: check with lhci
-        language: node
-        # https://github.com/GoogleChrome/lighthouse/issues/13258
-        language_version: 16.13.0
-        entry: lhci autorun
-        types_or: [ts, tsx, css]
-        additional_dependencies: ["@lhci/cli@0.8.2", "puppeteer@11.0.0"]
-        pass_filenames: false
-      - id: taplo-format
-        name: format toml files with taplo format
-        language: node
-        entry: taplo format
-        types: [toml]
-        additional_dependencies: ["@taplo/cli@0.3.2"]
-      - id: taplo-lint
-        name: check toml files with taplo lint
-        language: node
-        entry: taplo lint
-        types: [toml]
-        additional_dependencies: ["@taplo/cli@0.3.2"]
-      - id: just
-        name: format justfile with just --fmt option
-        language: system
-        entry: just --fmt --unstable
-        files: justfile$
-        pass_filenames: false
-      - id: shfmt
-        name: format shell scripts with shfmt
-        minimum_pre_commit_version: 2.4.0
-        language: docker_image
-        entry: mvdan/shfmt:v3.4.0 -w
-        types: [shell]
-      - id: shfmt
-        name: format .envrc with shfmt
-        minimum_pre_commit_version: 2.4.0
-        language: docker_image
-        entry: mvdan/shfmt:v3.4.0 -w
-        files: .envrc$
-      - id: shellharden
-        name: format shell scripts with shellharden
-        minimum_pre_commit_version: 1.10.0
-        language: rust
-        entry: shellharden --replace
-        types: [shell]
-        additional_dependencies: ["cli:shellharden:4.1.1"]
-      - id: shellharden
-        name: format .envrc with shellharden
-        minimum_pre_commit_version: 1.10.0
-        language: rust
-        entry: shellharden --replace
-        files: .envrc$
-        additional_dependencies: ["cli:shellharden:4.1.1"]
+  # markup
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.30.0
+    hooks:
+      - id: markdownlint
+        alias: markup
+      - id: markdownlint-fix
+        alias: markup
+  - repo: local
+    hooks:
       - id: markdown-link-check
+        alias: markup
         name: check link in markdown files with markdown-link-check
         language: node
         types: [markdown]
@@ -150,7 +125,63 @@ repos:
         additional_dependencies:
           - markdown-link-check@3.8.7
         entry: markdown-link-check --config .markdown-link-check.json
+  # shell scripts
+  - repo: local
+    hooks:
+      - id: shfmt
+        alias: shell-scripts
+        name: format shell scripts with shfmt
+        minimum_pre_commit_version: 2.4.0
+        language: docker_image
+        entry: mvdan/shfmt:v3.4.0 -w
+        types: [shell]
+      - id: shfmt
+        alias: shell-scripts
+        name: format .envrc with shfmt
+        minimum_pre_commit_version: 2.4.0
+        language: docker_image
+        entry: mvdan/shfmt:v3.4.0 -w
+        files: .envrc$
+      - id: shellharden
+        alias: shell-scripts
+        name: format shell scripts with shellharden
+        minimum_pre_commit_version: 1.10.0
+        language: rust
+        entry: shellharden --replace
+        types: [shell]
+        additional_dependencies: ["cli:shellharden:4.1.1"]
+      - id: shellharden
+        alias: shell-scripts
+        name: format .envrc with shellharden
+        minimum_pre_commit_version: 1.10.0
+        language: rust
+        entry: shellharden --replace
+        files: .envrc$
+        additional_dependencies: ["cli:shellharden:4.1.1"]
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: v0.8.0
+    hooks:
+      - id: shellcheck
+        alias: shell-scripts
+        name: check shell scripts with shellcheck
+      - id: shellcheck
+        alias: shell-scripts
+        name: check .envrc with shellcheck
+        args: [-s, bash]
+        files: .envrc$
+        types: []
+  # git
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-merge-conflict
+        alias: git
+      - id: check-added-large-files
+        alias: git
+  - repo: local
+    hooks:
       - id: commitlint
+        alias: git
         name: check commit message with commitlint
         language: node
         minimum_pre_commit_version: 0.7.0
@@ -159,3 +190,21 @@ repos:
           - "@commitlint/config-conventional@15.0.0"
         stages: [commit-msg]
         entry: commitlint --edit
+  # misc
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-case-conflict
+        alias: misc
+      - id: trailing-whitespace
+        alias: misc
+        exclude_types: [markdown]
+      - id: end-of-file-fixer
+        alias: misc
+      - id: fix-byte-order-marker
+        alias: misc
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.6.8
+    hooks:
+      - id: actionlint-docker
+        alias: misc
