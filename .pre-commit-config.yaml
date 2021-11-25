@@ -92,6 +92,8 @@ repos:
       - id: lhci
         name: check with lhci
         language: node
+        # https://github.com/GoogleChrome/lighthouse/issues/13258
+        language_version: 16.13.0
         entry: lhci autorun
         types_or: [ts, tsx, css]
         additional_dependencies: ["@lhci/cli@0.8.2", "puppeteer@11.0.0"]
