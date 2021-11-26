@@ -27,9 +27,9 @@ repos:
           - "stylelint-config-standard@24.0.0"
           - "stylelint-config-recess-order@3.0.0"
           - "stylelint-config-prettier@9.0.3"
-        entry: stylelint --fix
+        entry: stylelint --cache --fix
       - name: check css files with stylelint
-        entry: stylelint
+        entry: stylelint --cache
         <<: *stylelint
       - id: download-script
         alias: frontend
