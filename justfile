@@ -1,26 +1,26 @@
 registry := "ghcr.io"
 user := "n4vysh"
-project := "portfolio"
+name := "portfolio"
 version := "0.1.1"
-image := registry + "/" + user + "/" + project + ":" + version
+image := registry + "/" + user + "/" + name + ":" + version
 
-dev: init download dev-aleph
+set dotenv-load := false
 
-build: init download build-aleph build-pack
+dev: download
+    aleph dev
+
+build: download build-aleph build-pack
 
 init:
     ./scripts/init.bash
 
-install *packages:
+install *packages: init
     trex install {{ packages }}
 
-download:
+download: init
     denon download
 
-dev-aleph:
-    aleph dev
-
-check *target:
+check *target: init
     pre-commit run -av {{ target }}
 
 build-aleph:
@@ -29,33 +29,29 @@ build-aleph:
 build-pack:
     pack build {{ image }} --builder paketobuildpacks/builder:base
 
-start *opt:
-    docker run {{ opt }} --rm -t -e HOST=localhost -e PORT=8080 -p 8080:8080 --name {{ project }} {{ image }}
+start: build
+    docker run --rm --env-file .env -dp 8080:8080 --name {{ name }} {{ image }}
 
-start-background: (start "-d")
+logs:
+    docker logs -f {{ name }}
 
 stop:
-    docker stop {{ project }}
+    docker stop {{ name }}
 
-publish: login-docker push-docker
-
-login-docker:
+login:
     docker login -u {{ user }} {{ registry }}
 
-push-docker:
-    docker push "{{ image }}"
+publish: login
+    docker push {{ image }}
 
 update: update-asdf update-pre-commit
 
 update-asdf:
-    awk '{print $1}' .tool-versions | \
-      xargs -t -I {} sh -c 'asdf install {} latest && asdf local {} latest'
+    ./scripts/update-packages.bash
 
 update-pre-commit:
     pre-commit autoupdate
 
-screenshot:
-    just build
-    just start-background
+screenshot: start
     denon screenshot
     just stop
