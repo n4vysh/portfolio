@@ -12,11 +12,11 @@ if ! type denon >/dev/null 2>&1; then
 fi
 
 if ! type aleph >/dev/null 2>&1; then
-  deno run -A https://deno.land/x/aleph@v0.3.0-beta.19/install.ts
+  denon install:aleph
 fi
 
 if [[ ! -d ~/.cache/deno/deno_puppeteer/chromium/ ]]; then
-  PUPPETEER_PRODUCT=chrome deno run -A --unstable https://deno.land/x/puppeteer@9.0.2/install.ts
+  denon install:puppeteer
 fi
 
 if type pre-commit >/dev/null 2>&1; then

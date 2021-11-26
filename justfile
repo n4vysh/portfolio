@@ -12,11 +12,7 @@ init:
     ./scripts/init.bash
 
 download:
-    deno run \
-        --allow-net \
-        --allow-write \
-        --import-map ./import_map.json \
-        scripts/download.ts
+    denon download
 
 dev-aleph:
     aleph dev
@@ -58,9 +54,5 @@ update-pre-commit:
 screenshot:
     just build
     just start-background
-    deno run \
-        -A \
-        --unstable \
-        --import-map ./import_map.json \
-        scripts/screenshot.ts
+    denon screenshot
     just stop

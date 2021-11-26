@@ -1,0 +1,30 @@
+---
+watch: false
+scripts:
+  install:aleph:
+    cmd: "https://deno.land/x/aleph@v0.3.0-beta.19/install.ts"
+    desc: "Install Aleph.js"
+    allow:
+      all: true
+  install:puppeteer:
+    cmd: "https://deno.land/x/puppeteer@9.0.2/install.ts"
+    desc: "Install Chrome for Puppeteer"
+    allow:
+      all: true
+    env:
+      PUPPETEER_PRODUCT: chrome
+    unstable: true
+  download:
+    cmd: "scripts/download.ts"
+    desc: "Download icon files"
+    allow:
+      net: true
+      write: true
+    importmap: ./import_map.json
+  screenshot:
+    cmd: "scripts/screenshot.ts"
+    desc: "Take screenshot"
+    allow:
+      all: true
+    unstable: true
+    importmap: ./import_map.json
