@@ -21,8 +21,8 @@ download:
 dev-aleph:
     aleph dev
 
-check:
-    pre-commit run -av
+check *target:
+    pre-commit run -av {{ target }}
 
 build-aleph:
     aleph build
