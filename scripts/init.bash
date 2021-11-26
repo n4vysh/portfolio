@@ -23,6 +23,7 @@ if ! type trex >/dev/null 2>&1; then
     -n trex \
     --no-check \
     https://deno.land/x/trex@v1.10.0/cli.ts
+  just install
 fi
 
 if ! type aleph >/dev/null 2>&1; then

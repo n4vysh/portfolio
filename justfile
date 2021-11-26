@@ -11,6 +11,9 @@ build: init download build-aleph build-pack
 init:
     ./scripts/init.bash
 
+install *packages:
+    trex install {{ packages }}
+
 download:
     denon download
 
