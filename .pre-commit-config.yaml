@@ -1,4 +1,7 @@
 ---
+default_language_version:
+  python: 3.10.0
+  node: 17.1.0
 repos:
   # frontend
   - repo: local
@@ -20,6 +23,7 @@ repos:
         alias: frontend
         name: format css files with stylelint
         language: node
+        language_version: 17.1.0
         types: [css]
         minimum_pre_commit_version: 0.7.0
         additional_dependencies:
