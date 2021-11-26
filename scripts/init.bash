@@ -7,8 +7,12 @@ if type asdf >/dev/null 2>&1 &&
   asdf exec direnv allow
 fi
 
+if ! type denon >/dev/null 2>&1; then
+  deno install -qAf --unstable https://deno.land/x/denon@2.4.10/denon.ts
+fi
+
 if ! type aleph >/dev/null 2>&1; then
-  deno run -A https://deno.land/x/aleph/install.ts
+  deno run -A https://deno.land/x/aleph@v0.3.0-beta.19/install.ts
 fi
 
 if [[ ! -d ~/.cache/deno/deno_puppeteer/chromium/ ]]; then
