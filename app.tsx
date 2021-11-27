@@ -11,7 +11,7 @@ export default function App(
         <meta name="viewport" content="width=device-width" />
         <meta name="description" content="n4vysh's portfolio." />
         <meta name="theme-color" content="black" />
-        <link rel="icon" href="/images/favicon.png" />
+        <link rel="icon" href="/images/icon.png" />
         <link rel="apple-touch-icon" href="/images/icon.png" />
       </head>
       <Page {...pageProps} />
