@@ -49,6 +49,10 @@ Run `just check` to lint and format the source code with
 
 Run `just update` to update dependency packages and pre-commit hooks.
 
+## List
+
+Run `just --list` to list available commands in command runner.
+
 ## License
 
 This repository is licensed under the MIT license. See the

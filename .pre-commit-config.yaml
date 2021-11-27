@@ -42,11 +42,11 @@ repos:
         entry: just download
         files: scripts/download.ts$
         pass_filenames: false
-      - id: build-aleph
+      - id: build-static-site
         alias: frontend
         name: check ts, tsx, and css files with aleph build
         language: system
-        entry: just build-aleph
+        entry: just build-static-site
         types_or: [ts, tsx, css]
         exclude: scripts/*$
         pass_filenames: false
@@ -98,11 +98,11 @@ repos:
   # container
   - repo: local
     hooks:
-      - id: build-pack
+      - id: build-container-image
         alias: container
         name: check nginx.conf, project.toml, and buildpack.yml with pack
         language: system
-        entry: just build-pack
+        entry: just build-container-image
         files: |
           (?x)^(
               nginx.conf|
