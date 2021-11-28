@@ -6,6 +6,32 @@ repos:
   # frontend
   - repo: local
     hooks:
+      - id: svgo
+        alias: frontend
+        name: optimize svg file with svgo
+        language: node
+        minimum_pre_commit_version: 0.7.0
+        additional_dependencies:
+          - svgo@2.8.0
+        entry: svgo -o dist/icon.svg
+        files: src/icon.svg$
+      - id: resvg
+        alias: frontend
+        name: convert svg to png
+        minimum_pre_commit_version: 1.10.0
+        language: rust
+        entry: sh -c 'resvg $0 dist/icon.png'
+        files: src/icon.svg$
+        additional_dependencies: ["cli:resvg:0.19.0"]
+      - id: oxipng
+        alias: frontend
+        name: optimize png file with oxipng
+        minimum_pre_commit_version: 1.10.0
+        language: rust
+        entry: oxipng -o 3 -i 1 --strip safe dist/icon.png
+        files: src/icon.svg$
+        pass_filenames: false
+        additional_dependencies: ["cli:oxipng:5.0.1"]
       - id: deno-fmt
         alias: frontend
         name: format js, ts, tsx, md, and json files with deno fmt
@@ -35,13 +61,6 @@ repos:
       - name: check css files with stylelint
         entry: stylelint --cache
         <<: *stylelint
-      - id: download-script
-        alias: frontend
-        name: check download script
-        language: system
-        entry: just download
-        files: scripts/download.ts$
-        pass_filenames: false
       - id: build-static-site
         alias: frontend
         name: check ts, tsx, and css files with aleph build

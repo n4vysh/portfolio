@@ -14,13 +14,6 @@ scripts:
     env:
       PUPPETEER_PRODUCT: chrome
     unstable: true
-  download:
-    cmd: "scripts/download.ts"
-    desc: "Download icon files"
-    allow:
-      net: true
-      write: true
-    importmap: ./import_map.json
   screenshot:
     cmd: "scripts/screenshot.ts"
     desc: "Take screenshot"

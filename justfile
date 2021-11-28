@@ -7,11 +7,11 @@ image := registry + "/" + user + "/" + name + ":" + version
 set dotenv-load := false
 
 # Start the web server in `development`
-dev: download
+dev: init
     aleph dev
 
 # Build a static site and container image
-build: download build-static-site build-container-image
+build: init build-static-site build-container-image
 
 # Grants direnv and install all the dependencies
 init:
@@ -24,10 +24,6 @@ install *packages: init
 # Run frontend scripts
 run *script:
     denon {{ script }}
-
-# Download icon files
-download: init
-    just run download
 
 # Check codes with hooks
 check *target: init

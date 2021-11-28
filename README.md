@@ -55,7 +55,8 @@ Run `just --list` to list available commands in command runner.
 
 ## License
 
-This repository is licensed under the MIT license. See the
+This icon ([svg file](./misc/icon.svg)) is licensed under the CC BY-NC-ND 4.0.
+Other files is licensed under the MIT license. See the
 [LICENSE.txt](./LICENSE.txt) file for details.
 
 [gawk-link]: https://www.gnu.org/software/gawk/
