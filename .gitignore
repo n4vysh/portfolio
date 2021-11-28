@@ -1,5 +1,6 @@
 .aleph/
 dist/
-public/images/
+public/images/*
+!.gitkeep
 .lighthouseci/
 .*lintcache

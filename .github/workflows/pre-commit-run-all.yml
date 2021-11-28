@@ -2,6 +2,11 @@
 name: pre-commit run all
 "on": push
 jobs:
+  icon:
+    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
+    with:
+      hook: icon
+      setup-rust: true
   frontend:
     uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
     with:
@@ -9,7 +14,6 @@ jobs:
       setup-deno: true
       setup-just: true
       setup-frontend-packages: true
-      setup-rust: true
   config:
     uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
     with:
