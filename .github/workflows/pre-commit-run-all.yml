@@ -6,14 +6,21 @@ jobs:
     uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
     with:
       hook: frontend
+      setup-deno: true
+      setup-just: true
+      setup-frontend-packages: true
+      setup-rust: true
   config:
     uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
     with:
       hook: config
+      setup-just: true
   container:
     uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
     with:
       hook: container
+      setup-just: true
+      setup-pack: true
   markup:
     uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
     with:
@@ -22,6 +29,7 @@ jobs:
     uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
     with:
       hook: shell-scripts
+      setup-rust: true
   git:
     uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
     with:

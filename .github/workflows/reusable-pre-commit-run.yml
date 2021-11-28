@@ -6,29 +6,54 @@ name: reusable pre-commit run
   workflow_call:
     inputs:
       hook:
-        description: name of pre-commit hook
+        description: Name of pre-commit hook
         required: true
         type: string
+      setup-deno:
+        description: Setup Deno
+        required: false
+        type: boolean
+      setup-just:
+        description: Setup just
+        required: false
+        type: boolean
+      setup-frontend-packages:
+        description: Setup frontend packages
+        required: false
+        type: boolean
+      setup-pack:
+        description: Setup pack
+        required: false
+        type: boolean
+      setup-rust:
+        description: Setup Rust
+        required: false
+        type: boolean
 jobs:
   pre-commit:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - uses: denoland/setup-deno@v1
+        if: inputs.setup-deno == true
         with:
           deno-version: 1.16.2
       - uses: extractions/setup-just@v1
+        if: inputs.setup-just == true
         with:
           just-version: 0.10.3
-      - name: Install Aleph.js and deno-puppeteer
+      - name: Setup frontend packages
+        if: inputs.setup-frontend-packages == true
         run: just init
       - uses: buildpacks/github-actions/setup-pack@v4.4.2
+        if: inputs.setup-pack == true
         with:
           pack-version: 0.22.0
       - uses: actions/setup-python@v2
         with:
           python-version: 3.10.0
       - uses: actions-rs/toolchain@v1
+        if: inputs.setup-rust == true
         with:
           toolchain: 1.56.1
           profile: minimal
