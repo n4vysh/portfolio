@@ -2,4 +2,4 @@
 dist/
 public/images/
 .lighthouseci/
-.stylelintcache
+.*lintcache

@@ -24,7 +24,7 @@ Preview and edit the website on local machine as follows:
 1. Run `just` to start the server of [Aleph.js][alephjs-link] in `development`
    mode
 1. Open <http://localhost:8080/> in browser
-1. After done with the preview, press Ctrl-C in terminal to stop the server.
+1. After done with the preview, press Ctrl-C in terminal to stop the server
 
 While the preview is running, edit tsx and css files and will automatically
 rebuild them.
@@ -41,7 +41,7 @@ Run `just check` to lint and format the source code with
 1. Run `just start` to start the server of [nginx][nginx-link] in `production`
    mode
 1. Open <http://localhost:8080/> in browser
-1. After done with the preview, press Ctrl-C in terminal to stop the server.
+1. After done with the preview, press Ctrl-C in terminal to stop the server
 1. Run `just publish` to push docker image to
    [GitHub Container Registry][ghcr-link]
 
@@ -55,8 +55,8 @@ Run `just --list` to list available commands in command runner.
 
 ## License
 
-This icon ([svg file](./misc/icon.svg)) is licensed under the CC BY-NC-ND 4.0.
-Other files is licensed under the MIT license. See the
+This icon ([svg file](./misc/icon.svg)) distributed under the CC BY-NC-ND 4.0.
+Other files distributed under the MIT license. See the
 [LICENSE.txt](./LICENSE.txt) file for details.
 
 [gawk-link]: https://www.gnu.org/software/gawk/
