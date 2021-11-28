@@ -57,9 +57,10 @@ repos:
           - "stylelint-config-standard@24.0.0"
           - "stylelint-config-recess-order@3.0.0"
           - "stylelint-config-prettier@9.0.3"
-        entry: stylelint --cache --fix
-      - name: check css files with stylelint
         entry: stylelint --cache
+        args: [--fix]
+      - name: check css files with stylelint
+        args: []
         <<: *stylelint
       - id: build-static-site
         alias: frontend
@@ -235,6 +236,7 @@ repos:
         name: fix common misspellings in text files with codespell
         args: [--write-changes]
       - name: check common misspellings in text files with codespell
+        args: []
         <<: *codespell
   - repo: https://github.com/rhysd/actionlint
     rev: v1.6.8
