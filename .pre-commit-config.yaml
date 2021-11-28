@@ -198,9 +198,11 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
-      - id: check-merge-conflict
-        alias: git
       - id: check-added-large-files
+        alias: git
+      - id: check-case-conflict
+        alias: git
+      - id: check-merge-conflict
         alias: git
   - repo: local
     hooks:
@@ -214,32 +216,35 @@ repos:
           - "@commitlint/config-conventional@15.0.0"
         stages: [commit-msg]
         entry: commitlint --edit
-  # misc
+  # file
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
-      - id: check-case-conflict
-        alias: misc
+      - id: fix-byte-order-marker
+        alias: file
+  # text
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
       - id: trailing-whitespace
-        alias: misc
+        alias: text
         exclude_types: [markdown]
       - id: end-of-file-fixer
-        alias: misc
-      - id: fix-byte-order-marker
-        alias: misc
+        alias: text
   - repo: https://github.com/codespell-project/codespell
     rev: v2.1.0
     hooks:
       - &codespell
         id: codespell
-        alias: misc
+        alias: text
         name: fix common misspellings in text files with codespell
         args: [--write-changes]
       - name: check common misspellings in text files with codespell
         args: []
         <<: *codespell
+  # CI
   - repo: https://github.com/rhysd/actionlint
     rev: v1.6.8
     hooks:
       - id: actionlint-docker
-        alias: misc
+        alias: ci
