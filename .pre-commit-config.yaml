@@ -226,6 +226,16 @@ repos:
         alias: misc
       - id: fix-byte-order-marker
         alias: misc
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.1.0
+    hooks:
+      - &codespell
+        id: codespell
+        alias: misc
+        name: fix common misspellings in text files with codespell
+        args: [--write-changes]
+      - name: check common misspellings in text files with codespell
+        <<: *codespell
   - repo: https://github.com/rhysd/actionlint
     rev: v1.6.8
     hooks:
