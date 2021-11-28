@@ -1,8 +1,9 @@
 registry := "ghcr.io"
 user := "n4vysh"
 name := "portfolio"
-version := "0.1.1"
-image := registry + "/" + user + "/" + name + ":" + version
+repo := user + "/" + name
+rev := `git rev-parse --short HEAD`
+image := registry + "/" + repo
 
 set dotenv-load := false
 
@@ -35,11 +36,11 @@ build-static-site:
 
 # Build container image
 build-container-image:
-    pack build {{ image }} --builder paketobuildpacks/builder:base
+    pack build {{ image + ":" + rev }} --builder paketobuildpacks/builder:base
 
 # Start container
 start: build
-    docker run --rm --env-file .env -dp 8080:8080 --name {{ name }} {{ image }}
+    docker run --rm --env-file .env -dp 8080:8080 --name {{ name }} {{ image + ":" + rev }}
 
 # Fetch the logs of container
 logs:
@@ -54,8 +55,9 @@ login:
     docker login -u {{ user }} {{ registry }}
 
 # Push container image to registry
-publish: login
-    docker push {{ image }}
+publish +ver: login
+    docker tag {{ image + ":" + rev }} {{ image + ":" + ver }}
+    docker push {{ image + ":" + ver }}
 
 # Update package and hook versions
 update: update-package-versions update-hooks
