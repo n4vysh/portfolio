@@ -1,9 +1,14 @@
 ---
 # NOTE:
 # pre-commit hook is too large to install in the free tier of pre-commit.ci
-# https://results.pre-commit.ci/run/github/403175452/1637443602.QYVDDkU4Sy-Dn2qTaTlSgg
-name: pre-commit
-"on": push
+name: reusable pre-commit run
+"on":
+  workflow_call:
+    inputs:
+      hook:
+        description: name of pre-commit hook
+        required: true
+        type: string
 jobs:
   pre-commit:
     runs-on: ubuntu-20.04
@@ -28,3 +33,5 @@ jobs:
           toolchain: 1.56.1
           profile: minimal
       - uses: pre-commit/action@v2.0.3
+        with:
+          extra_args: ${{ inputs.hook }} --all-files

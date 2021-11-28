@@ -1,0 +1,40 @@
+---
+name: pre-commit run all
+"on": push
+jobs:
+  frontend:
+    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
+    with:
+      hook: frontend
+  config:
+    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
+    with:
+      hook: config
+  container:
+    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
+    with:
+      hook: container
+  markup:
+    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
+    with:
+      hook: markup
+  shell-scripts:
+    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
+    with:
+      hook: shell-scripts
+  git:
+    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
+    with:
+      hook: git
+  file:
+    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
+    with:
+      hook: file
+  text:
+    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
+    with:
+      hook: text
+  ci:
+    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
+    with:
+      hook: ci
