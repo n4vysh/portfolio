@@ -13,7 +13,7 @@ repos:
         minimum_pre_commit_version: 0.7.0
         additional_dependencies:
           - svgo@2.8.0
-        entry: svgo -o public/images/icon.svg
+        entry: sh -c 'svgo $0 -o public/images/icon.svg'
         files: misc/icon.svg$
       - id: resvg
         alias: icon
