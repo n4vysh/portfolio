@@ -1,0 +1,12 @@
+---
+apiVersion: skaffold/v2beta5
+kind: Config
+build:
+  artifacts:
+    - image: ghrc.io/n4vysh/portfolio
+      buildpacks:
+        builder: paketobuildpacks/builder:base
+deploy:
+  kubectl:
+    manifests:
+      - manifests/deployment.yaml

@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+  namespace: portfolio
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: ghcr.io/n4vysh/portfolio:dummy
+          imagePullPolicy: IfNotPresent
+          name: nginx
+          env:
+            - name: HOST
+              value: localhost
+            - name: PORT
+              value: "8080"
