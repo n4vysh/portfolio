@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+  namespace: portfolio
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          name: nginx
+          env:
+            - name: HOST
+              value: {{ .Values.host }}
+            - name: PORT
+              value: "{{ .Values.port }}"
+          ports:
+            - containerPort: {{ .Values.port }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.port }}
+              httpHeaders:
+                - name: Host
+                  value: {{ .Values.host }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.port }}
+              httpHeaders:
+                - name: Host
+                  value: {{ .Values.host }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}

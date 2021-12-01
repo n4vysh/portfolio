@@ -79,11 +79,10 @@ create-cluster:
     kind create cluster --config manifests/kind.yaml
     kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
     kubectl patch daemonsets -n projectcontour envoy -p '{"spec":{"template":{"spec":{"nodeSelector":{"ingress-ready":"true"},"tolerations":[{"key":"node-role.kubernetes.io/master","operator":"Equal","effect":"NoSchedule"}]}}}}'
-    kubectl apply -f manifests/namespace.yaml
-    kubectl apply -f manifests/ingress.yaml
-    kubectl apply -f manifests/service.yaml
     kind load --name {{ name }} docker-image {{ image + ":" + rev }}
-    kubectl apply -f manifests/deployment.yaml
+    helm install --create-namespace {{ name }} ./charts/
+    kubens {{ name }}
+    helm test {{ name }}
 
 dev-skaffold:
     skaffold dev -f manifests/skaffold.yaml

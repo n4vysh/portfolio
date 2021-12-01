@@ -8,6 +8,6 @@ metadata:
   namespace: portfolio
 spec:
   ports:
-    - port: 8080
+    - port: {{ .Values.port }}
   selector:
     app: nginx
