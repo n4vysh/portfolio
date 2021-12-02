@@ -1,0 +1,17 @@
+---
+repositories:
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
+helmDefaults:
+  createNamespace: true
+releases:
+  - name: contour
+    namespace: contour
+    chart: bitnami/contour
+    values:
+      - ./values.yaml
+  - name: portfolio
+    namespace: portfolio
+    chart: ./charts/
+    needs:
+      - contour

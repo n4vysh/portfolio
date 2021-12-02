@@ -5,7 +5,6 @@ metadata:
   labels:
     app: nginx
   name: nginx
-  namespace: portfolio
 spec:
   ports:
     - port: {{ .Values.port }}
