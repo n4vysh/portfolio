@@ -1,5 +1,5 @@
 ---
-apiVersion: skaffold/v2beta5
+apiVersion: skaffold/v2beta26
 kind: Config
 build:
   artifacts:
@@ -7,6 +7,11 @@ build:
       buildpacks:
         builder: paketobuildpacks/builder:base
 deploy:
-  kubectl:
-    manifests:
-      - manifests/deployment.yaml
+  helm:
+    releases:
+      - name: portfolio
+        artifactOverrides:
+          image: ghrc.io/n4vysh/portfolio
+        imageStrategy:
+          helm: {}
+        chartPath: ./charts/

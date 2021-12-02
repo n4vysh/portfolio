@@ -4,7 +4,7 @@ port: 8080
 image:
   repository: ghcr.io/n4vysh/portfolio
   pullPolicy: IfNotPresent
-  tag: "e93ed9d"
+  tag: "latest"
 
 ingress:
   annotations:

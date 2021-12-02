@@ -75,16 +75,16 @@ screenshot: start
     just run screenshot
     just stop
 
-create-cluster:
+create-cluster: build
     kind create cluster --config manifests/kind.yaml
     kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
     kubectl patch daemonsets -n projectcontour envoy -p '{"spec":{"template":{"spec":{"nodeSelector":{"ingress-ready":"true"},"tolerations":[{"key":"node-role.kubernetes.io/master","operator":"Equal","effect":"NoSchedule"}]}}}}'
     kind load --name {{ name }} docker-image {{ image + ":" + rev }}
-    helm install --create-namespace {{ name }} ./charts/
+    helm install --create-namespace {{ name }} --set image.tag={{ rev }} ./charts/
     kubens {{ name }}
     helm test {{ name }}
 
-dev-skaffold:
+dev-container:
     skaffold dev -f manifests/skaffold.yaml
 
 delete-cluster:
