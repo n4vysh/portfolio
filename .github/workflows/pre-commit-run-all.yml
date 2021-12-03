@@ -24,7 +24,7 @@ jobs:
     with:
       hook: container
       setup-just: true
-      setup-pack: true
+      setup-skaffold: true
   markup:
     uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
     with:

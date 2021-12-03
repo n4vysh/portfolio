@@ -36,7 +36,7 @@ build-static-site:
 
 # Build container image
 build-container-image:
-    pack build {{ image + ":" + rev }} --builder paketobuildpacks/builder:base
+    skaffold build -f manifests/skaffold.yaml
 
 # Start container
 start: build

@@ -6,6 +6,8 @@ build:
     - image: ghrc.io/n4vysh/portfolio
       buildpacks:
         builder: paketobuildpacks/builder:base
+  local:
+    push: false
 deploy:
   helm:
     releases:

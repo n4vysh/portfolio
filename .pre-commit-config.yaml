@@ -123,7 +123,7 @@ repos:
     hooks:
       - id: build-container-image
         alias: container
-        name: check nginx.conf, project.toml, and buildpack.yml with pack
+        name: check nginx.conf, project.toml, and buildpack.yml with skaffold
         language: system
         entry: just build-container-image
         files: |

@@ -21,8 +21,8 @@ name: reusable pre-commit run
         description: Setup frontend packages
         required: false
         type: boolean
-      setup-pack:
-        description: Setup pack
+      setup-skaffold:
+        description: Setup skaffold
         required: false
         type: boolean
       setup-rust:
@@ -45,10 +45,10 @@ jobs:
       - name: Setup frontend packages
         if: inputs.setup-frontend-packages == true
         run: just init
-      - uses: buildpacks/github-actions/setup-pack@v4.4.2
-        if: inputs.setup-pack == true
+      - uses: hiberbee/github-action-skaffold@1.14.0
+        if: inputs.setup-skaffold == true
         with:
-          pack-version: 0.22.0
+          skaffold-version: 1.35.0
       - uses: actions/setup-python@v2
         with:
           python-version: 3.10.0
