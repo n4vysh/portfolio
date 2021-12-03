@@ -3,7 +3,7 @@ apiVersion: skaffold/v2beta26
 kind: Config
 build:
   artifacts:
-    - image: ghrc.io/n4vysh/portfolio
+    - image: ghcr.io/n4vysh/portfolio
       buildpacks:
         builder: paketobuildpacks/builder:base
   local:
@@ -13,7 +13,7 @@ deploy:
     releases:
       - name: portfolio
         artifactOverrides:
-          image: ghrc.io/n4vysh/portfolio
+          image: ghcr.io/n4vysh/portfolio
         imageStrategy:
           helm: {}
         chartPath: ./charts/
