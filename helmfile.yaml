@@ -12,6 +12,6 @@ releases:
       - ./values.yaml
   - name: portfolio
     namespace: portfolio
-    chart: ./charts/
+    chart: ./charts/portfolio/
     needs:
       - contour

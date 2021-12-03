@@ -1,2 +1,2 @@
-charts/templates/*.yaml
-charts/templates/tests/*.yaml
+charts/portfolio/templates/*.yaml
+charts/portfolio/templates/tests/*.yaml

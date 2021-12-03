@@ -16,4 +16,4 @@ deploy:
           image: ghcr.io/n4vysh/portfolio
         imageStrategy:
           helm: {}
-        chartPath: ./charts/
+        chartPath: ./charts/portfolio/
