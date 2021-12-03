@@ -2,7 +2,6 @@ registry := "ghcr.io"
 user := "n4vysh"
 name := "portfolio"
 repo := user + "/" + name
-rev := `git rev-parse --short HEAD`
 image := registry + "/" + repo
 
 set dotenv-load := false
@@ -38,26 +37,9 @@ build-static-site:
 build-container-image:
     skaffold build -f manifests/skaffold.yaml
 
-# Start container
-start: build
-    docker run --rm --env-file .env -dp 8080:8080 --name {{ name }} {{ image + ":" + rev }}
-
-# Fetch the logs of container
-logs:
-    docker logs -f {{ name }}
-
-# Stop container
-stop:
-    docker stop {{ name }}
-
 # Login container registry
 login:
     docker login -u {{ user }} {{ registry }}
-
-# Push container image to registry
-publish +ver: login
-    docker tag {{ image + ":" + rev }} {{ image + ":" + ver }}
-    docker push {{ image + ":" + ver }}
 
 # Update package and hook versions
 update: update-package-versions update-hooks
@@ -71,20 +53,22 @@ update-hooks:
     pre-commit autoupdate
 
 # Take a screenshot
-screenshot: start
+take:
     just run screenshot
-    just stop
 
-create-cluster: build
-    kind create cluster --config manifests/kind.yaml
-    kind load --name {{ name }} docker-image {{ image + ":" + rev }}
-    helmfile repos
-    helmfile apply --set image.tag={{ rev }}
-    kubens {{ name }}
-    helmfile test
-
-dev-container:
+# Start the web server in container
+dev-container: _create-cluster && _delete-cluster
     skaffold dev -f manifests/skaffold.yaml
 
-delete-cluster:
+_create-cluster: build && _deploy
+    kind create cluster --config manifests/kind.yaml
+    kind load --name {{ name }} docker-image {{ image }}
+
+_deploy:
+    helmfile repos
+    helmfile apply
+    helmfile test
+    kubens {{ name }}
+
+_delete-cluster:
     kind delete cluster --name {{ name }}
