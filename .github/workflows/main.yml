@@ -54,6 +54,7 @@ jobs:
     uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
     with:
       hook: artifact
+      setup-skaffold: true
   deploy:
     runs-on: ubuntu-20.04
     if: github.ref == 'refs/heads/main'

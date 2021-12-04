@@ -293,3 +293,9 @@ repos:
         entry: quay.io/helmpack/chart-testing:v3.4.0 ct lint --all
         files: ^charts
         pass_filenames: false
+      - id: skaffold
+        alias: artifact
+        name: check skaffold.yaml with skaffold diagnose
+        language: system
+        entry: skaffold diagnose -f
+        files: manifests/skaffold.yaml
