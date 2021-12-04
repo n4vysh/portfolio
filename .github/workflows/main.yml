@@ -1,5 +1,5 @@
 ---
-name: pre-commit run all
+name: main
 "on": push
 jobs:
   icon:
@@ -50,3 +50,35 @@ jobs:
     uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
     with:
       hook: ci
+  artifact:
+    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
+    with:
+      hook: artifact
+  deploy:
+    runs-on: ubuntu-20.04
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - icon
+      - frontend
+      - config
+      - container
+      - markup
+      - shell-scripts
+      - git
+      - file
+      - text
+      - ci
+      - artifact
+    steps:
+      - uses: actions/checkout@v2
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: hiberbee/github-action-skaffold@1.14.0
+        with:
+          skaffold-version: 1.35.0
+          command: build
+          filename: manifests/skaffold.yaml
+          push: true
