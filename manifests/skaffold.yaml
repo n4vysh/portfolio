@@ -6,6 +6,13 @@ build:
     - image: ghcr.io/n4vysh/portfolio
       buildpacks:
         builder: paketobuildpacks/builder:base
+        dependencies:
+          paths:
+            - dist/
+            - mime.types
+            - nginx.conf
+            - buildpack.yml
+            - project.toml
   local:
     push: false
 deploy:

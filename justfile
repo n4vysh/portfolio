@@ -11,7 +11,7 @@ dev: init
     aleph dev
 
 # Build a static site and container image
-build: init build-static-site build-container-image
+build: init build-images build-static-site build-container-image
 
 # Grants direnv and install all the dependencies
 init:
@@ -28,6 +28,10 @@ run *script:
 # Check codes with hooks
 check *target: init
     pre-commit run -av {{ target }}
+
+# Build images
+build-images:
+    ./scripts/build-images.bash
 
 # Build a static site
 build-static-site:

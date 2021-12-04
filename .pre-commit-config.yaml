@@ -3,35 +3,6 @@ default_language_version:
   python: 3.10.0
   node: 17.1.0
 repos:
-  # icon
-  - repo: local
-    hooks:
-      - id: svgo
-        alias: icon
-        name: optimize svg file with svgo
-        language: node
-        minimum_pre_commit_version: 0.7.0
-        additional_dependencies:
-          - svgo@2.8.0
-        entry: sh -c 'svgo $0 -o public/images/icon.svg'
-        files: misc/icon.svg$
-      - id: resvg
-        alias: icon
-        name: convert svg to png with resvg
-        minimum_pre_commit_version: 1.10.0
-        language: rust
-        entry: sh -c 'resvg $0 public/images/icon.png'
-        files: misc/icon.svg$
-        additional_dependencies: ["cli:resvg:0.19.0"]
-      - id: oxipng
-        alias: icon
-        name: optimize png file with oxipng
-        minimum_pre_commit_version: 1.10.0
-        language: rust
-        entry: oxipng -o 3 -i 1 --strip safe public/images/icon.png
-        files: misc/icon.svg$
-        pass_filenames: false
-        additional_dependencies: ["cli:oxipng:5.0.1"]
   # frontend
   - repo: local
     hooks:
@@ -125,7 +96,7 @@ repos:
         alias: container
         name: check nginx.conf, project.toml, and buildpack.yml with skaffold
         language: system
-        entry: just build-container-image
+        entry: sh -c 'mkdir dist/; just build-container-image'
         files: |
           (?x)^(
               nginx.conf|
@@ -297,5 +268,5 @@ repos:
         alias: artifact
         name: check skaffold.yaml with skaffold diagnose
         language: system
-        entry: skaffold diagnose -f
+        entry: sh -c 'mkdir dist/; skaffold diagnose -f $0'
         files: manifests/skaffold.yaml
