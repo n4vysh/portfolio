@@ -7,6 +7,7 @@ skillsets and expertise.
 
 ## Requirements
 
+- [bash][bash-link]
 - [Gawk][gawk-link]
 - [Grep][grep-link]
 - [Findutils][findutils-link]
@@ -59,6 +60,7 @@ This icon ([svg file](./misc/icon.svg)) distributed under the CC BY-NC-ND 4.0.
 Other files distributed under the MIT license. See the
 [LICENSE.txt](./LICENSE.txt) file for details.
 
+[bash-link]: https://www.gnu.org/software/bash/
 [gawk-link]: https://www.gnu.org/software/gawk/
 [grep-link]: https://www.gnu.org/software/grep/
 [findutils-link]: https://www.gnu.org/software/findutils/
