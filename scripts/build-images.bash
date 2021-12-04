@@ -1,7 +1,11 @@
 #!/bin/bash
 
-docker build -f misc/dockerfiles/svgo/Dockerfile -t svgo .
-touch "$PWD"/public/images/icon.svg
+for d in misc/dockerfiles/*; do
+  docker build -f "$d/Dockerfile" -t "$(basename "$d")" .
+done
+
+touch "$PWD"/public/images/icon.{svg,png}
+
 docker run \
   -i \
   --rm \
@@ -9,8 +13,6 @@ docker run \
   --mount "type=bind,src=$PWD/public/images/icon.svg,dst=/icon.min.svg" \
   svgo icon.svg -o icon.min.svg
 
-docker build -f misc/dockerfiles/resvg/Dockerfile -t resvg .
-touch "$PWD"/public/images/icon.png
 docker run \
   -i \
   --rm \
@@ -18,8 +20,6 @@ docker run \
   --mount "type=bind,src=$PWD/public/images/icon.png,dst=/icon.png" \
   resvg icon.svg icon.png
 
-docker build -f misc/dockerfiles/oxipng/Dockerfile -t oxipng .
-touch "$PWD"/public/images/icon.png
 docker run \
   -i \
   --rm \
