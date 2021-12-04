@@ -268,5 +268,4 @@ repos:
         alias: artifact
         name: check skaffold.yaml with skaffold diagnose
         language: system
-        entry: sh -c 'mkdir dist/; skaffold diagnose -f $0'
-        files: manifests/skaffold.yaml
+        entry: sh -c 'mkdir dist/; skaffold diagnose'

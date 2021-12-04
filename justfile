@@ -39,7 +39,7 @@ build-static-site:
 
 # Build container image
 build-container-image:
-    skaffold build -f manifests/skaffold.yaml
+    skaffold build
 
 # Login container registry
 login:
@@ -62,10 +62,10 @@ take:
 
 # Start the web server in container
 dev-container: _create-cluster && _delete-cluster
-    skaffold dev -f manifests/skaffold.yaml
+    skaffold dev
 
 _create-cluster: build && _deploy
-    kind create cluster --config manifests/kind.yaml
+    kind create cluster
     kind load --name {{ name }} docker-image {{ image }}
 
 _deploy:

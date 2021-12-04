@@ -89,6 +89,5 @@ jobs:
         with:
           skaffold-version: 1.35.0
           command: build
-          filename: manifests/skaffold.yaml
           push: true
           tag: ${{ steps.var.outputs.sha_short }}
