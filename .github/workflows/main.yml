@@ -72,6 +72,8 @@ jobs:
       - artifact
     steps:
       - uses: actions/checkout@v2
+      - id: var
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - uses: docker/login-action@v1
         with:
           registry: ghcr.io
@@ -83,3 +85,4 @@ jobs:
           command: build
           filename: manifests/skaffold.yaml
           push: true
+          tag: ${{ steps.var.outputs.sha_short }}
