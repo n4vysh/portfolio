@@ -101,7 +101,8 @@ repos:
           (?x)^(
               nginx.conf|
               project.toml|
-              buildpack.yml
+              buildpack.yml|
+              skaffold.yaml
           )$
         pass_filenames: false
   # markup
@@ -269,3 +270,4 @@ repos:
         name: check skaffold.yaml with skaffold diagnose
         language: system
         entry: sh -c 'mkdir dist/; skaffold diagnose'
+        files: skaffold.yaml
