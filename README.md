@@ -1,6 +1,6 @@
 # portfolio
 
-![screenshot](./screenshot.png)
+![screenshot](./misc/screenshot.png)
 
 This repository contains the source code of the website to show my technical
 skillsets and expertise.
