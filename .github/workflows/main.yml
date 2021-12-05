@@ -52,7 +52,7 @@ jobs:
       setup-skaffold: true
       setup-helm: true
       setup-kubeval: true
-  deploy:
+  container-image-deploy:
     runs-on: ubuntu-20.04
     if: github.ref == 'refs/heads/main'
     needs:
@@ -93,3 +93,30 @@ jobs:
           command: build
           push: true
           tag: ${{ steps.var.outputs.sha_short }}
+  artifact-release:
+    runs-on: ubuntu-20.04
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - frontend
+      - config
+      - container
+      - markup
+      - shell-scripts
+      - git
+      - file
+      - text
+      - ci
+      - artifact
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - uses: azure/setup-helm@v1
+        with:
+          version: 3.7.1
+      - uses: helm/chart-releaser-action@v1.2.1
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
