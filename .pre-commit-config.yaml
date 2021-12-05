@@ -12,6 +12,7 @@ repos:
         language: system
         entry: deno fmt
         types_or: [javascript, ts, tsx, markdown, json]
+        exclude: ^charts
       - id: deno-lint
         alias: frontend
         name: check ts and tsx files with deno lint
@@ -116,8 +117,10 @@ repos:
     hooks:
       - id: markdownlint
         alias: markup
+        exclude: ^charts
       - id: markdownlint-fix
         alias: markup
+        exclude: ^charts
   - repo: local
     hooks:
       - id: markdown-link-check
@@ -158,6 +161,7 @@ repos:
           - "textlint-rule-stop-words@2.0.9"
         entry: textlint
         args: [--fix]
+        exclude: ^charts
       - name: check text files with textlint
         args: [--cache]
         <<: *textlint
@@ -292,3 +296,7 @@ repos:
         args: [lint, charts/portfolio/]
         files: ^charts/portfolio/
         pass_filenames: false
+  - repo: https://github.com/norwoodj/helm-docs
+    rev: v1.2.0
+    hooks:
+      - id: helm-docs
