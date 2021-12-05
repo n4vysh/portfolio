@@ -1,0 +1,16 @@
+apiVersion: v1
+entries:
+  portfolio:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2021-12-05T14:21:34.935655685Z"
+    description: website
+    digest: 25f8d2ec228496e833258fed89fb8d3e5c11bf81eb56030062befba603a19302
+    maintainers:
+    - name: n4vysh
+    name: portfolio
+    type: application
+    urls:
+    - https://github.com/n4vysh/portfolio/releases/download/portfolio-0.1.0/portfolio-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-12-05T14:21:34.935661785Z"
