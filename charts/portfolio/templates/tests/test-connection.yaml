@@ -5,10 +5,26 @@ metadata:
   name: "nginx-test-connection"
   annotations:
     "helm.sh/hook": test
+    ignore-check.kube-linter.io/run-as-non-root: "This deployment needs to run as privileged because it is not exist unprivileged user in container image"
 spec:
   containers:
     - name: wget
       image: busybox:1.34.1
       command: ['wget']
-      args: ['--header', 'Host:{{ .Values.host }}', 'http://nginx:{{ .Values.port }}']
+      args:
+        - '--header'
+        - 'Host:{{ .Values.host }}'
+        - 'http://nginx:{{ .Values.port }}'
+        - '-O'
+        - '-'
+      securityContext:
+        readOnlyRootFilesystem: true
+        runAsNonRoot: false
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
   restartPolicy: Never

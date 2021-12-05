@@ -271,3 +271,12 @@ repos:
         language: system
         entry: sh -c 'mkdir dist/; skaffold diagnose'
         files: skaffold.yaml
+  - repo: https://github.com/stackrox/kube-linter
+    rev: 0.2.5
+    hooks:
+      - id: kube-linter-docker
+        alias: artifact
+        entry: stackrox/kube-linter:0.2.5-alpine
+        args: [lint, charts/portfolio/]
+        files: ^charts/portfolio/
+        pass_filenames: false

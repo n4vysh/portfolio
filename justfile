@@ -65,7 +65,7 @@ dev-container: _create-cluster && _delete-cluster
     skaffold dev
 
 _create-cluster: build && _deploy
-    kind create cluster
+    kind create cluster --name {{ name }} --config kind.yaml
     kind load --name {{ name }} docker-image {{ image }}
 
 _deploy:
@@ -75,4 +75,4 @@ _deploy:
     kubens {{ name }}
 
 _delete-cluster:
-    kind delete cluster --name {{ name }}
+    kind delete cluster --name {{ name }} --config kind.yaml
