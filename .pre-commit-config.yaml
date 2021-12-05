@@ -265,6 +265,13 @@ repos:
         entry: quay.io/helmpack/chart-testing:v3.4.0 ct lint --all
         files: ^charts
         pass_filenames: false
+      - id: kubeval
+        alias: artifact
+        name: validate helm chart
+        language: system
+        entry: sh -c 'helm template portfolio ./charts/portfolio/ | kubeval'
+        files: ^charts
+        pass_filenames: false
       - id: skaffold
         alias: artifact
         name: check skaffold.yaml with skaffold diagnose

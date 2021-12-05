@@ -50,6 +50,8 @@ jobs:
     with:
       hook: artifact
       setup-skaffold: true
+      setup-helm: true
+      setup-kubeval: true
   deploy:
     runs-on: ubuntu-20.04
     if: github.ref == 'refs/heads/main'
