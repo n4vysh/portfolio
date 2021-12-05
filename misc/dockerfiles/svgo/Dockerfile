@@ -5,6 +5,6 @@ RUN yarn add svgo@2.8.0
 
 FROM scratch
 
-COPY --from=builder . .
+COPY --from=builder . /
 
 ENTRYPOINT ["node_modules/.bin/svgo"]
