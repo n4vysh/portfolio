@@ -297,6 +297,6 @@ repos:
         files: ^charts/portfolio/
         pass_filenames: false
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.2.0
+    rev: v1.2.1
     hooks:
       - id: helm-docs
