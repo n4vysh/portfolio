@@ -2,6 +2,8 @@
 repositories:
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
+  - name: n4vysh
+    url: https://n4vysh.github.io/portfolio
 helmDefaults:
   createNamespace: true
   timeout: 15
@@ -9,8 +11,10 @@ releases:
   - name: contour
     namespace: contour
     chart: bitnami/contour
+    version: 7.0.5
     values:
       - ./values.yaml
   - name: portfolio
     namespace: portfolio
-    chart: ./charts/portfolio/
+    chart: n4vysh/portfolio
+    version: 0.1.0
