@@ -1,27 +1,37 @@
 #!/bin/bash
 
 for d in misc/dockerfiles/*; do
-  docker build -f "$d/Dockerfile" -t "$(basename "$d")" .
+  docker build -q -f "$d/Dockerfile" -t "$(basename "$d")" .
 done
 
 touch "$PWD"/public/images/icon.{svg,png}
 
-docker run \
-  -i \
-  --rm \
-  --mount "type=bind,src=$PWD/misc/icon.svg,dst=/icon.svg" \
-  --mount "type=bind,src=$PWD/public/images/icon.svg,dst=/icon.min.svg" \
-  svgo icon.svg -o icon.min.svg
+svgo() {
+  docker run \
+    -i \
+    --rm \
+    --mount "type=bind,src=$PWD/misc/icon.svg,dst=/misc/icon.svg" \
+    --mount "type=bind,src=$PWD/public/images/icon.svg,dst=/public/images/icon.svg" \
+    svgo "$@"
+}
 
-docker run \
-  -i \
-  --rm \
-  --mount "type=bind,src=$PWD/public/images/icon.svg,dst=/icon.svg" \
-  --mount "type=bind,src=$PWD/public/images/icon.png,dst=/icon.png" \
-  resvg icon.svg icon.png
+resvg() {
+  docker run \
+    -i \
+    --rm \
+    --mount "type=bind,src=$PWD/public/images/icon.svg,dst=/public/images/icon.svg" \
+    --mount "type=bind,src=$PWD/public/images/icon.png,dst=/public/images/icon.png" \
+    resvg "$@"
+}
 
-docker run \
-  -i \
-  --rm \
-  --mount "type=bind,src=$PWD/public/images/icon.png,dst=/icon.png" \
-  oxipng -o 3 -i 1 --strip safe icon.png
+oxipng() {
+  docker run \
+    -i \
+    --rm \
+    --mount "type=bind,src=$PWD/public/images/icon.png,dst=/public/images/icon.png" \
+    oxipng "$@"
+}
+
+svgo misc/icon.svg -o public/images/icon.svg
+resvg public/images/icon.svg public/images/icon.png
+oxipng -o 3 -i 1 --strip safe public/images/icon.png
