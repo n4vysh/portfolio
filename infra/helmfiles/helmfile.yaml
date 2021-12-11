@@ -23,7 +23,7 @@ releases:
   - name: contour
     namespace: contour
     chart: bitnami/contour
-    version: 7.0.5
+    version: 7.0.6
     values:
       - ./values/{{ .Environment.Name }}/contour.yaml
   - name: external-dns

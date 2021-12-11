@@ -17,4 +17,4 @@ releases:
   - name: portfolio
     namespace: portfolio
     chart: n4vysh/portfolio
-    version: 0.1.0
+    version: 0.1.1
