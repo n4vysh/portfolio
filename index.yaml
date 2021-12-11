@@ -3,6 +3,19 @@ entries:
   portfolio:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2021-12-11T17:38:07.350183025Z"
+    description: website
+    digest: d0ce0740884d3f246295a920be3d255f0d2d4e22d92ebc3642d2eb2f59913d36
+    icon: https://raw.githubusercontent.com/n4vysh/portfolio/4b14e1c8a9ced87ed3dcecbc12d8df6ff264ccd4/misc/icon.svg
+    maintainers:
+    - name: n4vysh
+    name: portfolio
+    type: application
+    urls:
+    - https://github.com/n4vysh/portfolio/releases/download/portfolio-0.1.1/portfolio-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2021-12-05T14:21:34.935655685Z"
     description: website
     digest: 25f8d2ec228496e833258fed89fb8d3e5c11bf81eb56030062befba603a19302
@@ -13,4 +26,4 @@ entries:
     urls:
     - https://github.com/n4vysh/portfolio/releases/download/portfolio-0.1.0/portfolio-0.1.0.tgz
     version: 0.1.0
-generated: "2021-12-05T14:21:34.935661785Z"
+generated: "2021-12-11T17:38:07.350194125Z"
