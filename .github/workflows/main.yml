@@ -76,8 +76,8 @@ jobs:
           just-version: 0.10.3
       - name: Setup frontend packages
         run: just init
-      - name: Build images
-        run: just build-images
+      - name: Build icon image
+        run: just build-icon-image
       - name: Build a static site
         run: just build-static-site
       - id: var
@@ -118,5 +118,7 @@ jobs:
         with:
           version: 3.7.1
       - uses: helm/chart-releaser-action@v1.2.1
+        with:
+          charts_dir: infra/charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

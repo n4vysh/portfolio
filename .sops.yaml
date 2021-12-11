@@ -1,0 +1,5 @@
+---
+creation_rules:
+  - path_regex: (/dev/stdin|.*\.enc\.yaml)$
+    # yamllint disable-line rule:line-length
+    kms: "arn:aws:kms:ap-northeast-1:746269319114:key/mrk-ada43909b95b46dbb9d2efddc592566e,arn:aws:kms:us-east-1:746269319114:key/mrk-ada43909b95b46dbb9d2efddc592566e"

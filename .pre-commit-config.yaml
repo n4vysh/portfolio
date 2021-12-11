@@ -12,7 +12,7 @@ repos:
         language: system
         entry: deno fmt
         types_or: [javascript, ts, tsx, markdown, json]
-        exclude: ^charts
+        exclude: ^infra/charts
       - id: deno-lint
         alias: frontend
         name: check ts and tsx files with deno lint
@@ -117,10 +117,10 @@ repos:
     hooks:
       - id: markdownlint
         alias: markup
-        exclude: ^charts
+        exclude: ^infra/charts
       - id: markdownlint-fix
         alias: markup
-        exclude: ^charts
+        exclude: ^infra/charts
   - repo: local
     hooks:
       - id: markdown-link-check
@@ -161,7 +161,7 @@ repos:
           - "textlint-rule-stop-words@2.0.9"
         entry: textlint
         args: [--fix]
-        exclude: ^charts
+        exclude: ^infra/charts
       - name: check text files with textlint
         args: [--cache]
         <<: *textlint
@@ -271,15 +271,17 @@ repos:
         alias: artifact
         name: lint helm chart
         language: docker_image
-        entry: quay.io/helmpack/chart-testing:v3.4.0 ct lint --all
-        files: ^charts
+        entry: |
+          quay.io/helmpack/chart-testing:v3.4.0 sh -c 'cd infra; ct lint --all'
+        files: ^infra/charts
         pass_filenames: false
       - id: kubeval
         alias: artifact
         name: validate helm chart
         language: system
-        entry: sh -c 'helm template portfolio ./charts/portfolio/ | kubeval'
-        files: ^charts
+        entry: |
+          sh -c 'helm template portfolio ./infra/charts/portfolio/ | kubeval'
+        files: ^infra/charts
         pass_filenames: false
       - id: skaffold
         alias: artifact
@@ -293,8 +295,8 @@ repos:
       - id: kube-linter-docker
         alias: artifact
         entry: stackrox/kube-linter:0.2.5-alpine
-        args: [lint, charts/portfolio/]
-        files: ^charts/portfolio/
+        args: [lint, infra/charts/portfolio/]
+        files: ^infra/charts/portfolio/
         pass_filenames: false
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.2.1

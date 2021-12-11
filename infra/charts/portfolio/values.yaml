@@ -7,14 +7,8 @@ image:
   tag: "cf63a6e"
 
 ingress:
-  annotations:
-    {}
-    # cert-manager.io/cluster-issuer: letsencrypt-staging
-    # ingress.kubernetes.io/force-ssl-redirect: "true"
-    # kubernetes.io/ingress.class: contour
-    # kubernetes.io/tls-acme: "true"
+  annotations: {}
   tls: []
-  #  - secretName: portfolio-tls
 
 resources:
   limits:

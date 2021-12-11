@@ -1,0 +1,11 @@
+---
+apiVersion: v2
+name: portfolio
+description: website
+type: application
+version: 0.1.1
+appVersion: "0.1.0"
+maintainers:
+  - name: n4vysh
+# yamllint disable-line rule:line-length
+icon: https://raw.githubusercontent.com/n4vysh/portfolio/4b14e1c8a9ced87ed3dcecbc12d8df6ff264ccd4/misc/icon.svg

@@ -1,15 +1,16 @@
 # portfolio
 
-![screenshot](./misc/screenshot.png)
+[![screenshot](./misc/screenshot.png)](https://n4vysh.dev)
 
 This repository contains the source code of the website to show my technical
 skillsets and expertise.
 
 ## Requirements
 
-- [bash][bash-link]
-- [Gawk][gawk-link]
+- [Bash][bash-link]
 - [Grep][grep-link]
+- [sed][sed-link]
+- [Gawk][gawk-link]
 - [Findutils][findutils-link]
 - [asdf][asdf-link]
 - [Docker][docker-link]
@@ -52,7 +53,25 @@ Run `just update` to update dependency packages and pre-commit hooks.
 
 ## List
 
-Run `just --list` to list available commands in command runner.
+Run `just list` to list available commands in command runner.
+
+## Deploy
+
+Run following commands to deploy kubernetes cluster and helm charts.
+
+```bash
+just infra/start && just infra/deploy # development environment
+# staging environment
+(
+  ENV=stg
+  just infra/start && just infra/deploy
+)
+# production environment
+(
+  ENV=prd
+  just infra/start && just infra/deploy
+)
+```
 
 ## License
 
@@ -61,8 +80,9 @@ Other files distributed under the MIT license. See the
 [LICENSE.txt](./LICENSE.txt) file for details.
 
 [bash-link]: https://www.gnu.org/software/bash/
-[gawk-link]: https://www.gnu.org/software/gawk/
 [grep-link]: https://www.gnu.org/software/grep/
+[sed-link]: https://www.gnu.org/software/sed/
+[gawk-link]: https://www.gnu.org/software/gawk/
 [findutils-link]: https://www.gnu.org/software/findutils/
 [asdf-link]: https://asdf-vm.com/
 [docker-link]: https://www.docker.com/

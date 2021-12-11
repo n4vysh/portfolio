@@ -1,0 +1,10 @@
+# Deploy helm charts
+deploy +env:
+    KUBECONFIG=../kubeconfigs/{{ env }}/config.yaml kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.1/cert-manager.crds.yaml
+    KUBECONFIG=../kubeconfigs/{{ env }}/config.yaml helmfile -e {{ env }} repos
+    KUBECONFIG=../kubeconfigs/{{ env }}/config.yaml helmfile -e {{ env }} apply
+    KUBECONFIG=../kubeconfigs/{{ env }}/config.yaml helmfile -e {{ env }} test
+
+# Render helm charts
+render +env:
+    KUBECONFIG=../kubeconfigs/{{ env }}/config.yaml helmfile -e {{ env }} template

@@ -19,10 +19,11 @@ spec:
                 port:
                   number: {{ .Values.port }}
   {{- if .Values.ingress.tls }}
+      host: {{ $.Values.host }}
   tls:
     {{- range .Values.ingress.tls }}
     - hosts:
-        - {{ .Values.host }}
+        - {{ $.Values.host }}
       secretName: {{ .secretName }}
     {{- end }}
   {{- end }}

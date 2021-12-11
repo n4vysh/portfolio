@@ -41,3 +41,7 @@ if type pre-commit >/dev/null 2>&1; then
     pre-commit install --hook-type commit-msg
   fi
 fi
+
+helm plugin list |
+  grep secrets >/dev/null ||
+  helm plugin install https://github.com/jkroepke/helm-secrets --version v3.11.0

@@ -1,0 +1,33 @@
+user := "n4vysh"
+tld := "dev"
+domain := user + "." + tld
+region := "ap-northeast-1"
+bucket := "tfstate." + domain
+
+default:
+
+# Terraform is an administrative tool that manages your infrastructure, and so ideally the infrastructure that is used by Terraform should exist outside of the infrastructure that Terraform manages.
+# This can be achieved by creating a separate administrative AWS account which contains the user accounts used by human operators and any infrastructure and tools used to manage the the other accounts.
+# TODO: create aws account for terraform s3 backend
+# https://www.terraform.io/docs/language/settings/backends/s3.html
+
+# Setup terraform backend
+setup-backend:
+    aws s3api create-bucket \
+        --bucket "{{bucket}}" \
+        --create-bucket-configuration LocationConstraint={{region}}
+    aws s3api put-bucket-versioning \
+        --bucket "{{bucket}}" \
+        --versioning-configuration Status=Enabled
+
+# Creates an execution plan
+plan +dir:
+    terragrunt plan --terragrunt-working-dir {{ dir }}
+
+# Executes the planned actions
+apply +dir:
+    terragrunt apply --terragrunt-working-dir {{ dir }}
+
+# Destroy remote objects
+destroy +dir:
+    terragrunt destroy --terragrunt-working-dir {{ dir }}

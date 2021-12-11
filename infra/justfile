@@ -1,0 +1,31 @@
+registry := "ghcr.io"
+user := "n4vysh"
+name := "portfolio"
+repo := user + "/" + name
+image := registry + "/" + repo
+
+env := if env_var("ENV") =~ "^dev(|elopment)$" {
+    "development"
+} else if env_var("ENV") =~ "^st(g|age|aging)$" {
+    "staging"
+} else if env_var("ENV") =~ "^pr(d|od|oduction)$" {
+    "production"
+} else {
+    env_var("ENV")
+}
+
+# Start kubernetes cluster
+start:
+    ./scripts/start.bash {{ env }}
+
+# Deploy with helm charts
+deploy:
+    ./scripts/deploy.bash {{ env }}
+
+# Stop kubernetes cluster
+stop:
+    ./scripts/stop.bash {{ env }}
+
+# Render templates of helm charts
+render:
+    ./scripts/render.bash {{ env }}

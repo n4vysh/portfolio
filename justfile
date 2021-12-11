@@ -11,7 +11,7 @@ dev: init
     aleph dev
 
 # Build a static site and container image
-build: init build-images build-static-site build-container-image
+build: init build-icon-image build-static-site build-container-image
 
 # Grants direnv and install all the dependencies
 init:
@@ -29,9 +29,9 @@ run *script:
 check *target: init
     pre-commit run -av {{ target }}
 
-# Build images
-build-images:
-    ./scripts/build-images.bash
+# Build icon images
+build-icon-image:
+    ./scripts/build-icon-image.bash
 
 # Build a static site
 build-static-site:
@@ -60,19 +60,6 @@ update-hooks:
 take:
     just run screenshot
 
-# Start the web server in container
-dev-container: _create-cluster && _delete-cluster
-    skaffold dev
-
-_create-cluster: build && _deploy
-    kind create cluster --name {{ name }} --config kind.yaml
-    kind load --name {{ name }} docker-image {{ image }}
-
-_deploy:
-    helmfile repos
-    helmfile apply
-    helmfile test
-    kubens {{ name }}
-
-_delete-cluster:
-    kind delete cluster --name {{ name }} --config kind.yaml
+# List available commands
+list:
+    ./scripts/list.bash

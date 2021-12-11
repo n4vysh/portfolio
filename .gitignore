@@ -4,4 +4,3 @@ public/images/*
 !.gitkeep
 .lighthouseci/
 .*lintcache
-.kubeconfig.yaml

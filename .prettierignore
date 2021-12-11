@@ -1,2 +1,5 @@
-charts/portfolio/templates/*.yaml
-charts/portfolio/templates/tests/*.yaml
+infra/charts/portfolio/templates/*.yaml
+infra/charts/portfolio/templates/tests/*.yaml
+infra/helmfiles/helmfile.yaml
+infra/helmfiles/values/*.yaml.gotmpl
+infra/helmfiles/secrets/*.enc.yaml
