@@ -2,15 +2,16 @@ provider "civo" {
   region = "NYC1"
 }
 
-data "civo_instances_size" "xsmall" {
+data "civo_instances_size" "portfolio" {
+  filter {
+    key      = "name"
+    values   = ["g3.k3s.${var.size}"]
+    match_by = "re"
+  }
+
   filter {
     key    = "type"
     values = ["kubernetes"]
-  }
-
-  sort {
-    key       = "ram"
-    direction = "asc"
   }
 }
 
@@ -53,6 +54,6 @@ resource "civo_kubernetes_cluster" "portfolio" {
   applications       = "-Traefik,-metrics-server"
   num_target_nodes   = var.node
   kubernetes_version = "1.20.0-k3s1"
-  target_nodes_size  = element(data.civo_instances_size.xsmall.sizes, 0).name
+  target_nodes_size  = element(data.civo_instances_size.portfolio.sizes, 0).name
   firewall_id        = civo_firewall.portfolio.id
 }

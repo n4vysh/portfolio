@@ -11,7 +11,6 @@ if [[ $env == development ]]; then
   (cd .. && skaffold dev)
 elif [[ $env == staging ]] || [[ $env == production ]]; then
   just helmfiles/deploy "$env"
-  cmctl check api
 else
   echo 'No such environment'
 fi

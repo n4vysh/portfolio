@@ -4,7 +4,12 @@ deploy +env:
     KUBECONFIG=../kubeconfigs/{{ env }}/config.yaml helmfile -e {{ env }} repos
     KUBECONFIG=../kubeconfigs/{{ env }}/config.yaml helmfile -e {{ env }} apply
     KUBECONFIG=../kubeconfigs/{{ env }}/config.yaml helmfile -e {{ env }} test
+    KUBECONFIG=../kubeconfigs/{{ env }}/config.yaml cmctl check api
 
 # Render helm charts
 render +env:
     KUBECONFIG=../kubeconfigs/{{ env }}/config.yaml helmfile -e {{ env }} template
+
+# Show diff of helm charts
+diff +env:
+    KUBECONFIG=../kubeconfigs/{{ env }}/config.yaml helmfile -e {{ env }} diff

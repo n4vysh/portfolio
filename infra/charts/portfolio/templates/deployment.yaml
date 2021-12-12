@@ -15,6 +15,16 @@ spec:
     metadata:
       labels:
         app: nginx
+      annotations:
+        ad.datadoghq.com/nginx.check_names: '["nginx"]'
+        ad.datadoghq.com/nginx.init_configs: '[{}]'
+        ad.datadoghq.com/nginx.instances: |
+          [
+            {
+              "nginx_status_url":"http://%%host%%:{{ .Values.status.port }}/status"
+            }
+          ]
+        ad.datadoghq.com/nginx.logs: '[{"source":"nginx","service":"portfolio"}]'
     spec:
       containers:
         - name: nginx

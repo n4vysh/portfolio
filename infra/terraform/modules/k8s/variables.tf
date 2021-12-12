@@ -5,3 +5,7 @@ variable "env" {
 variable "node" {
   type = number
 }
+
+variable "size" {
+  type = string
+}

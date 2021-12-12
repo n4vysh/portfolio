@@ -1,0 +1,7 @@
+---
+datadog:
+  tags: {{ .Values.datadog.tags }}
+  apiKey: {{ .Values.datadog.apiKey }}
+  logs:
+    enabled: true
+    containerCollectAll: true

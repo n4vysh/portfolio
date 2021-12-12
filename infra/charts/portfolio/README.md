@@ -1,6 +1,6 @@
 # portfolio
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 website
 
@@ -20,7 +20,7 @@ website
 | host | string | `"localhost"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/n4vysh/portfolio"` |  |
-| image.tag | string | `"cf63a6e"` |  |
+| image.tag | string | `"bb14505"` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.tls | list | `[]` |  |
 | port | int | `8080` |  |

@@ -6,7 +6,7 @@ status:
 image:
   repository: ghcr.io/n4vysh/portfolio
   pullPolicy: IfNotPresent
-  tag: "cf63a6e"
+  tag: "bb14505"
 
 ingress:
   annotations: {}

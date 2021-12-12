@@ -29,3 +29,7 @@ stop:
 # Render templates of helm charts
 render:
     ./scripts/render.bash {{ env }}
+
+# Show a diff explaining what a helm upgrade would change
+diff:
+    ./scripts/diff.bash {{ env }}
