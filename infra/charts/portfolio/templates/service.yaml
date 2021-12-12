@@ -8,5 +8,8 @@ metadata:
 spec:
   ports:
     - port: {{ .Values.port }}
+      name: main
+    - port: {{ .Values.status.port }}
+      name: status
   selector:
     app: nginx

@@ -1,6 +1,8 @@
 ---
 host: localhost
 port: 8080
+status:
+  port: 8081
 image:
   repository: ghcr.io/n4vysh/portfolio
   pullPolicy: IfNotPresent

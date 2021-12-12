@@ -28,21 +28,17 @@ spec:
               value: {{ .Values.host }}
             - name: PORT
               value: "{{ .Values.port }}"
+            - name: STATUS_PORT
+              value: "{{ .Values.status.port }}"
           ports:
             - containerPort: {{ .Values.port }}
           livenessProbe:
             httpGet:
-              path: /
-              port: {{ .Values.port }}
-              httpHeaders:
-                - name: Host
-                  value: {{ .Values.host }}
+              path: /status
+              port: {{ .Values.status.port }}
           readinessProbe:
             httpGet:
-              path: /
-              port: {{ .Values.port }}
-              httpHeaders:
-                - name: Host
-                  value: {{ .Values.host }}
+              path: /status
+              port: {{ .Values.status.port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
