@@ -6,6 +6,8 @@ repositories:
     url: https://charts.jetstack.io
   - name: metrics-server
     url: https://kubernetes-sigs.github.io/metrics-server/
+  - name: falcosecurity
+    url: https://falcosecurity.github.io/charts
 helmDefaults:
   createNamespace: true
   timeout: 30
@@ -54,3 +56,8 @@ releases:
     namespace: metrics-server
     chart: metrics-server/metrics-server
     version: 3.7.0
+  - name: falco
+    namespace: falco
+    chart: falcosecurity/falco
+    version: 1.16.2
+    installed: {{ or (eq .Environment.Name "staging") (eq .Environment.Name "production") | toYaml }}
