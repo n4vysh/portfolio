@@ -9,5 +9,5 @@ terraform {
 inputs = {
   env = "staging"
   node = 1
-  size = "small"
+  size = "xsmall"
 }
