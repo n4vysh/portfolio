@@ -1,5 +1,3 @@
 ---
 envoy:
   useHostPort: false
-  podAnnotations:
-    ad.datadoghq.com/envoy.logs: '[{"source":"envoy","service":"contour"}]'

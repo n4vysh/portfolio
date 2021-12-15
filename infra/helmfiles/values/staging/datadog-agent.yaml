@@ -1,4 +1,0 @@
----
-datadog:
-  tags:
-    - env:staging

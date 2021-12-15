@@ -4,10 +4,6 @@ repositories:
     url: https://charts.bitnami.com/bitnami
   - name: jetstack
     url: https://charts.jetstack.io
-  - name: datadog
-    url: https://helm.datadoghq.com
-  - name: prometheus-community
-    url: https://prometheus-community.github.io/helm-charts
 helmDefaults:
   createNamespace: true
   timeout: 30
@@ -16,17 +12,13 @@ environments:
   staging:
     values:
       - ./values/{{ .Environment.Name }}/portfolio.yaml
-      - ./values/{{ .Environment.Name }}/datadog-agent.yaml
     secrets:
       - ./secrets/cloudflare.enc.yaml
-      - ./secrets/datadog.enc.yaml
   production:
     values:
       - ./values/{{ .Environment.Name }}/portfolio.yaml
-      - ./values/{{ .Environment.Name }}/datadog-agent.yaml
     secrets:
       - ./secrets/cloudflare.enc.yaml
-      - ./secrets/datadog.enc.yaml
 releases:
   - name: contour
     namespace: contour
@@ -56,15 +48,3 @@ releases:
     needs:
       - contour
       - cert-manager
-  - name: datadog-agent
-    namespace: datadog-agent
-    chart: datadog/datadog
-    version: 2.27.5
-    installed: {{ or (eq .Environment.Name "staging") (eq .Environment.Name "production") | toYaml }}
-    values:
-      - ./values/datadog-agent.yaml.gotmpl
-  - name: kube-state-metrics
-    namespace: kube-state-metrics
-    chart: prometheus-community/kube-state-metrics
-    version: 4.1.1
-    installed: {{ or (eq .Environment.Name "staging") (eq .Environment.Name "production") | toYaml }}
