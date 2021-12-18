@@ -42,3 +42,19 @@ spec:
               port: {{ .Values.status.port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+        - name: nginx-prometheus-exporter
+          image: "nginx/nginx-prometheus-exporter:0.9.0"
+          args:
+            - -nginx.scrape-uri=http://localhost:{{ .Values.status.port }}/status
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+          ports:
+            - containerPort: 9113
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi

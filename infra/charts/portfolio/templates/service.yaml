@@ -11,5 +11,7 @@ spec:
       name: main
     - port: {{ .Values.status.port }}
       name: status
+    - port: 9113
+      name: exporter
   selector:
     app: nginx

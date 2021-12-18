@@ -48,14 +48,6 @@ releases:
     needs:
       - contour
     installed: {{ or (eq .Environment.Name "staging") (eq .Environment.Name "production") | toYaml }}
-  - name: portfolio
-    namespace: portfolio
-    chart: ../charts/portfolio/
-    values:
-      - ./values/portfolio.yaml.gotmpl
-    needs:
-      - contour
-      - cert-manager
   - name: metrics-server
     namespace: metrics-server
     chart: metrics-server/metrics-server
@@ -74,3 +66,12 @@ releases:
       - ./values/kube-prometheus-stack.yaml.gotmpl
     disableValidationOnInstall: true
     timeout: 300
+  - name: portfolio
+    namespace: portfolio
+    chart: ../charts/portfolio/
+    values:
+      - ./values/portfolio.yaml.gotmpl
+    needs:
+      - contour
+      - cert-manager
+      - kube-prometheus-stack

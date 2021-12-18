@@ -27,6 +27,7 @@ inputs = {
       "proxy.json",
       "scheduler.json",
       "workload-total.json",
+      "nginx.json",
     ]
   )
 }
