@@ -37,7 +37,7 @@ releases:
   - name: external-dns
     namespace: external-dns
     chart: bitnami/external-dns
-    version: 5.5.2
+    version: 6.0.2
     installed: {{ or (eq .Environment.Name "staging") (eq .Environment.Name "production") | toYaml }}
     values:
       - ./values/external-dns.yaml.gotmpl
