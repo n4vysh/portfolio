@@ -60,7 +60,7 @@ releases:
   - name: kube-prometheus-stack
     namespace: kube-prometheus-stack
     chart: prometheus-community/kube-prometheus-stack
-    version: 23.3.2
+    version: 24.0.1
     installed: {{ or (eq .Environment.Name "staging") (eq .Environment.Name "production") | toYaml }}
     values:
       - ./values/kube-prometheus-stack.yaml.gotmpl
