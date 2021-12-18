@@ -279,8 +279,11 @@ repos:
         alias: artifact
         name: validate helm chart
         language: system
-        entry: |
-          sh -c 'helm template portfolio ./infra/charts/portfolio/ | kubeval'
+        entry: >-
+          sh -c '
+            helm template portfolio ./infra/charts/portfolio/ |
+              kubeval --ignore-missing-schemas
+          '
         files: ^infra/charts
         pass_filenames: false
       - id: skaffold
