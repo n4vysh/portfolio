@@ -20,6 +20,9 @@ setup-backend:
         --bucket "{{bucket}}" \
         --versioning-configuration Status=Enabled
 
+build-dashboards:
+    ./scripts/build-dashboards.bash
+
 # Creates an execution plan
 plan +dir:
     terragrunt plan --terragrunt-working-dir {{ dir }}

@@ -1,3 +1,6 @@
+!.gitkeep
 **/.terraform
 **/.terragrunt-cache
 **/errored.tfstate
+environments/common/grafana/dashboards/*
+tmp/

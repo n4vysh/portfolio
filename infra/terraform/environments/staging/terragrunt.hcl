@@ -8,6 +8,6 @@ terraform {
 
 inputs = {
   env = "staging"
-  node = 1
-  size = "xsmall"
+  node = 2
+  size = "small"
 }

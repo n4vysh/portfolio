@@ -1,0 +1,21 @@
+---
+alertmanager:
+  enabled: false
+grafana:
+  enabled: false
+prometheus:
+  prometheusSpec:
+    remoteWrite:
+      - url: https://prometheus-prod-10-prod-us-central-0.grafana.net/api/prom/push
+        basicAuth:
+          username:
+            name: prometheus-secret
+            key: username
+          password:
+            name: prometheus-secret
+            key: password
+  extraSecret:
+    name: prometheus-secret
+    data:
+      username: "276476"
+      password: {{ .Values.grafana.cloud.token }}
