@@ -1,0 +1,16 @@
+---
+helmDefaults:
+  createNamespace: true
+  timeout: 30
+helmfiles:
+  - path: helmfiles/monitoring.yaml
+  - path: helmfiles/ingress.yaml
+  - path: helmfiles/dns.yaml
+  - path: helmfiles/certificate.yaml
+  - path: helmfiles/certificate-issuers.yaml
+  - path: helmfiles/misc.yaml
+  - path: helmfiles/portfolio.yaml
+environments:
+  development:
+  staging:
+  production:

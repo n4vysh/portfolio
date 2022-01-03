@@ -4,6 +4,8 @@ domain := user + "." + tld
 region := "ap-northeast-1"
 bucket := "tfstate." + domain
 
+export ENV := `../../scripts/get-env.bash`
+
 default:
 
 # Terraform is an administrative tool that manages your infrastructure, and so ideally the infrastructure that is used by Terraform should exist outside of the infrastructure that Terraform manages.
@@ -20,17 +22,26 @@ setup-backend:
         --bucket "{{bucket}}" \
         --versioning-configuration Status=Enabled
 
+# Build Grafana dashboard
 build-dashboards:
     ./scripts/build-dashboards.bash
 
+# Run terragrunt
+run +cmd:
+    terragrunt {{ cmd }} --terragrunt-working-dir=environments/$ENV/
+
+# Run terragrunt in each sub directory
+run-all +cmd:
+    just run run-all {{ cmd }}
+
 # Creates an execution plan
-plan +dir:
-    terragrunt plan --terragrunt-working-dir {{ dir }}
+plan:
+    just run-all plan
 
 # Executes the planned actions
-apply +dir:
-    terragrunt apply --terragrunt-working-dir {{ dir }}
+apply:
+    just run-all apply
 
 # Destroy remote objects
-destroy +dir:
-    terragrunt destroy --terragrunt-working-dir {{ dir }}
+destroy:
+    just run-all destroy

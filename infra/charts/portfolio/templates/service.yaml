@@ -2,9 +2,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: nginx
   name: nginx
+  {{- with .Values.labels }}
+  labels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ports:
     - port: {{ .Values.port }}
@@ -14,4 +16,4 @@ spec:
     - port: 9113
       name: exporter
   selector:
-    app: nginx
+    app.kubernetes.io/name: nginx

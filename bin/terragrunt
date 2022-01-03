@@ -1,0 +1,12 @@
+#!/bin/bash
+
+dir=$(
+  cd "$(dirname "$0")" || exit
+  git rev-parse --show-toplevel
+)
+ENV=$("$dir"/scripts/get-env.bash)
+
+CIVO_TOKEN=$(gopass show -o terraform/civo/token)
+export CIVO_TOKEN
+
+aws-vault exec "$AWS_PROFILE" -- asdf exec terragrunt "${@}"

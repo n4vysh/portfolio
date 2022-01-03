@@ -11,6 +11,7 @@ rules:
   "@textlint-rule/no-duplicate-abbr": true
   unexpanded-acronym:
     ignore_acronyms:
+      - CCZE
       - MIT
   abbr-within-parentheses: true
   alex:

@@ -1,0 +1,27 @@
+---
+config:
+  compactor:
+    shared_store: s3
+    compaction_interval: 10m
+    retention_enabled: true
+    retention_delete_delay: 2h
+    retention_delete_worker_count: 150
+  limits_config:
+    # NOTE: The minimum retention period is 24h.
+    # https://grafana.com/docs/loki/latest/operations/storage/retention/
+    retention_period: 24h
+  schema_config:
+    configs:
+      - from: 2020-10-24
+        store: boltdb-shipper
+        object_store: s3
+        schema: v11
+        index:
+          prefix: index_
+          period: 24h
+  storage_config:
+    boltdb_shipper:
+      shared_store: s3
+    aws:
+      s3: s3://{{ .Values.loki.aws.s3.accesskey }}:{{ urlquery .Values.loki.aws.s3.secretkey }}@ap-northeast-1/{{ .Values.loki.aws.s3.bucket }}
+      s3forcepathstyle: true

@@ -3,7 +3,7 @@ apiVersion: v2
 name: portfolio
 description: website
 type: application
-version: 0.1.4
+version: 0.1.5
 appVersion: "0.1.0"
 maintainers:
   - name: n4vysh

@@ -15,6 +15,11 @@ skillsets and expertise.
 - [asdf][asdf-link]
 - [Docker][docker-link]
 
+optional
+
+- [CCZE][ccze-link]
+- [GoAccess][goaccess-link]
+
 ## Development Setup
 
 Preview and edit the website on local machine as follows:
@@ -22,7 +27,7 @@ Preview and edit the website on local machine as follows:
 1. [Clone this repository on local machine][gh-clone-link]
 1. Go to the project root directory of this repository in terminal
 1. Run [`./scripts/install-packages.bash`][script-link] to install packages via
-   [asdf][asdf-link]
+   asdf
 1. Run `just` to start the server of [Aleph.js][alephjs-link] in `development`
    mode
 1. Open <http://localhost:8080/> in browser
@@ -38,14 +43,8 @@ Run `just check` to lint and format the source code with
 
 ## Containerize
 
-1. Run `just build` to build docker image of [nginx][nginx-link] with
-   [Cloud Native Buildpacks][cnb-link]
-1. Run `just start` to start the server of [nginx][nginx-link] in `production`
-   mode
-1. Open <http://localhost:8080/> in browser
-1. After done with the preview, press Ctrl-C in terminal to stop the server
-1. Run `just publish` to push docker image to
-   [GitHub Container Registry][ghcr-link]
+Run `just build` to build docker image of [nginx][nginx-link] with
+[Cloud Native Buildpacks][cnb-link]
 
 ## Update
 
@@ -57,20 +56,43 @@ Run `just list` to list available commands in command runner.
 
 ## Deploy
 
-Run following commands to deploy kubernetes cluster and helm charts.
+Run following commands to deploy [Kubernetes][kubernetes-link] cluster and helm
+charts.
 
 ```bash
-just infra/start && just infra/deploy # development environment
-# staging environment
-(
-  ENV=stg
-  just infra/start && just infra/deploy
-)
-# production environment
-(
-  ENV=prd
-  just infra/start && just infra/deploy
-)
+just deploy            # development environment
+ENV=stg    just deploy # staging environment
+ENV=prd    just deploy # production environment
+```
+
+The development environment create local Kubernetes cluster with
+[kind][kind-link]. Other environments create [K3s][k3s-link] cluster in
+[Civo Cloud][civo-cloud-link] with [Terragrunt][terragrunt-link]. helm charts
+deploy with [helmfile][helmfile-link].
+
+Run following commands to show nginx highlighted access logs with ccze.
+
+```bash
+just log         # development environment
+ENV=stg just log # staging environment
+ENV=prd just log # production environment
+```
+
+Run following commands to analyze nginx access logs with GoAccess.
+
+```bash
+just analyze         # development environment
+ENV=stg just analyze # staging environment
+ENV=prd just analyze # production environment
+```
+
+Run following commands to change kubernetes context with [Kubie][kubie-link] and
+debug kubernetes resources.
+
+```bash
+just switch         # development environment
+ENV=stg just switch # staging environment
+ENV=prd just switch # production environment
 ```
 
 ## License
@@ -86,10 +108,18 @@ Other files distributed under the MIT license. See the
 [findutils-link]: https://www.gnu.org/software/findutils/
 [asdf-link]: https://asdf-vm.com/
 [docker-link]: https://www.docker.com/
+[ccze-link]: http://freshmeat.net/projects/ccze/
+[goaccess-link]: https://goaccess.io/
 [gh-clone-link]: https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories
 [script-link]: ./scripts/install-packages.bash
 [alephjs-link]: https://alephjs.org/
 [nginx-link]: https://nginx.org/en/
 [pre-commit-link]: https://pre-commit.com/
 [cnb-link]: https://buildpacks.io/
-[ghcr-link]: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+[kubernetes-link]: https://kubernetes.io/
+[kind-link]: https://kind.sigs.k8s.io
+[k3s-link]: https://k3s.io/
+[civo-cloud-link]: https://www.civo.com/
+[terragrunt-link]: https://terragrunt.gruntwork.io/
+[helmfile-link]: https://github.com/roboll/helmfile
+[kubie-link]: https://github.com/sbstp/kubie

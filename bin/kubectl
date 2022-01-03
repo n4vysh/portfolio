@@ -1,0 +1,12 @@
+#!/bin/bash
+
+dir=$(
+  dirname "$(
+    cd "$(dirname "$0")" || exit
+    pwd
+  )"
+)
+ENV=$("$dir"/scripts/get-env.bash)
+
+export KUBECONFIG="$dir/infra/kubectl/configs/$ENV/config.yaml"
+asdf exec kubectl "${@}"

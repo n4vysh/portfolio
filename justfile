@@ -63,3 +63,23 @@ take:
 # List available commands
 list:
     ./scripts/list.bash
+
+# Deploy containers to server
+deploy:
+    ./scripts/deploy.bash
+
+# Destroy servers
+destroy:
+    ./scripts/destroy.bash
+
+# Show highlighted access logs
+log:
+    @just infra/stern/log | just infra/ccze/highlight
+
+# Analyze access logs
+analyze:
+    @just infra/stern/log | just infra/goaccess/analyze
+
+# Switch kubernetes context
+switch:
+    just infra/kubie/switch

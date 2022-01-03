@@ -1,0 +1,12 @@
+---
+apiVersion: v2
+name: cert-manager-issuers
+description: issuers
+# https://github.com/jetstack/cert-manager/pull/2778
+type: application
+version: 0.1.0
+appVersion: 1.6.1
+maintainers:
+  - name: n4vysh
+# yamllint disable-line rule:line-length
+icon: https://raw.githubusercontent.com/jetstack/cert-manager/v1.6.1/logo/logo.png

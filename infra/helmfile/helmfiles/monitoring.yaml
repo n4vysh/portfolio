@@ -1,0 +1,72 @@
+---
+repositories:
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
+  - name: fluent
+    url: https://fluent.github.io/helm-charts
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
+  - name: grafana
+    url: https://grafana.github.io/helm-charts
+environments:
+  staging:
+    values:
+      - ./environments/values/{{ .Environment.Name }}/kube-prometheus-stack.yaml
+      - ./environments/values/{{ .Environment.Name }}/loki.yaml
+    secrets:
+      - ./environments/secrets/{{ .Environment.Name }}/grafana.enc.yaml
+      - ./environments/secrets/{{ .Environment.Name }}/thanos.enc.yaml
+      - ./environments/secrets/{{ .Environment.Name }}/loki.enc.yaml
+  production:
+    values:
+      - ./environments/values/{{ .Environment.Name }}/kube-prometheus-stack.yaml
+      - ./environments/values/{{ .Environment.Name }}/loki.yaml
+    secrets:
+      - ./environments/secrets/{{ .Environment.Name }}/grafana.enc.yaml
+      - ./environments/secrets/{{ .Environment.Name }}/thanos.enc.yaml
+      - ./environments/secrets/{{ .Environment.Name }}/loki.enc.yaml
+releases:
+  - name: grafana-dashboards
+    namespace: &kube-prometheus-stack_ns kube-prometheus-stack
+    chart: ../../charts/grafana-dashboards/
+    installed: {{ ne .Environment.Name "development" | toYaml }}
+    values:
+      - ./values/templates/grafana-dashboards.yaml.gotmpl
+  - name: kube-prometheus-stack
+    namespace: *kube-prometheus-stack_ns
+    chart: prometheus-community/kube-prometheus-stack
+    version: 23.3.2
+    installed: {{ ne .Environment.Name "development" | toYaml }}
+    values:
+      - ./values/templates/kube-prometheus-stack.yaml.gotmpl
+    # for installing crds
+    disableValidationOnInstall: true
+    timeout: 300
+    needs:
+      - grafana-dashbords
+  - name: thanos
+    namespace: *kube-prometheus-stack_ns
+    chart: bitnami/thanos
+    version: 8.2.5
+    installed: {{ ne .Environment.Name "development" | toYaml }}
+    values:
+      - ./values/thanos.yaml
+    # for installing service monitor
+    disableValidationOnInstall: true
+    needs:
+      - grafana-dashbords
+      - kube-prometheus-stack
+  - name: fluent-bit
+    namespace: fluent-bit
+    chart: fluent/fluent-bit
+    version: 0.19.15
+    installed: {{ ne .Environment.Name "development" | toYaml }}
+    values:
+      - ./values/templates/fluent-bit.yaml.gotmpl
+  - name: loki
+    namespace: loki
+    chart: grafana/loki
+    version: 2.8.4
+    installed: {{ ne .Environment.Name "development" | toYaml }}
+    values:
+      - ./values/templates/loki.yaml.gotmpl

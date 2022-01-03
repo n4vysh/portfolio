@@ -1,0 +1,6 @@
+---
+provider: cloudflare
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true

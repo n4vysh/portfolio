@@ -1,14 +1,17 @@
+{{ if .Values.servicemonitor }}
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: nginx-prometheus-exporter
+  {{- with .Values.labels }}
   labels:
-    app: nginx
-    release: kube-prometheus-stack
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   selector:
     matchLabels:
-      app: nginx
+      app.kubernetes.io/name: nginx
   endpoints:
     - port: exporter
+{{ end }}

@@ -1,0 +1,28 @@
+---
+# NOTE: use extraSecret of prometheus operator
+existingObjstoreSecret: thanos-secret
+query:
+  # NOTE: use replicaExternalLabelName of prometheus operator
+  replicaLabel: "__replica__"
+  dnsDiscovery:
+    sidecarsService: kube-prometheus-stack-thanos-discovery
+    sidecarsNamespace: kube-prometheus-stack
+bucketweb:
+  enabled: true
+storegateway:
+  enabled: true
+  # https://github.com/civo/kube100/issues/87
+  persistence:
+    enabled: false
+compactor:
+  enabled: true
+  # https://github.com/civo/kube100/issues/87
+  persistence:
+    enabled: false
+  retentionResolutionRaw: 4h
+  retentionResolution5m: 4h
+  retentionResolution1h: 8h
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true

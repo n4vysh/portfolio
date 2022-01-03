@@ -8,8 +8,17 @@ image:
   pullPolicy: IfNotPresent
   tag: "bb14505"
 
+labels:
+  app.kubernetes.io/name: nginx
+  app.kubernetes.io/instance: nginx
+  app.kubernetes.io/version: 1.21.4
+  app.kubernetes.io/component: web-server
+  app.kubernetes.io/part-of: portfolio
+  app.kubernetes.io/managed-by: helm
+
 ingress:
   annotations: {}
+  class: ""
   tls: []
 
 resources:
@@ -24,3 +33,5 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 3
   targetCPUUtilizationPercentage: 80
+
+servicemonitor: false

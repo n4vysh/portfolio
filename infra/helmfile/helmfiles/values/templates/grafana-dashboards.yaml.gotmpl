@@ -1,0 +1,6 @@
+---
+dashboards:
+  nginx: |-
+    {{- readFile "dashboards/nginx.json" | nindent 4 }}
+  cert-manager: |-
+    {{- readFile "dashboards/cert-manager.json" | nindent 4 }}

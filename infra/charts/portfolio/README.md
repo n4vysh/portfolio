@@ -1,6 +1,6 @@
 # portfolio
 
-![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.5](https://img.shields.io/badge/Version-0.1.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 website
 
@@ -22,12 +22,20 @@ website
 | image.repository | string | `"ghcr.io/n4vysh/portfolio"` |  |
 | image.tag | string | `"bb14505"` |  |
 | ingress.annotations | object | `{}` |  |
+| ingress.class | string | `""` |  |
 | ingress.tls | list | `[]` |  |
+| labels."app.kubernetes.io/component" | string | `"web-server"` |  |
+| labels."app.kubernetes.io/instance" | string | `"nginx"` |  |
+| labels."app.kubernetes.io/managed-by" | string | `"helm"` |  |
+| labels."app.kubernetes.io/name" | string | `"nginx"` |  |
+| labels."app.kubernetes.io/part-of" | string | `"portfolio"` |  |
+| labels."app.kubernetes.io/version" | string | `"1.21.4"` |  |
 | port | int | `8080` |  |
 | resources.limits.cpu | string | `"100m"` |  |
 | resources.limits.memory | string | `"128Mi"` |  |
 | resources.requests.cpu | string | `"100m"` |  |
 | resources.requests.memory | string | `"128Mi"` |  |
+| servicemonitor | bool | `false` |  |
 | status.port | int | `8081` |  |
 
 ----------------------------------------------

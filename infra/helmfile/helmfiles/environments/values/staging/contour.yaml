@@ -1,0 +1,7 @@
+---
+contour:
+  envoy:
+    useHostPort: false
+  metrics:
+    serviceMonitor:
+      enabled: true

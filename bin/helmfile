@@ -1,0 +1,10 @@
+#!/bin/bash
+
+dir=$(
+  cd "$(dirname "$0")" || exit
+  git rev-parse --show-toplevel
+)
+ENV=$("$dir"/scripts/get-env.bash)
+
+export KUBECONFIG="$dir/infra/kubectl/configs/$ENV/config.yaml"
+asdf exec helmfile "${@}"

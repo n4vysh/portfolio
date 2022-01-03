@@ -1,0 +1,15 @@
+---
+serviceMonitor:
+  enabled: true
+config:
+  outputs: |
+    [OUTPUT]
+        name                   loki
+        match                  *
+        labels                 job=fluentbit,env={{ .Environment.Name }}
+        auto_kubernetes_labels on
+
+        host loki.loki
+dashboards:
+  enabled: true
+  namespace: kube-prometheus-stack

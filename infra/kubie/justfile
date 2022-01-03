@@ -1,0 +1,6 @@
+env := `../../scripts/get-env.bash`
+kubeconfig := "../kubectl/configs/" + env + "/config.yaml"
+
+# Switch kubernetes context
+switch:
+    (dir=`readlink -f "{{ kubeconfig }}"` && cd "{{invocation_directory()}}" && kubie ctx -f "$dir")

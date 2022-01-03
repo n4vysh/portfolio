@@ -1,8 +1,9 @@
 ---
 extends: default
 ignore: |
-  infra/charts/portfolio/templates/*.yaml
-  infra/charts/portfolio/templates/tests/*.yaml
-  infra/helmfiles/helmfile.yaml
-  infra/helmfiles/values/*.yaml.gotmpl
-  infra/helmfiles/secrets/*.enc.yaml
+  infra/charts/*/templates/*.yaml
+  infra/charts/*/templates/tests/*.yaml
+  infra/helmfile/helmfile.yaml
+  infra/helmfile/helmfiles/*.yaml
+  infra/helmfile/helmfiles/secrets/*.enc.yaml
+  infra/helmfile/helmfiles/environments/secrets/*/*.enc.yaml

@@ -1,0 +1,14 @@
+---
+environments:
+  staging:
+  production:
+releases:
+  - name: external-dns
+    namespace: external-dns
+    chart: bitnami/external-dns
+    version: 5.5.2
+    installed: {{ ne .Environment.Name "development" | toYaml }}
+    values:
+      - ./values/external-dns.yaml
+    secrets:
+      - ./secrets/cloudflare.enc.yaml

@@ -1,0 +1,7 @@
+# Create local Kubernetes cluster
+create:
+    ./scripts/create.bash
+
+# Delete local Kubernetes cluster
+delete:
+    ./scripts/delete.bash
