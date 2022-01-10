@@ -1,0 +1,8 @@
+.aleph/
+dist/
+public/images/*
+.lighthouseci/
+.*lintcache
+bin/oxipng
+bin/resvg
+!.gitkeep

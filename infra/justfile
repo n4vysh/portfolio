@@ -1,0 +1,54 @@
+env := `../scripts/get-env.bash 2>/dev/null || true`
+kubeconfig := "$HOME/.kube/configs/portfolio/" + env + "/config.yaml"
+cmd := if env =~ '(production|staging)' {
+    "aws-vault exec n4vysh/" + env + " -- kubie"
+} else {
+    "kubie"
+}
+
+init:
+    ./scripts/init.bash
+
+install:
+    ./scripts/install-packages.bash
+
+# Deploy containers to server
+deploy: init
+    ./scripts/deploy.bash
+
+# Destroy servers
+destroy: init
+    ./scripts/destroy.bash
+
+# Switch kubernetes context
+switch: init
+    (dir=`readlink -f "{{ kubeconfig }}"` && cd "{{invocation_directory()}}" && {{cmd}} ctx -f "$dir")
+
+# Check middleware status
+check:
+    flux check
+    linkerd check
+
+# Trigger a reconciliation of sources and resources
+reconcile:
+    flux reconcile kustomization flux-system --with-source
+
+# Show highlighted access logs
+log: init
+    ./scripts/log.bash
+
+# Analyze access logs
+analyze: init
+    ./scripts/analyze.bash
+
+# Open monitoring system dashboard
+viz-monitor:
+    ./scripts/viz-monitor.bash
+
+# Open service mesh dashboard
+viz-nw:
+    linkerd viz dashboard
+
+# Login cloud service
+login:
+    aws-vault login n4vysh/{{env}}

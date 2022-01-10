@@ -1,0 +1,20 @@
+---
+apiVersion: linkerd.io/v1alpha2
+kind: ServiceProfile
+metadata:
+  name: portfolio
+  namespace: portfolio
+spec:
+  routes:
+    - condition:
+        method: GET
+        pathRegex: /
+      name: GET /
+    - condition:
+        method: GET
+        pathRegex: /status
+      name: GET /status
+    - condition:
+        method: GET
+        pathRegex: /metrics
+      name: GET /metrics

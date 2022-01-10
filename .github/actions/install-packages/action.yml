@@ -1,0 +1,35 @@
+---
+name: setup
+description: "Install packages"
+runs:
+  using: "composite"
+  steps:
+    - uses: asdf-vm/actions/setup@v1.1.0
+    - name: Install atool
+      run: sudo apt install -y atool
+      shell: bash
+    - name: Cache packages
+      id: packages-cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.config/direnv/
+          ~/.asdf/
+          ~/.local/share/direnv/allow/
+          ~/.local/share/virtualenvs/
+          ~/.node/
+          misc/node_modules/
+          frontend/misc/node_modules/
+          bin/
+          frontend/bin/
+          misc/vale-styles/
+          ~/.cache/pre-commit/
+          ~/.cache/deno/
+          ~/.cache/helm/
+          ~/.local/share/helm/plugins/
+        # yamllint disable-line rule:line-length
+        key: ${{ runner.os }}-${{ hashFiles('**/scripts/install-packages.bash', '**/scripts/install/*.bash', '.envrc', 'misc/Pipfile.lock', '**/.tool-versions', 'misc/pnpm-lock.yaml', '.pre-commit-config.yaml', 'frontend/scripts.yml', 'infra/misc/helm-plugins.yaml', 'misc/scripts/download-vale-styles.bash', 'bin/') }}
+    - name: Install packages
+      if: steps.packages-cache.outputs.cache-hit != 'true'
+      run: ./scripts/install-packages.bash -ie
+      shell: bash

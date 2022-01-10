@@ -1,2 +1,0 @@
-analyze:
-    goaccess -p goaccess.conf -

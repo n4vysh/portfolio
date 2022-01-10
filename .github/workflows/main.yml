@@ -2,85 +2,164 @@
 name: main
 "on": push
 jobs:
-  frontend:
-    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
-    with:
-      hook: frontend
-      setup-deno: true
-      setup-just: true
-      setup-frontend-packages: true
-  config:
-    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
-    with:
-      hook: config
-      setup-just: true
-  container:
-    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
-    with:
-      hook: container
-      setup-just: true
-      setup-skaffold: true
-  markup:
-    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
-    with:
-      hook: markup
-  shell-scripts:
-    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
-    with:
-      hook: shell-scripts
-      setup-rust: true
-  git:
-    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
-    with:
-      hook: git
-  file:
-    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
-    with:
-      hook: file
-  text:
-    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
-    with:
-      hook: text
-  ci:
-    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
-    with:
-      hook: ci
-  artifact:
-    uses: n4vysh/portfolio/.github/workflows/reusable-pre-commit-run.yml@main
-    with:
-      hook: artifact
-      setup-skaffold: true
-      setup-helm: true
-      setup-kubeval: true
+  install-packages:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install packages
+        uses: ./.github/actions/install-packages
+  set-pre-commit-info:
+    runs-on: ubuntu-20.04
+    outputs:
+      hooks: ${{ steps.output-pre-commit-info.outputs.hooks }}
+    steps:
+      - uses: actions/checkout@v2
+      - id: output-pre-commit-info
+        run: .github/scripts/output-pre-commit-info.bash
+  pre-commit:
+    runs-on: ubuntu-20.04
+    needs:
+      - install-packages
+      - set-pre-commit-info
+    strategy:
+      fail-fast: false
+      matrix:
+        hook: ${{ fromJson(needs.set-pre-commit-info.outputs.hooks) }}
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install packages
+        uses: ./.github/actions/install-packages
+      - name: Run pre-commit hooks
+        run: |
+          eval "$(direnv export bash)"
+          just check ${{ matrix.hook }}
+  set-terragrunt-info:
+    runs-on: ubuntu-20.04
+    outputs:
+      environments: ${{ steps.output-terragrunt-info.outputs.environments }}
+    steps:
+      - uses: actions/checkout@v2
+      - id: output-terragrunt-info
+        run: .github/scripts/output-terragrunt-info.bash
+  terragrunt-plan:
+    runs-on: ubuntu-20.04
+    needs:
+      - install-packages
+      - set-terragrunt-info
+      - pre-commit
+    strategy:
+      fail-fast: false
+      matrix:
+        # yamllint disable-line rule:line-length
+        environments: ${{ fromJson(needs.set-terragrunt-info.outputs.environments) }}
+    environment:
+      name: ${{ matrix.environments }}
+      url: |
+        ${{
+          (matrix.environments == 'production' && 'https://n4vysh.dev')
+          || (matrix.environments == 'staging' && 'https://stg.n4vysh.dev')
+        }}
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install packages
+        uses: ./.github/actions/install-packages
+      - name: Configure AWS Credentials (production)
+        uses: ./.github/actions/configure-aws-credentials
+        if: matrix.environments == 'production'
+        with:
+          # yamllint disable-line rule:line-length
+          role-to-assume: arn:aws:iam::804137327620:role/prd-portfolio-github-actions
+      - name: Run driftctl
+        env:
+          ENV: ${{ matrix.environments }}
+        run: |
+          eval "$(direnv export bash)"
+          ./scripts/driftctl.bash
+        working-directory: ./infra/terragrunt/
+      - name: Start kind mock cluster
+        env:
+          ENV: ${{ matrix.environments }}
+        run: |
+          eval "$(direnv export bash)"
+          ./scripts/start-kind-mock-cluster.bash
+        working-directory: ./infra/terragrunt/
+      - name: Run terragrunt plan
+        env:
+          ENV: ${{ matrix.environments }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+        run: |
+          eval "$(direnv export bash)"
+          just plan
+        working-directory: ./infra/terragrunt/
+      - name: Stop kind mock cluster
+        env:
+          ENV: ${{ matrix.environments }}
+        run: |
+          eval "$(direnv export bash)"
+          ./scripts/stop-kind-mock-cluster.bash
+        working-directory: ./infra/terragrunt/
+  terragrunt-apply:
+    runs-on: ubuntu-20.04
+    needs:
+      - install-packages
+      - set-terragrunt-info
+      - pre-commit
+      - terragrunt-plan
+    strategy:
+      fail-fast: false
+      matrix:
+        # yamllint disable-line rule:line-length
+        environments: ${{ fromJson(needs.set-terragrunt-info.outputs.environments) }}
+    environment:
+      name: ${{ matrix.environments }}
+      url: |
+        ${{
+          (matrix.environments == 'production' && 'https://n4vysh.dev')
+          || (matrix.environments == 'staging' && 'https://stg.n4vysh.dev')
+        }}
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install packages
+        uses: ./.github/actions/install-packages
+      - name: Configure AWS Credentials (production)
+        uses: ./.github/actions/configure-aws-credentials
+        if: matrix.environments == 'production'
+        with:
+          # yamllint disable-line rule:line-length
+          role-to-assume: arn:aws:iam::804137327620:role/prd-portfolio-github-actions
+      - name: Run terragrunt apply
+        env:
+          ENV: ${{ matrix.environments }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+        run: |
+          eval "$(direnv export bash)"
+          just apply
+        working-directory: ./infra/terragrunt/
   container-image-deploy:
     runs-on: ubuntu-20.04
     if: github.ref == 'refs/heads/main'
     needs:
-      - frontend
-      - config
-      - container
-      - markup
-      - shell-scripts
-      - git
-      - file
-      - text
-      - ci
-      - artifact
+      - pre-commit
     steps:
       - uses: actions/checkout@v2
-      - uses: denoland/setup-deno@v1
-        with:
-          deno-version: 1.16.2
-      - uses: extractions/setup-just@v1
-        with:
-          just-version: 0.10.3
-      - name: Setup frontend packages
-        run: just init
+      - name: Install packages
+        uses: ./.github/actions/install-packages
       - name: Build icon image
         run: just build-icon-image
       - name: Build a static site
         run: just build-static-site
-      - id: var
+      - id: output-git-info
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - uses: docker/login-action@v1
         with:
@@ -92,31 +171,19 @@ jobs:
           skaffold-version: 1.35.0
           command: build
           push: true
-          tag: ${{ steps.var.outputs.sha_short }}
-  artifact-release:
+          tag: ${{ steps.output-git-info.outputs.sha_short }}
+  chart-release:
     runs-on: ubuntu-20.04
     if: github.ref == 'refs/heads/main'
     needs:
-      - frontend
-      - config
-      - container
-      - markup
-      - shell-scripts
-      - git
-      - file
-      - text
-      - ci
-      - artifact
+      - pre-commit
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - uses: azure/setup-helm@v1
-        with:
-          version: 3.7.1
+      - name: Install packages
+        uses: ./.github/actions/install-packages
       - uses: helm/chart-releaser-action@v1.2.1
         with:
           charts_dir: infra/charts

@@ -1,0 +1,3 @@
+[allowlist]
+description = "ignore linkerd issuer key"
+paths = ['''infra/flux/infra/base/linkerd/issuer\.key''']

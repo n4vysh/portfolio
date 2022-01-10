@@ -3,6 +3,7 @@ apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
   name: nginx
+  namespace: portfolio
   {{- with .Values.labels }}
   labels:
     {{- toYaml . | nindent 4 }}

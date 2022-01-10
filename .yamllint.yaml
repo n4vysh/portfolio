@@ -1,9 +1,11 @@
 ---
 extends: default
+rules:
+  comments:
+    min-spaces-from-content: 1
 ignore: |
+  misc/pnpm-lock.yaml
+  frontend/misc/pnpm-lock.yaml
   infra/charts/*/templates/*.yaml
   infra/charts/*/templates/tests/*.yaml
-  infra/helmfile/helmfile.yaml
-  infra/helmfile/helmfiles/*.yaml
-  infra/helmfile/helmfiles/secrets/*.enc.yaml
-  infra/helmfile/helmfiles/environments/secrets/*/*.enc.yaml
+  infra/flux/clusters/*/flux-system/

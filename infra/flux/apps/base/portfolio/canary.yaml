@@ -1,0 +1,48 @@
+---
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: portfolio
+  namespace: portfolio
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx
+  autoscalerRef:
+    apiVersion: autoscaling/v1
+    kind: HorizontalPodAutoscaler
+    name: nginx
+  progressDeadlineSeconds: 60
+  service:
+    port: 8080
+    targetPort: 8080
+    portDiscovery: true
+  analysis:
+    interval: 10s
+    threshold: 3
+    maxWeight: 50
+    stepWeight: 5
+    metrics:
+      - name: request-success-rate
+        thresholdRange:
+          min: 99
+        interval: 1m
+      - name: request-duration
+        thresholdRange:
+          max: 500
+        interval: 30s
+    webhooks:
+      - name: acceptance-test
+        type: pre-rollout
+        url: http://flagger-loadtester.portfolio/
+        timeout: 30s
+        metadata:
+          type: bash
+          cmd: "curl -s -H 'Host:n4vysh.dev' http://nginx-canary.portfolio:8080"
+      - name: load-test
+        type: rollout
+        url: http://flagger-loadtester.portfolio/
+        metadata:
+          # yamllint disable-line rule:line-length
+          cmd: "hey -z 2m -q 10 -c 2 -host n4vysh.dev http://nginx-canary.portfolio:8080"

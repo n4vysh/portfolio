@@ -1,6 +1,0 @@
----
-serviceMonitor:
-  enabled: true
-grafanaDashboard:
-  enabled: true
-  namespace: kube-prometheus-stack

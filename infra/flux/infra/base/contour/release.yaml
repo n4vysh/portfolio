@@ -1,0 +1,70 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: contour
+  namespace: contour
+spec:
+  releaseName: contour
+  chart:
+    spec:
+      chart: contour
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+      version: "7.0.7"
+  test:
+    enable: true
+  dependsOn:
+    - name: linkerd
+      namespace: linkerd
+  interval: 1m
+  values:
+    envoy:
+      podAnnotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8002"
+        prometheus.io/path: "/stats/prometheus"
+        linkerd.io/inject: enabled
+      serviceAccount:
+        automountServiceAccountToken: true
+      service:
+        type: ClusterIP
+        externalTrafficPolicy: null
+    metrics:
+      serviceMonitor:
+        enabled: true
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: target-group-bindings
+  namespace: contour
+spec:
+  releaseName: target-group-bindings
+  chart:
+    spec:
+      chart: ./infra/charts/target-group-bindings
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  test:
+    enable: true
+  dependsOn:
+    - name: contour
+  interval: 1m
+  valuesFrom:
+    - kind: ConfigMap
+      name: target-group-bindings
+      valuesKey: targetGroupARN
+      targetPath: targetGroupARN
+    - kind: ConfigMap
+      name: target-group-bindings
+      valuesKey: securityGroupID
+      targetPath: securityGroupID
+  values:
+    service:
+      name: contour-envoy
+      namespace: contour

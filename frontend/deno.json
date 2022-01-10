@@ -1,0 +1,20 @@
+{
+  "lint": {
+    "files": {
+      "exclude": [
+        "dist",
+        ".aleph/",
+        "misc/node_modules/"
+      ]
+    }
+  },
+  "fmt": {
+    "files": {
+      "exclude": [
+        "dist",
+        ".aleph/",
+        "misc/node_modules/"
+      ]
+    }
+  }
+}

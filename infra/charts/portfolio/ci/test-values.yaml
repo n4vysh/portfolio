@@ -1,0 +1,44 @@
+---
+host: localhost
+port: 8080
+status:
+  port: 8081
+image:
+  # ghcr.io/n4vysh/portfolio:bb14505
+  repository: ghcr.io/n4vysh/portfolio
+  # yamllint disable-line rule:line-length
+  digest: sha256:b721a3931efa1c1b0c5700a87403eefbc793aa0494b2a5b5b27351816ecf074f
+  pullPolicy: IfNotPresent
+
+labels:
+  app.kubernetes.io/name: nginx
+  app.kubernetes.io/instance: nginx
+  app.kubernetes.io/version: 1.21.4
+  app.kubernetes.io/component: web-server
+  app.kubernetes.io/part-of: portfolio
+  app.kubernetes.io/managed-by: helm
+
+ingress:
+  annotations:
+    cert-manager.io/issuer: cloudflare
+    cert-manager.io/issuer-kind: OriginIssuer
+    cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
+    external-dns.alpha.kubernetes.io/ttl: "3600"
+  class: contour
+  tls:
+    - secretName: portfolio-tls
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+autoscaling:
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+
+servicemonitor: true

@@ -1,0 +1,19 @@
+---
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: {{ required "A valid .Values.service.name entry required!" .Values.service.name }}
+  namespace: {{ required "A valid .Values.service.namespace entry required!" .Values.service.namespace }}
+spec:
+  serviceRef:
+    name: {{ required "A valid .Values.service.name entry required!" .Values.service.name }}
+    port: 80
+  targetType: ip
+  targetGroupARN: {{ required "A valid .Values.targetGroupARN entry required!" .Values.targetGroupARN }}
+  networking:
+    ingress:
+    - from:
+      - securityGroup:
+          groupID: {{ required "A valid .Values.securityGroupID entry required!" .Values.securityGroupID }}
+      ports:
+      - protocol: TCP

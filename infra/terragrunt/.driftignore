@@ -1,0 +1,16 @@
+*
+!aws_s3_bucket
+!aws_s3_bucket_policy
+!aws_route53_zone
+!aws_iam_policy
+!aws_iam_policy_attachment
+!aws_iam_role
+!aws_iam_role_policy
+!aws_iam_role_policy_attachment
+aws_s3_bucket.*-n4vysh-tfstate
+aws_iam_role.OrganizationAccountAccessRole
+aws_iam_role.*-portfolio-blue-eks-node-group-*
+aws_iam_role.*-portfolio-cluster-*
+aws_iam_role.*-portfolio-green-eks-node-group-*
+aws_iam_policy_attachment.AWSServiceRoleFor*
+aws_iam_role_policy.OrganizationAccountAccessRole:AdministratorAccess

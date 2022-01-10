@@ -1,0 +1,58 @@
+name := "portfolio"
+user := "n4vysh"
+tld := "dev"
+domain := user + "." + tld
+region := "ap-northeast-1"
+bucket := name + ".tfstate." + domain
+table := name + "-tfstate-lock"
+
+env := `../../scripts/get-env.bash 2>/dev/null || true`
+
+opts := if env != "" {
+    "--terragrunt-working-dir=environments/" + env + "/"
+} else {
+    ""
+}
+
+default:
+
+# Terraform is an administrative tool that manages your infrastructure, and so ideally the infrastructure that is used by Terraform should exist outside of the infrastructure that Terraform manages.
+# This can be achieved by creating a separate administrative AWS account which contains the user accounts used by human operators and any infrastructure and tools used to manage the the other accounts.
+# TODO: create aws account for terraform s3 backend
+# https://www.terraform.io/docs/language/settings/backends/s3.html
+
+# Setup terraform backend
+setup-backend:
+    ./scripts/setup-backend.bash
+
+# Build Grafana dashboard
+build-dashboards:
+    ./scripts/build-dashboards.bash
+
+# Run terragrunt
+run +cmd:
+    terragrunt {{ cmd }} {{ opts }}
+
+# Run terragrunt in each sub directory
+run-all +cmd:
+    just run run-all {{ cmd }}
+
+# Creates an execution plan
+plan:
+    just run-all plan
+
+# Executes the planned actions
+apply:
+    just run-all apply --terragrunt-non-interactive -auto-approve
+
+# Destroy remote objects
+destroy:
+    just run-all destroy
+
+# Render terragrunt config for debug
+render:
+    (cd "{{invocation_directory()}}" && terragrunt render-json --terragrunt-json-out /dev/stdout | jq -r)
+
+# Format terragrunt config
+fmt:
+    terragrunt hclfmt

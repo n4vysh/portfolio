@@ -1,0 +1,17 @@
+{
+  "engines": {
+    "//": "https://github.com/GoogleChrome/lighthouse/issues/13258",
+    "node": "v16.13.2"
+  },
+  "packageManager": "pnpm@6.26.1",
+  "devDependencies": {
+    "@lhci/cli": "0.8.2",
+    "prettier": "2.5.1",
+    "puppeteer": "11.0.0",
+    "stylelint": "14.1.0",
+    "stylelint-config-prettier": "9.0.3",
+    "stylelint-config-recess-order": "3.0.0",
+    "stylelint-config-standard": "24.0.0",
+    "svgo": "2.8.0"
+  }
+}

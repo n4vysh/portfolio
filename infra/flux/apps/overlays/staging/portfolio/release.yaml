@@ -1,0 +1,10 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: portfolio
+  namespace: portfolio
+spec:
+  values:
+    host: stg.n4vysh.dev
+    servicemonitor: true

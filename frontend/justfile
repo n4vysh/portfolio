@@ -1,0 +1,55 @@
+set dotenv-load := false
+
+# Start the web server in `development`
+dev: install
+    aleph dev
+
+# Build a static site and container image
+build: build-icon-image build-static-site build-container-image
+
+# Install frontend packages
+install:
+    ./scripts/install-packages.bash
+
+# Run frontend scripts
+run *script:
+    denon {{ script }}
+
+# Build icon images
+build-icon-image:
+    ./scripts/build-icon-image.bash
+
+# Build a static site
+build-static-site:
+    aleph build
+
+# Build container image
+build-container-image:
+    skaffold build
+
+# Take a screenshot
+take:
+    just run screenshot
+
+# Test performance
+test:
+    lhci autorun
+
+fmt: fmt-deno fmt-css-prettier fmt-css-stylelint
+
+fmt-deno *target:
+    deno fmt --config deno.json {{target}}
+
+fmt-css-prettier target='style/':
+    prettier --parser css --write --list-different {{target}}
+
+fmt-css-stylelint target='style/':
+    stylelint --cache --fix {{target}}
+
+lint: lint-deno lint-css
+
+lint-deno *target:
+    deno lint --config deno.json {{target}}
+
+lint-css target='style/':
+    stylelint --cache {{target}}

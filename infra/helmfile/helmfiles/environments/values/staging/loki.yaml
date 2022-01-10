@@ -1,5 +1,0 @@
----
-loki:
-  aws:
-    s3:
-      bucket: stg.loki.n4vysh.dev

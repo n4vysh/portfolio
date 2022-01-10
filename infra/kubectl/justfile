@@ -1,3 +1,0 @@
-# Get kubeconfig
-get:
-    ./scripts/get.bash

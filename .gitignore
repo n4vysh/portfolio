@@ -1,6 +1,8 @@
-.aleph/
-dist/
-public/images/*
-!.gitkeep
-.lighthouseci/
-.*lintcache
+.pnpm-debug.log
+bin/shellharden
+bin/kube-linter
+bin/actionlint
+bin/infracost
+bin/terrascan
+bin/gitleaks
+bin/step

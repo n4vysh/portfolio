@@ -3,12 +3,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
+  namespace: portfolio
   {{- with .Values.labels }}
   labels:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   annotations:
-    ignore-check.kube-linter.io/no-read-only-root-fs: "This deployment needs write access because it generate nginx.conf"
+    ignore-check.kube-linter.io/no-read-only-root-fs: paketo-buildpacks/nginx needs write access because it generate nginx.conf
+    checkov.io/skip1: CKV_K8S_15=Use IfNotPresent for skaffold dev
+    checkov.io/skip2: CKV_K8S_22=paketo-buildpacks/nginx needs write access because it generate nginx.conf
+    checkov.io/skip3: CKV_K8S_40=paketo-buildpacks/nginx use 1000 (cnb user) and nginx-prometheus-exporter use 1001
 spec:
   selector:
     matchLabels:
@@ -17,14 +21,24 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: nginx
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
     spec:
+      automountServiceAccountToken: true # for using mTLS traffic of Linkerd
+      securityContext:
+        runAsNonRoot: true
       containers:
         - name: nginx
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}@{{ .Values.image.digest | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
             readOnlyRootFilesystem: false
             runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            runAsUser: 1000 # cnb
+            capabilities:
+              drop:
+                - ALL
           env:
             - name: HOST
               value: {{ .Values.host }}
@@ -33,7 +47,10 @@ spec:
             - name: STATUS_PORT
               value: "{{ .Values.status.port }}"
           ports:
-            - containerPort: {{ .Values.port }}
+            - name: root
+              containerPort: {{ .Values.port }}
+            - name: status
+              containerPort: {{ .Values.status.port }}
           livenessProbe:
             httpGet:
               path: /status
@@ -45,14 +62,30 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
         - name: nginx-prometheus-exporter
-          image: "nginx/nginx-prometheus-exporter:0.9.0"
+          # nginx/nginx-prometheus-exporter:0.10.0
+          image: "nginx/nginx-prometheus-exporter@sha256:1c6eba17d7768401ba1ed056101fc56ec3e3b5c82e508fdd8968fbcd96ec9574"
+          imagePullPolicy: Always
           args:
             - -nginx.scrape-uri=http://localhost:{{ .Values.status.port }}/status
           securityContext:
             readOnlyRootFilesystem: true
             runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            runAsUser: 1001
+            capabilities:
+              drop:
+                - ALL
           ports:
-            - containerPort: 9113
+            - name: exporter
+              containerPort: 9113
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 9113
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 9113
           resources:
             limits:
               cpu: 100m

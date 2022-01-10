@@ -1,0 +1,6 @@
+---
+service:
+  name: "contour-envoy"
+  namespace: "contour"
+targetGroupARN: "<arn-to-targetGroup>"
+securityGroupID: "<groupID>"

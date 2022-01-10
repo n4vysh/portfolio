@@ -4,9 +4,11 @@ port: 8080
 status:
   port: 8081
 image:
+  # ghcr.io/n4vysh/portfolio:bb14505
   repository: ghcr.io/n4vysh/portfolio
+  # yamllint disable-line rule:line-length
+  digest: sha256:b721a3931efa1c1b0c5700a87403eefbc793aa0494b2a5b5b27351816ecf074f
   pullPolicy: IfNotPresent
-  tag: "bb14505"
 
 labels:
   app.kubernetes.io/name: nginx
@@ -18,7 +20,7 @@ labels:
 
 ingress:
   annotations: {}
-  class: ""
+  class: contour
   tls: []
 
 resources:

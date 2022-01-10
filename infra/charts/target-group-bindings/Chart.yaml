@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: target-group-bindings
+description: target group binding of AWS Load Balancer Controller
+type: application
+version: 0.1.0
+appVersion: 1.4.0
+maintainers:
+  - name: n4vysh
+icon: https://raw.githubusercontent.com/aws/eks-charts/v0.0.80/docs/logo/aws.png

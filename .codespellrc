@@ -1,0 +1,2 @@
+[codespell]
+skip = misc/diagram.svg,**/pnpm-lock.yaml

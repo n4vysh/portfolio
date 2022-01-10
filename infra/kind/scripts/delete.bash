@@ -11,7 +11,9 @@ ENV=$("$dir"/scripts/get-env.bash)
 cd "$dir"/infra/kind/ || exit
 if [[ $ENV == development ]]; then
 	kind delete cluster --name "$name"
-elif [[ $ENV =~ ^(staging|production|common)$ ]]; then
+elif [[ $ENV =~ ^(staging|production)$ ]]; then
+	kind delete cluster --name "$name-mock"
+else
 	echo 'No support this environment' 1>&2
 	exit 1
 fi

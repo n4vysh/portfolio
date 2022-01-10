@@ -1,5 +1,0 @@
----
-thanos:
-  aws:
-    s3:
-      bucket: stg.thanos.n4vysh.dev

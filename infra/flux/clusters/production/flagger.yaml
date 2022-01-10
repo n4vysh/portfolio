@@ -1,0 +1,37 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: flagger
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/weaveworks/flagger
+  ref:
+    tag: v1.19.0
+  ignore: |
+    /*
+    !/kustomize
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: flagger
+  namespace: flux-system
+spec:
+  interval: 1m
+  dependsOn:
+    - name: infra
+      namespace: flux-system
+  timeout: 5m
+  path: "./kustomize/linkerd/"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flagger
+  targetNamespace: linkerd
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: flagger
+      namespace: linkerd

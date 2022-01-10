@@ -2,7 +2,7 @@
   "extends": [
     "config:base",
     ":automergePatch",
-    "schedule:weekends",
+    "schedule:quarterly",
     "group:allNonMajor"
   ],
   "timezone": "Asia/Tokyo",

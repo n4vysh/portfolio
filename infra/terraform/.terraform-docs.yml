@@ -1,0 +1,11 @@
+---
+formatter: "markdown table"
+recursive:
+  enabled: true
+output:
+  file: README.md
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    <!-- markdownlint-disable-file -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->

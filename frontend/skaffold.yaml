@@ -1,0 +1,27 @@
+---
+apiVersion: skaffold/v2beta26
+kind: Config
+build:
+  artifacts:
+    - image: ghcr.io/n4vysh/portfolio
+      buildpacks:
+        builder: paketobuildpacks/builder:base
+        dependencies:
+          paths:
+            - dist/
+            - mime.types
+            - nginx.conf
+            - buildpack.yml
+            - project.toml
+  local:
+    push: false
+deploy:
+  helm:
+    releases:
+      - name: portfolio
+        artifactOverrides:
+          image: ghcr.io/n4vysh/portfolio
+        imageStrategy:
+          helm: {}
+        chartPath: ../infra/charts/portfolio/
+        createNamespace: true

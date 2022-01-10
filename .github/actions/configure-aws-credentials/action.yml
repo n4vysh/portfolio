@@ -1,0 +1,14 @@
+---
+name: configure-aws-credentials
+description: "Configure AWS Credentials"
+inputs:
+  role-to-assume:
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: ${{ inputs.role-to-assume }}
+        aws-region: ap-northeast-1

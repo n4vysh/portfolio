@@ -1,49 +1,14 @@
-registry := "ghcr.io"
-user := "n4vysh"
-name := "portfolio"
-repo := user + "/" + name
-image := registry + "/" + repo
-
 set dotenv-load := false
 
-# Start the web server in `development`
-dev: init
-    aleph dev
+dev:
+    just frontend/dev
 
-# Build a static site and container image
-build: init build-icon-image build-static-site build-container-image
-
-# Grants direnv and install all the dependencies
-init:
-    ./scripts/init.bash
-
-# Install frontend packages
-install *packages: init
-    trex install {{ packages }}
-
-# Run frontend scripts
-run *script:
-    denon {{ script }}
+build:
+    just frontend/build
 
 # Check codes with hooks
-check *target: init
+check *target:
     pre-commit run -av {{ target }}
-
-# Build icon images
-build-icon-image:
-    ./scripts/build-icon-image.bash
-
-# Build a static site
-build-static-site:
-    aleph build
-
-# Build container image
-build-container-image:
-    skaffold build
-
-# Login container registry
-login:
-    docker login -u {{ user }} {{ registry }}
 
 # Update package and hook versions
 update: update-package-versions update-hooks
@@ -56,30 +21,31 @@ update-package-versions:
 update-hooks:
     pre-commit autoupdate
 
-# Take a screenshot
-take:
-    just run screenshot
-
 # List available commands
 list:
     ./scripts/list.bash
 
-# Deploy containers to server
 deploy:
-    ./scripts/deploy.bash
+    just infra/deploy
 
-# Destroy servers
 destroy:
-    ./scripts/destroy.bash
+    just infra/destroy
 
-# Show highlighted access logs
-log:
-    @just infra/stern/log | just infra/ccze/highlight
+fmt: fmt-yaml fmt-toml
 
-# Analyze access logs
-analyze:
-    @just infra/stern/log | just infra/goaccess/analyze
+fmt-yaml *target:
+    prettier --parser yaml --write --list-different {{ target }}
 
-# Switch kubernetes context
-switch:
-    just infra/kubie/switch
+fmt-toml *target:
+    taplo format {{ target }}
+
+lint: lint-toml lint-commit lint-md
+
+lint-toml *target:
+    taplo lint {{ target }}
+
+lint-commit *target:
+    commitlint --edit {{ target }}
+
+lint-md *target:
+    markdown-link-check --config .markdown-link-check.json {{ target }}

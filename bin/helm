@@ -1,0 +1,19 @@
+#!/bin/bash
+
+dir=$(
+  dirname "$(
+    cd "$(dirname "$0")" || exit
+    pwd
+  )"
+)
+ENV=$("$dir"/scripts/get-env.bash 2>/dev/null || true)
+export KUBECONFIG
+[[ $ENV != "" ]] && KUBECONFIG=${KUBECONFIG:-$HOME/.kube/configs/portfolio/$ENV/config.yaml}
+
+if ! [[ -v AWS_ACCESS_KEY_ID && -v AWS_SECRET_ACCESS_KEY && -v AWS_SESSION_TOKEN ]] &&
+  [[ $ENV =~ ^(staging|production)$ ]] &&
+  [[ $CI != true ]]; then
+  aws-vault exec "n4vysh/$ENV" -- asdf exec helm "${@}"
+else
+  asdf exec helm "${@}"
+fi

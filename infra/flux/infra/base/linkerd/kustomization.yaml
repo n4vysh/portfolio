@@ -1,0 +1,15 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: linkerd
+resources:
+  - namespace.yaml
+  - release.yaml
+secretGenerator:
+  - name: linkerd-certs
+    files:
+      - ca.crt
+      - issuer.crt
+      - issuer.key
+generatorOptions:
+  disableNameSuffixHash: true
