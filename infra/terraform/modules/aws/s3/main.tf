@@ -36,7 +36,7 @@ data "aws_iam_policy_document" "this" {
 
 module "bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "2.11.1"
+  version = "2.11.2"
 
   bucket = local.name
 
