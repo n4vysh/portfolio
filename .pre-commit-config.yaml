@@ -260,7 +260,7 @@ repos:
         <<: *codespell
   # CI
   - repo: https://github.com/rhysd/actionlint
-    rev: v1.6.8
+    rev: v1.6.9
     hooks:
       - id: actionlint-docker
         alias: ci
