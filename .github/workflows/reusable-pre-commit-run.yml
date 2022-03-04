@@ -67,7 +67,7 @@ jobs:
         env:
           URL: |-
             https://github.com/instrumenta/kubeval/releases/download/v0.16.1/kubeval-linux-amd64.tar.gz
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3
         with:
           python-version: 3.10.0
       - uses: actions-rs/toolchain@v1
