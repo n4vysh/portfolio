@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: refactor
+    branch: main
   secretRef:
     name: flux-system
   url: ssh://git@ssh.github.com:443/n4vysh/portfolio.git
