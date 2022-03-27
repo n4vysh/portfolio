@@ -1,5 +1,7 @@
 set dotenv-load := false
 
+sha := `git rev-parse --short HEAD`
+
 # Start the web server in `development`
 dev: install
     aleph dev
@@ -25,7 +27,11 @@ build-static-site:
 
 # Build container image
 build-container-image:
-    skaffold build
+    skaffold build -t {{sha}}
+
+# Build and push container image
+build-push-container-image:
+    skaffold build -t {{sha}} --push
 
 # Take a screenshot
 take:

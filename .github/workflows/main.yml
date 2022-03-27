@@ -165,19 +165,16 @@ jobs:
           cd frontend/
           eval "$(direnv export bash)"
           just build-static-site
-      - id: output-git-info
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: hiberbee/github-action-skaffold@1.14.0
-        with:
-          skaffold-version: 1.35.0
-          command: build
-          push: true
-          tag: ${{ steps.output-git-info.outputs.sha_short }}
+      - name: Build and push container image
+        run: |
+          cd frontend/
+          eval "$(direnv export bash)"
+          just build-push-container-image
   chart-release:
     runs-on: ubuntu-20.04
     if: github.ref == 'refs/heads/main'
