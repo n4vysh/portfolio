@@ -102,7 +102,7 @@ The development environment create local Kubernetes cluster with
 [kind][kind-link] and skaffold. Other environments create Kubernetes cluster in
 [Amazon Web Services][aws-link] with [Terragrunt][terragrunt-link] and
 [Flux][flux-link]. Terragrunt and Flux deploy following middlewares using
-[Helm][helm-link] and [kustomize][kustomize-link] in production environment.
+[Helm][helm-link] and [Kustomize][kustomize-link] in production environment.
 
 | Name                                                              | Description                                                                                                                                   |
 | :---------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -260,7 +260,7 @@ BY-NC-ND 4.0. Other files distributed under the MIT license. See the
 [terragrunt-link]: https://terragrunt.gruntwork.io/
 [flux-link]: https://fluxcd.io/
 [helm-link]: https://helm.sh
-[kustomize-link]: https://github.com/kubernetes-sigs/kustomize
+[kustomize-link]: https://kustomize.io/
 [aws-load-balancer-controller-link]: https://kubernetes-sigs.github.io/aws-load-balancer-controller
 [kube-prometheus-stack-link]: https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
 [prometheus-link]: https://prometheus.io/
