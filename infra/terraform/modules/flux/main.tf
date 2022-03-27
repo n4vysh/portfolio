@@ -93,6 +93,8 @@ resource "github_repository_file" "install" {
   file       = data.flux_install.this.path
   content    = data.flux_install.this.content
   branch     = var.branch
+
+  overwrite_on_create = true
 }
 
 resource "github_repository_file" "sync" {
@@ -100,6 +102,8 @@ resource "github_repository_file" "sync" {
   file       = data.flux_sync.this.path
   content    = data.flux_sync.this.content
   branch     = var.branch
+
+  overwrite_on_create = true
 }
 
 resource "github_repository_file" "kustomize" {
@@ -107,4 +111,6 @@ resource "github_repository_file" "kustomize" {
   file       = data.flux_sync.this.kustomize_path
   content    = data.flux_sync.this.kustomize_content
   branch     = var.branch
+
+  overwrite_on_create = true
 }
