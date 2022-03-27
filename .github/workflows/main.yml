@@ -156,9 +156,9 @@ jobs:
       - name: Install packages
         uses: ./.github/actions/install-packages
       - name: Build icon image
-        run: just build-icon-image
+        run: just frontend/build-icon-image
       - name: Build a static site
-        run: just build-static-site
+        run: just frontend/build-static-site
       - id: output-git-info
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - uses: docker/login-action@v1
