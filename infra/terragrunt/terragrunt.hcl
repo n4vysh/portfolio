@@ -10,6 +10,17 @@ locals {
 }
 
 terraform {
+  extra_arguments "parallelism" {
+    commands = [
+      "plan",
+      "apply",
+    ]
+
+    arguments = [
+      "-parallelism=100"
+    ]
+  }
+
   before_hook "terraform_validate" {
     commands = ["plan"]
     execute = [

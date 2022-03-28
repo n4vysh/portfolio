@@ -36,116 +36,33 @@ jobs:
         run: |
           eval "$(direnv export bash)"
           just check ${{ matrix.hook }}
-  set-terragrunt-info:
-    runs-on: ubuntu-20.04
-    outputs:
-      environments: ${{ steps.output-terragrunt-info.outputs.environments }}
-    steps:
-      - uses: actions/checkout@v2
-      - id: output-terragrunt-info
-        run: .github/scripts/output-terragrunt-info.bash
-  terragrunt-plan:
-    runs-on: ubuntu-20.04
+  deploy-prd:
+    # yamllint disable-line rule:line-length
+    uses: n4vysh/portfolio/.github/workflows/reusable-terragrunt-workflow.yml@main
+    with:
+      environment: production
+      url: https://n4vysh.dev
+      # yamllint disable-line rule:line-length
+      role-to-assume: arn:aws:iam::804137327620:role/prd-portfolio-github-actions
     needs:
       - install-packages
-      - set-terragrunt-info
       - pre-commit
-    strategy:
-      fail-fast: false
-      matrix:
-        # yamllint disable-line rule:line-length
-        environments: ${{ fromJson(needs.set-terragrunt-info.outputs.environments) }}
-    environment:
-      name: ${{ matrix.environments }}
-      url: |
-        ${{
-          (matrix.environments == 'production' && 'https://n4vysh.dev')
-          || (matrix.environments == 'staging' && 'https://stg.n4vysh.dev')
-        }}
-    permissions:
-      id-token: write
-      contents: write
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install packages
-        uses: ./.github/actions/install-packages
-      - name: Configure AWS Credentials (production)
-        uses: ./.github/actions/configure-aws-credentials
-        if: matrix.environments == 'production'
-        with:
-          # yamllint disable-line rule:line-length
-          role-to-assume: arn:aws:iam::804137327620:role/prd-portfolio-github-actions
-      - name: Run driftctl
-        env:
-          ENV: ${{ matrix.environments }}
-        run: |
-          eval "$(direnv export bash)"
-          ./scripts/driftctl.bash
-        working-directory: ./infra/terragrunt/
-      - name: Start kind mock cluster
-        env:
-          ENV: ${{ matrix.environments }}
-        run: |
-          eval "$(direnv export bash)"
-          ./scripts/start-kind-mock-cluster.bash
-        working-directory: ./infra/terragrunt/
-      - name: Run terragrunt plan
-        env:
-          ENV: ${{ matrix.environments }}
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
-        run: |
-          eval "$(direnv export bash)"
-          just plan
-        working-directory: ./infra/terragrunt/
-      - name: Stop kind mock cluster
-        env:
-          ENV: ${{ matrix.environments }}
-        run: |
-          eval "$(direnv export bash)"
-          ./scripts/stop-kind-mock-cluster.bash
-        working-directory: ./infra/terragrunt/
-  terragrunt-apply:
-    runs-on: ubuntu-20.04
+    secrets:
+      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+  deploy-stg:
+    # yamllint disable-line rule:line-length
+    uses: n4vysh/portfolio/.github/workflows/reusable-terragrunt-workflow.yml@main
+    with:
+      environment: staging
+      url: https://stg.n4vysh.dev
+      role-to-assume: dummy-arn
     needs:
       - install-packages
-      - set-terragrunt-info
       - pre-commit
-      - terragrunt-plan
-    strategy:
-      fail-fast: false
-      matrix:
-        # yamllint disable-line rule:line-length
-        environments: ${{ fromJson(needs.set-terragrunt-info.outputs.environments) }}
-    environment:
-      name: ${{ matrix.environments }}
-      url: |
-        ${{
-          (matrix.environments == 'production' && 'https://n4vysh.dev')
-          || (matrix.environments == 'staging' && 'https://stg.n4vysh.dev')
-        }}
-    permissions:
-      id-token: write
-      contents: write
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install packages
-        uses: ./.github/actions/install-packages
-      - name: Configure AWS Credentials (production)
-        uses: ./.github/actions/configure-aws-credentials
-        if: matrix.environments == 'production'
-        with:
-          # yamllint disable-line rule:line-length
-          role-to-assume: arn:aws:iam::804137327620:role/prd-portfolio-github-actions
-      - name: Run terragrunt apply
-        env:
-          ENV: ${{ matrix.environments }}
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
-        run: |
-          eval "$(direnv export bash)"
-          just apply
-        working-directory: ./infra/terragrunt/
+    secrets:
+      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
   container-image-deploy:
     runs-on: ubuntu-20.04
     if: github.ref == 'refs/heads/main'

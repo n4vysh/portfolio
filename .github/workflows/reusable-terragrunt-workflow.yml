@@ -1,0 +1,122 @@
+---
+name: reusable terragrunt workflow
+"on":
+  workflow_call:
+    inputs:
+      environment:
+        description: environment name
+        required: true
+        type: string
+      url:
+        description: environment URL
+        required: true
+        type: string
+      role-to-assume:
+        description: assume role ARN
+        required: true
+        type: string
+    secrets:
+      PERSONAL_ACCESS_TOKEN:
+        required: true
+        description: personal access token of GitHub
+      INFRACOST_API_KEY:
+        required: true
+        description: infracost API key
+jobs:
+  set-terragrunt-info:
+    runs-on: ubuntu-20.04
+    outputs:
+      dirs: ${{ steps.output-terragrunt-info.outputs.dirs }}
+    steps:
+      - uses: actions/checkout@v2
+      - id: output-terragrunt-info
+        run: .github/scripts/output-terragrunt-info.bash ${{inputs.environment}}
+  terragrunt-plan:
+    runs-on: ubuntu-20.04
+    needs:
+      - set-terragrunt-info
+    strategy:
+      fail-fast: false
+      matrix:
+        # yamllint disable-line rule:line-length
+        dir: ${{ fromJson(needs.set-terragrunt-info.outputs.dirs) }}
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.url }}
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install packages
+        uses: ./.github/actions/install-packages
+      - name: Configure AWS Credentials
+        if: inputs.environment != 'staging'
+        uses: ./.github/actions/configure-aws-credentials
+        with:
+          role-to-assume: ${{ inputs.role-to-assume }}
+      - name: Run driftctl
+        # yamllint disable-line rule:line-length
+        if: matrix.dir == 'dns' || matrix.dir == 'iam' || matrix.dir == 'storage'
+        env:
+          ENV: ${{ inputs.environment }}
+        run: |
+          eval "$(direnv export bash)"
+          ./scripts/driftctl.bash ${{ matrix.dir }}
+        working-directory: ./infra/terragrunt/
+      - name: Start kind mock cluster
+        if: matrix.dir == 'artifact' || matrix.dir == 'cd'
+        env:
+          ENV: ${{ inputs.environment }}
+        run: |
+          eval "$(direnv export bash)"
+          ./scripts/start-kind-mock-cluster.bash
+        working-directory: ./infra/terragrunt/
+      - name: Run terragrunt plan
+        env:
+          ENV: ${{ inputs.environment }}
+          DIR: ${{ matrix.dir }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+        run: |
+          eval "$(direnv export bash)"
+          just plan
+        working-directory: ./infra/terragrunt/
+      - name: Stop kind mock cluster
+        if: matrix.dir == 'artifact' || matrix.dir == 'cd'
+        env:
+          ENV: ${{ inputs.environment }}
+        run: |
+          eval "$(direnv export bash)"
+          ./scripts/stop-kind-mock-cluster.bash
+        working-directory: ./infra/terragrunt/
+  terragrunt-apply:
+    runs-on: ubuntu-20.04
+    needs:
+      - set-terragrunt-info
+      - terragrunt-plan
+    strategy:
+      fail-fast: false
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.url }}
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install packages
+        uses: ./.github/actions/install-packages
+      - name: Configure AWS Credentials
+        if: inputs.environment != 'staging'
+        uses: ./.github/actions/configure-aws-credentials
+        with:
+          role-to-assume: ${{ inputs.role-to-assume }}
+      - name: Run terragrunt apply
+        env:
+          ENV: ${{ inputs.environment }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          eval "$(direnv export bash)"
+          just apply
+        working-directory: ./infra/terragrunt/

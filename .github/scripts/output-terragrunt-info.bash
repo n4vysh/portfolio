@@ -1,11 +1,14 @@
 #!/bin/bash
 
-environments=$(
+env="$1"
+
+dirs=$(
 	find \
-		infra/terragrunt/environments/ \
+		"infra/terragrunt/environments/$env" \
 		-maxdepth 1 \
 		-mindepth 1 \
+		-type d \
 		-printf '%P\n' |
 		jq -Rnc '[inputs]'
 )
-echo "::set-output name=environments::$environments"
+echo "::set-output name=dirs::$dirs"

@@ -7,8 +7,11 @@ bucket := name + ".tfstate." + domain
 table := name + "-tfstate-lock"
 
 env := `../../scripts/get-env.bash 2>/dev/null || true`
+dir := env_var_or_default('DIR', "")
 
-opts := if env != "" {
+opts := if dir != "" {
+    "--terragrunt-working-dir=environments/" + env + "/" + dir + " --terragrunt-ignore-external-dependencies"
+} else if env != "" {
     "--terragrunt-working-dir=environments/" + env + "/"
 } else {
     ""
