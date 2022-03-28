@@ -24,7 +24,7 @@ spec:
       annotations:
         seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
     spec:
-      automountServiceAccountToken: true # for using mTLS traffic of Linkerd
+      automountServiceAccountToken: true # for using mTLS of service mesh
       securityContext:
         runAsNonRoot: true
       containers:
