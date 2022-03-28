@@ -31,6 +31,19 @@ entries:
   portfolio:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2022-03-28T13:19:32.904777683Z"
+    description: website
+    digest: 254c7382efd9e75e5891a3884aca22e950b8b4774748f4707d9b3e96115e9062
+    icon: https://raw.githubusercontent.com/n4vysh/portfolio/4b14e1c8a9ced87ed3dcecbc12d8df6ff264ccd4/misc/icon.svg
+    maintainers:
+    - name: n4vysh
+    name: portfolio
+    type: application
+    urls:
+    - https://github.com/n4vysh/portfolio/releases/download/portfolio-0.1.6/portfolio-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2022-01-04T13:42:45.265227557Z"
     description: website
     digest: 732d42e9387d59b25a03807998460100b629491a1d8a40c80ec41579b9a082e1
@@ -106,4 +119,18 @@ entries:
     urls:
     - https://github.com/n4vysh/portfolio/releases/download/portfolio-0.1.0/portfolio-0.1.0.tgz
     version: 0.1.0
-generated: "2022-01-04T13:42:45.265245457Z"
+  target-group-bindings:
+  - apiVersion: v2
+    appVersion: 1.4.0
+    created: "2022-03-28T13:19:33.084455276Z"
+    description: target group binding of AWS Load Balancer Controller
+    digest: b1f19da5584137208c4de4246bf12baf63f304218aaef1ea151751601eb78e9b
+    icon: https://raw.githubusercontent.com/aws/eks-charts/v0.0.80/docs/logo/aws.png
+    maintainers:
+    - name: n4vysh
+    name: target-group-bindings
+    type: application
+    urls:
+    - https://github.com/n4vysh/portfolio/releases/download/target-group-bindings-0.1.0/target-group-bindings-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-03-28T13:19:33.084736279Z"
