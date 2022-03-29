@@ -92,6 +92,7 @@ jobs:
         working-directory: ./infra/terragrunt/
   terragrunt-apply:
     runs-on: ubuntu-20.04
+    if: github.ref == 'refs/heads/main'
     needs:
       - set-terragrunt-info
       - terragrunt-plan
