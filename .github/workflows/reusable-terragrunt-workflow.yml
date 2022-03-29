@@ -33,6 +33,7 @@ jobs:
         run: .github/scripts/output-terragrunt-info.bash ${{inputs.environment}}
   terragrunt-plan:
     runs-on: ubuntu-20.04
+    if: needs.set-terragrunt-info.outputs.dirs != '[]'
     needs:
       - set-terragrunt-info
     strategy:
