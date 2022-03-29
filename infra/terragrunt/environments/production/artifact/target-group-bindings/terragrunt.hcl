@@ -14,6 +14,7 @@ dependencies {
   paths = [
     "../../cluster",
     "../../lb",
+    "../contour",
   ]
 }
 
