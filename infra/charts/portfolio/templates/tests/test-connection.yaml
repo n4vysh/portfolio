@@ -6,6 +6,10 @@ metadata:
   namespace: portfolio
   annotations:
     "helm.sh/hook": test
+    kube-score/ignore: pod-networkpolicy, container-security-context-user-group-id
+    # pod-networkpolicy: kind not support NetworkPolicy
+    # https://github.com/kubernetes-sigs/kind/issues/842
+    # container-security-context-user-group-id: false positive?
 spec:
   template:
     metadata:
@@ -36,15 +40,22 @@ spec:
                 - ALL
           livenessProbe:
             exec:
-              command: ["type", "-a", "wget"]
+              command:
+                - /bin/sh
+                - -c
+                - 'ps -A | grep wget'
+          # ignore CUSTOM_CONTAINERS_MISSING_READINESSPROBE of datree
+          # https://github.com/datreeio/datree/issues/398
           readinessProbe:
             exec:
-              command: ["type", "-a", "wget"]
+              command: ["true"]
           resources:
             limits:
               cpu: 100m
               memory: 128Mi
+              ephemeral-storage: 1Gi
             requests:
               cpu: 100m
               memory: 128Mi
+              ephemeral-storage: 1Gi
       restartPolicy: Never

@@ -6,3 +6,4 @@ bin/infracost
 bin/terrascan
 bin/gitleaks
 bin/step
+bin/kube-score

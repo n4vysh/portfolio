@@ -321,6 +321,13 @@ repos:
         entry: scripts/hooks/datree.bash
         files: ^infra/charts/
         pass_filenames: false
+      - id: kube-score
+        alias: infra/charts
+        name: check helm charts with kube-score
+        language: script
+        entry: scripts/hooks/kube-score.bash
+        files: ^infra/charts/
+        pass_filenames: false
   # infra/terraform
   - repo: local
     hooks:

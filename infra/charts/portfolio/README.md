@@ -1,6 +1,6 @@
 # portfolio
 
-![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.7](https://img.shields.io/badge/Version-0.1.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 website
 
@@ -19,7 +19,6 @@ website
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | host | string | `"localhost"` |  |
 | image.digest | string | `"sha256:b721a3931efa1c1b0c5700a87403eefbc793aa0494b2a5b5b27351816ecf074f"` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/n4vysh/portfolio"` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.class | string | `"contour"` |  |
@@ -32,8 +31,10 @@ website
 | labels."app.kubernetes.io/version" | string | `"1.21.4"` |  |
 | port | int | `8080` |  |
 | resources.limits.cpu | string | `"100m"` |  |
+| resources.limits.ephemeral-storage | string | `"1Gi"` |  |
 | resources.limits.memory | string | `"128Mi"` |  |
 | resources.requests.cpu | string | `"100m"` |  |
+| resources.requests.ephemeral-storage | string | `"1Gi"` |  |
 | resources.requests.memory | string | `"128Mi"` |  |
 | servicemonitor | bool | `false` |  |
 | status.port | int | `8081` |  |
