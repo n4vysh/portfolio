@@ -52,3 +52,7 @@ viz-nw:
 # Login cloud service
 login:
     aws-vault login n4vysh/{{env}}
+
+# Get credentials
+get-creds:
+    ./scripts/get-creds.bash

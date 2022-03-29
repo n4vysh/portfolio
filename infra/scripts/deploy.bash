@@ -1,7 +1,5 @@
 #!/bin/bash
 
-name=portfolio
-
 dir=$(
 	cd "$(dirname "$0")" || exit
 	git rev-parse --show-toplevel
@@ -27,11 +25,7 @@ if [[ $ENV == development ]]; then
 	)
 elif [[ $ENV =~ ^(staging|production)$ ]]; then
 	just terragrunt/apply
-	env=$(ENV="$ENV" "$dir"/scripts/get-env.bash --short 2>/dev/null)
-	aws eks update-kubeconfig \
-		--name "$env-$name" \
-		--alias "$env-$name" \
-		--kubeconfig "$HOME/.kube/configs/portfolio/$ENV/config.yaml"
+	"$dir"/infra/scripts/get-creds.bash
 else
 	echo 'No support this environment' 1>&2
 	exit 1
