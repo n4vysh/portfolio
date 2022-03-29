@@ -178,17 +178,21 @@ can access EKS control plane by [aws-auth][aws-auth-link] ConfigMap.
 
 ## CI/CD Pipeline
 
-### CI
+Use [GitHub Actions][github-actions-link], Flux, and Flagger.
 
-[GitHub Actions][github-actions-link] run pre-commit, skaffold,
-[drifctl][driftctl-link], terragrunt, and [chart-releaser][chart-releaser-link]
-in main workflow when push source code to GitHub repository. A main workflow use
-[cache action][cache-action-link], [composite action][composite-action-link],
-[build matrix][build-matrix-link], [OpenID Connect][oidc-link],
-[dependent job][dependent-job-link], [environments][environments-link], and
-[secrets][secrets-link].
+### GitHub Actions
 
-### CD
+GitHub Actions run pre-commit, skaffold, [drifctl][driftctl-link], terragrunt,
+and [chart-releaser][chart-releaser-link] in main workflow when push source code
+to GitHub repository. A main workflow use [cache action][cache-action-link],
+[composite action][composite-action-link],
+[reusable workflow][reusable-workflow-link], [build matrix][build-matrix-link],
+[OpenID Connect][oidc-link], [dependent job][dependent-job-link],
+[environments][environments-link], and [secrets][secrets-link].
+
+![main workflow](./misc/screenshots/github_actions_main_workflow.png)
+
+### Flux + Flagger
 
 Flux keep Kubernetes clusters in sync with Git repository, and Flagger introduce
 by gradually shifting traffic to the new portfolio version while measuring
@@ -291,6 +295,7 @@ BY-NC-ND 4.0. Other files distributed under the MIT license. See the
 [chart-releaser-link]: https://github.com/helm/chart-releaser
 [cache-action-link]: https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
 [composite-action-link]: https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+[reusable-workflow-link]: https://docs.github.com/en/actions/using-workflows/reusing-workflows
 [build-matrix-link]: https://docs.github.com/en/actions/using-jobs/using-a-build-matrix-for-your-jobs
 [oidc-link]: https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
 [dependent-job-link]: https://docs.github.com/en/actions/using-workflows/advanced-workflow-features#creating-dependent-jobs
