@@ -43,6 +43,7 @@ $dir/scripts/install/infracost.bash
 $dir/scripts/install/terrascan.bash
 $dir/scripts/install/gitleaks.bash
 $dir/scripts/install/step.bash
+$dir/scripts/install/kube-score.bash
 $dir/frontend/scripts/install-packages.bash
 $dir/infra/scripts/install-packages.bash
 $dir/misc/scripts/download-vale-styles.bash
