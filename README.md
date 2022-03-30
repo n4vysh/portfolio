@@ -15,21 +15,21 @@ skillsets and expertise.
 
 ## Requirements
 
-| Name                                  | Description                   |
-| :------------------------------------ | :---------------------------- |
-| [Bash][bash-link]                     | Unix shell                    |
-| [Grep][grep-link]                     | Line-oriented search tool     |
-| [sed][sed-link]                       | Stream editor                 |
-| [Gawk][gawk-link]                     | Pattern scanning tool         |
-| [Findutils][findutils-link]           | Directory searching utilities |
-| [GNU parallel][gnu-parallel-link]     | Parallel job executor         |
-| [asdf][asdf-link]                     | Version manager               |
-| [asdf-direnv][asdf-direnv-link]       | direnv plugin for asdf        |
-| [Docker][docker-link]                 | Virtualization software       |
-| [atool][atool-link]                   | File archive manager          |
-| [CCZE][ccze-link]                     | Log colorizer                 |
-| [GoAccess][goaccess-link]             | Log Analyzer                  |
-| [drawio-desktop][drawio-desktop-link] | Graph drawing software        |
+| Name                                  | Description                   | Version     |
+| :------------------------------------ | :---------------------------- | :---------- |
+| [Bash][bash-link]                     | Unix shell                    | ~> 5.1.16   |
+| [Grep][grep-link]                     | Line-oriented search tool     | >= 3.7      |
+| [sed][sed-link]                       | Stream editor                 | >= 4.8      |
+| [Gawk][gawk-link]                     | Pattern scanning tool         | ~> 5.1.1    |
+| [Findutils][findutils-link]           | Directory searching utilities | ~> 4.9.0    |
+| [GNU parallel][gnu-parallel-link]     | Parallel job executor         | >= 20220322 |
+| [asdf][asdf-link]                     | Version manager               | ~> 0.9.0    |
+| [asdf-direnv][asdf-direnv-link]       | direnv plugin for asdf        | ~> 2.28.0   |
+| [Docker][docker-link]                 | Virtualization software       | ~> 20.10.14 |
+| [atool][atool-link]                   | File archive manager          | ~> 0.39.0   |
+| [CCZE][ccze-link]                     | Log colorizer                 | ~> 0.2.1    |
+| [GoAccess][goaccess-link]             | Log Analyzer                  | ~> 1.5.5    |
+| [drawio-desktop][drawio-desktop-link] | Graph drawing software        | ~> 17.2.4   |
 
 ## Development setup
 
