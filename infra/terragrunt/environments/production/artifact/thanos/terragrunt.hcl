@@ -57,12 +57,20 @@ inputs = {
             }
             storegateway = {
               enabled = true
+              # prevent volume node affinity conflict
+              persistence = {
+                enabled = false
+              }
             }
             compactor = {
               enabled                = true
               retentionResolution1h  = "24h"
               retentionResolution5m  = "24h"
               retentionResolutionRaw = "24h"
+              # prevent volume node affinity conflict
+              persistence = {
+                enabled = false
+              }
             }
             metrics = {
               enabled = true

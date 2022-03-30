@@ -47,13 +47,5 @@ inputs = {
       ttl     = 3600
       records = dependency.delegation_sets.outputs.route53_delegation_set_name_servers["${local.env.short}.${local.root.domain}"]
     },
-    {
-      name = local.env.short
-      type = "DS"
-      ttl  = 3600
-      records = [
-        "51205 13 2 E969CFA564681A158503652A9732A4E6729BCA6CF4794EE4A77353BDDF1AB43E",
-      ]
-    },
   ]
 }
