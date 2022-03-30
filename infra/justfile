@@ -24,10 +24,9 @@ destroy: init
 switch: init
     (dir=`readlink -f "{{ kubeconfig }}"` && cd "{{invocation_directory()}}" && {{cmd}} ctx -f "$dir")
 
-# Check middleware status
+# Check status of pods, nodes, and middlewares
 check:
-    flux check
-    linkerd check
+    ./scripts/check.bash
 
 # Trigger a reconciliation of sources and resources
 reconcile:

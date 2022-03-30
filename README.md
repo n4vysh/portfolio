@@ -127,7 +127,7 @@ ENV=dev just switch # development environment
 ENV=stg just switch # staging environment
 ENV=prd just switch # production environment
 
-# Check flux and linkerd status
+# Check status of pods, nodes, flux, and linkerd
 just check
 
 # Trigger a reconciliation of kubernetes sources and resources with flux
