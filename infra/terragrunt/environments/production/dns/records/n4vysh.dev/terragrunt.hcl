@@ -1,8 +1,3 @@
-locals {
-  root = read_terragrunt_config(find_in_parent_folders()).locals
-  env  = read_terragrunt_config("${dirname(find_in_parent_folders(""))}/base/env.hcl").locals.env
-}
-
 include "root" {
   path = find_in_parent_folders()
 }
@@ -40,12 +35,6 @@ inputs = {
       records = [
         "keybase-site-verification=5SuI24_yjjuEK2_wZN1Wl9j1I49OqY43Ylh4QYGShDk",
       ]
-    },
-    {
-      name    = local.env.short
-      type    = "NS"
-      ttl     = 3600
-      records = dependency.delegation_sets.outputs.route53_delegation_set_name_servers["${local.env.short}.${local.root.domain}"]
     },
   ]
 }

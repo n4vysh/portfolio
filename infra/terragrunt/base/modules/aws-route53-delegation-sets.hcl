@@ -5,7 +5,7 @@ locals {
   sets = compact(
     [
       local.env.short == "prd" ? local.root.domain : "",
-      "${local.env.short}.${local.root.domain}",
+      local.env.short == "stg" ? "${local.env.short}.${local.root.domain}" : "",
     ]
   )
 
