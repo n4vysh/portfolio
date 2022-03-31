@@ -88,7 +88,7 @@ Run `just check` to lint and format the source code with
 | [gitleaks][gitleaks-link]                                                                                                                                                                                                         | secrets                         |
 | [codespell][codespell-link]                                                                                                                                                                                                       | misspellings                    |
 | [actionlint][actionlint-link]                                                                                                                                                                                                     | GitHub Actions workflow files   |
-| [kube-linter][kube-linter-link] + [ct][ct-link] + [kubeval][kubeval-link] + [datree][datree-link] + [kube-score][kube-score-link] + [helm-docs][helm-docs-link] + [checkov][checkov-link]                                         | Helm charts                     |
+| [kube-linter][kube-linter-link] + [ct][ct-link] + [kubeval][kubeval-link] + [datree][datree-link] + [kube-score][kube-score-link] + [polaris][polaris-link] + [helm-docs][helm-docs-link] + [checkov][checkov-link]               | Helm charts                     |
 | [terraform fmt][terraform-fmt-link] + [terraform validate][terraform-validate-link] + [terrascan][terrascan-link] + [trivy][trivy-link] + [tflint][tflint-link] + [terraform-docs][terraform-docs-link] + [checkov][checkov-link] | tf files                        |
 | [terragrunt hclfmt][terragrunt-hclfmt-link]                                                                                                                                                                                       | terragrunt.hcl                  |
 
@@ -120,6 +120,7 @@ Run `just check` to lint and format the source code with
 [checkov-link]: https://www.checkov.io/
 [datree-link]: https://www.datree.io/
 [kube-score-link]: https://github.com/zegl/kube-score
+[polaris-link]: https://www.fairwinds.com/polaris
 [terraform-fmt-link]: https://www.terraform.io/cli/commands/fmt
 [terraform-validate-link]: https://www.terraform.io/cli/commands/validate
 [terrascan-link]: https://runterrascan.io/

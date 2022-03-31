@@ -328,6 +328,13 @@ repos:
         entry: scripts/hooks/kube-score.bash
         files: ^infra/charts/
         pass_filenames: false
+      - id: polaris
+        alias: infra/charts
+        name: check helm charts with polaris
+        language: script
+        entry: scripts/hooks/polaris.bash
+        files: ^infra/charts/
+        pass_filenames: false
   # infra/terraform
   - repo: local
     hooks:

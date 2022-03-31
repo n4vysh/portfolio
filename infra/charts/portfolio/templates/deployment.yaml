@@ -19,6 +19,9 @@ metadata:
     # pod-networkpolicy: kind not support NetworkPolicy
     # https://github.com/kubernetes-sigs/kind/issues/842
     # container-security-context-user-group-id: paketo-buildpacks/nginx use 1000 (cnb user) and nginx-prometheus-exporter use 1001
+    polaris.fairwinds.com/deploymentMissingReplicas-exempt: "true" # use HPA
+    # paketo-buildpacks/nginx needs write access because it generate nginx.conf
+    polaris.fairwinds.com/notReadOnlyRootFilesystem-exempt: "true"
 spec:
   selector:
     matchLabels:
