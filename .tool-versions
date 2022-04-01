@@ -19,6 +19,7 @@ kubeval v0.16.1
 kubie 0.16.0
 linkerd 2.11.1
 nodejs 16.13.2
+pluto 5.7.0
 polaris 5.1.0
 pre-commit 2.16.0
 python 3.10.0

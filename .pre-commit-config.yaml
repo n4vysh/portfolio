@@ -335,6 +335,13 @@ repos:
         entry: scripts/hooks/polaris.bash
         files: ^infra/charts/
         pass_filenames: false
+      - id: pluto
+        alias: infra/charts
+        name: check helm charts with pluto
+        language: script
+        entry: scripts/hooks/pluto.bash
+        files: ^infra/charts/
+        pass_filenames: false
   # infra/terraform
   - repo: local
     hooks:
