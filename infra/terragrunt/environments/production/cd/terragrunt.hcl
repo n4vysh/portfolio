@@ -12,7 +12,7 @@ include "flux" {
 
 dependencies {
   paths = [
-    "../cluster",
+    "../artifact/configmaps",
   ]
 }
 

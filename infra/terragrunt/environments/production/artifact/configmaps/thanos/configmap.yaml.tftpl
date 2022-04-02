@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ${name}
+  namespace: ${namespace}
+data:
+  values.yaml: |
+    objstore.yml: |
+      type: s3
+      config:
+        bucket: ${id}
+        endpoint: s3-accesspoint.dualstack.${region}.amazonaws.com
+        region: ${region}

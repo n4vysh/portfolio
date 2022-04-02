@@ -22,12 +22,6 @@ generate "kubernetes_provider" {
   contents  = file("kubernetes.tf")
 }
 
-generate "helm_provider" {
-  path      = "helm.provider.tf"
-  if_exists = "overwrite"
-  contents  = file("helm.tf")
-}
-
 generate "kubectl_provider" {
   path      = "kubectl.provider.tf"
   if_exists = "overwrite"

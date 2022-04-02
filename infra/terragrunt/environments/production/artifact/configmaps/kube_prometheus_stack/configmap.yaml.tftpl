@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ${name}
+  namespace: ${namespace}
+data:
+  values.yaml: |
+    prometheus:
+      prometheusSpec:
+        externalLabels:
+          env: ${env}
+          cluster: ${cluster}
+      serviceAccount:
+        annotations:
+          eks.amazonaws.com/role-arn: ${role_arn}
+      extraSecret:
+        name: thanos-secret
+        data:
+          objstore.yml: |
+            type: s3
+            config:
+              bucket: ${s3_bucket_id}
+              endpoint: s3-accesspoint.dualstack.${s3_bucket_region}.amazonaws.com
+              region: ${s3_bucket_region}

@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ${name}
+  namespace: ${namespace}
+data:
+  values.yaml: |
+    targetGroupARN: ${target_group_arn}
+    securityGroupID: ${security_group_id}

@@ -8,3 +8,7 @@ resources:
   - linkerd
   - linkerd-viz
   - contour
+  - aws-load-balancer-controller
+  - kube-prometheus-stack
+  - fluent-bit
+  - loki

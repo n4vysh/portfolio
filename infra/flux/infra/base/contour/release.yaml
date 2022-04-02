@@ -19,6 +19,10 @@ spec:
   dependsOn:
     - name: linkerd
       namespace: linkerd
+    - name: kube-prometheus-stack
+      namespace: kube-prometheus-stack
+    - name: thanos
+      namespace: kube-prometheus-stack
   interval: 1m
   values:
     envoy:
@@ -57,13 +61,7 @@ spec:
   interval: 1m
   valuesFrom:
     - kind: ConfigMap
-      name: target-group-bindings
-      valuesKey: targetGroupARN
-      targetPath: targetGroupARN
-    - kind: ConfigMap
-      name: target-group-bindings
-      valuesKey: securityGroupID
-      targetPath: securityGroupID
+      name: target-group-bindings-helm-values
   values:
     service:
       name: contour-envoy

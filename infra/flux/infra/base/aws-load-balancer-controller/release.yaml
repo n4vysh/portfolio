@@ -1,0 +1,32 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: aws-load-balancer-controller
+  namespace: kube-system
+spec:
+  releaseName: aws-load-balancer-controller
+  chart:
+    spec:
+      chart: aws-load-balancer-controller
+      sourceRef:
+        kind: HelmRepository
+        name: eks
+        namespace: flux-system
+      version: "1.4.0"
+  test:
+    enable: true
+  dependsOn:
+    - name: kube-prometheus-stack
+      namespace: kube-prometheus-stack
+    - name: thanos
+      namespace: kube-prometheus-stack
+  interval: 1m
+  valuesFrom:
+    - kind: ConfigMap
+      name: aws-load-balancer-controller-helm-values
+  values:
+    serviceAccount:
+      name: aws-load-balancer-controller
+    serviceMonitor:
+      enabled: true

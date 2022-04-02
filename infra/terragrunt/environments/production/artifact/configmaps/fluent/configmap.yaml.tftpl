@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ${name}
+  namespace: ${namespace}
+data:
+  values.yaml: |
+    config:
+      outputs: |
+        [OUTPUT]
+            name                   loki
+            match                  *
+            labels                 job=fluentbit,env=${env}
+            auto_kubernetes_labels on
+
+            host loki.loki

@@ -8,3 +8,7 @@ resources:
   - falcosecurity.yaml
   - linkerd.yaml
   - bitnami.yaml
+  - eks.yaml
+  - prometheus-community.yaml
+  - fluent.yaml
+  - grafana.yaml
