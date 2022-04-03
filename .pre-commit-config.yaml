@@ -422,3 +422,13 @@ repos:
           '
         files: ^infra/terragrunt/
         pass_filenames: false
+  # infra/flux
+  - repo: local
+    hooks:
+      - id: kubeconform
+        alias: infra/flux
+        name: check manifest files with kubeconform
+        language: script
+        entry: infra/flux/scripts/kubeconform.bash
+        files: ^infra/flux/
+        pass_filenames: false

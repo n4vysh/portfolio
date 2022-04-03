@@ -46,6 +46,7 @@ $dir/scripts/install/step.bash
 $dir/scripts/install/kube-score.bash
 $dir/frontend/scripts/install-packages.bash
 $dir/infra/scripts/install-packages.bash
+$dir/infra/flux/scripts/download-crd-schemas.bash
 $dir/misc/scripts/download-vale-styles.bash
 EOF
 cat "$joblog"

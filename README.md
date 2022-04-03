@@ -88,6 +88,7 @@ Run `just check` to lint and format the source code with
 | [gitleaks][gitleaks-link]                                                                                                                                                                                                                 | secrets                         |
 | [codespell][codespell-link]                                                                                                                                                                                                               | misspellings                    |
 | [actionlint][actionlint-link]                                                                                                                                                                                                             | GitHub Actions workflow files   |
+| [kubeconform][kubeconform-link]                                                                                                                                                                                                           | Kubernetes manifest files       |
 | [kube-linter][kube-linter-link] + [ct][ct-link] + [kubeval][kubeval-link] + [datree][datree-link] + [kube-score][kube-score-link] + [polaris][polaris-link] + [pluto][pluto-link] + [helm-docs][helm-docs-link] + [checkov][checkov-link] | Helm charts                     |
 | [terraform fmt][terraform-fmt-link] + [terraform validate][terraform-validate-link] + [terrascan][terrascan-link] + [trivy][trivy-link] + [tflint][tflint-link] + [terraform-docs][terraform-docs-link] + [checkov][checkov-link]         | tf files                        |
 | [terragrunt hclfmt][terragrunt-hclfmt-link]                                                                                                                                                                                               | terragrunt.hcl                  |
@@ -113,6 +114,7 @@ Run `just check` to lint and format the source code with
 [gitleaks-link]: https://github.com/zricethezav/gitleaks
 [codespell-link]: https://github.com/codespell-project/codespell
 [actionlint-link]: https://github.com/rhysd/actionlint
+[kubeconform-link]: https://github.com/yannh/kubeconform
 [kube-linter-link]: https://github.com/stackrox/kube-linter
 [helm-docs-link]: https://github.com/norwoodj/helm-docs
 [ct-link]: https://github.com/helm/chart-testing
