@@ -32,6 +32,7 @@ inputs = {
   cluster_version = "1.21"
 
   create_cloudwatch_log_group = false
+  cluster_enabled_log_types   = []
 
   cluster_addons = {
     coredns = {
