@@ -12,7 +12,8 @@ metadata:
     ignore-check.kube-linter.io/no-read-only-root-fs: paketo-buildpacks/nginx needs write access because it generate nginx.conf
     checkov.io/skip1: CKV_K8S_15=Use IfNotPresent for skaffold dev
     checkov.io/skip2: CKV_K8S_22=paketo-buildpacks/nginx needs write access because it generate nginx.conf
-    checkov.io/skip3: CKV_K8S_40=paketo-buildpacks/nginx use 1000 (cnb user) and nginx-prometheus-exporter use 1001
+    checkov.io/skip3: CKV_K8S_38=Use mTLS of service mesh
+    checkov.io/skip4: CKV_K8S_40=paketo-buildpacks/nginx use 1000 (cnb user) and nginx-prometheus-exporter use 1001
     kube-score/ignore: container-security-context-readonlyrootfilesystem, pod-probes, pod-networkpolicy, container-security-context-user-group-id
     # container-security-context-readonlyrootfilesystem: paketo-buildpacks/nginx needs write access because it generate nginx.conf
     # pod-probes: nginx-prometheus-exporter can't different readiness and liveness probe
