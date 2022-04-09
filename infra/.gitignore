@@ -1,0 +1,5 @@
+bin/kube-linter
+bin/infracost
+bin/terrascan
+bin/step
+bin/kube-score

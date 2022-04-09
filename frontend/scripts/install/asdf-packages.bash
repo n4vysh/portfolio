@@ -13,20 +13,7 @@ _install() {
 export -f _install
 
 joblog="$(TMPDIR=/tmp/ mktemp)"
-cat \
-	<(
-		awk '{print $1}' .tool-versions |
-			grep -v 'just' |
-			grep -v 'vale' |
-			grep -v 'lefthook'
-	) \
-	<(
-		cat <<-EOF
-			just https://github.com/heliumbrain/asdf-just
-			vale https://github.com/osg/asdf-vale
-			lefthook https://gitlab.com/jtzero/asdf-lefthook.git
-		EOF
-	) |
+awk '{print $1}' ".tool-versions" |
 	sort |
 	parallel -a - --colsep ' ' --joblog "$joblog" _install
 cat "$joblog"

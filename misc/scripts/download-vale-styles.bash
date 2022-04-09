@@ -11,7 +11,7 @@ _download() {
 	url="$1"
 	file="${url##*/}"
 	xh -F -o "$file" "$url" &&
-		unzip "$file" &&
+		aunpack "$file" >/dev/null 2>&1 &&
 		rm "$file"
 }
 export -f _download
@@ -26,3 +26,5 @@ parallel -a - --joblog "$joblog" _download <<-EOF
 	https://github.com/errata-ai/write-good/releases/download/v0.4.0/write-good.zip
 EOF
 cat "$joblog"
+# shellcheck disable=SC2064
+trap "rm -f '$joblog'" EXIT

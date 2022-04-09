@@ -6,10 +6,8 @@ export TMPDIR="$HOME"/.pack
 mkdir -p "$TMPDIR"
 
 dir=$(
-  dirname "$(
-    cd "$(dirname "$0")" || exit
-    pwd
-  )"
+  cd "$(dirname "$0")" || exit
+  git rev-parse --show-toplevel
 )
 ENV=$("$dir"/scripts/get-env.bash 2>/dev/null || true)
 export KUBECONFIG

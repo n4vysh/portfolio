@@ -35,18 +35,14 @@ joblog="$(TMPDIR=/tmp/ mktemp)"
 parallel -a - --joblog "$joblog" direnv exec "$dir" <<EOF
 $dir/scripts/install/python-packages.bash
 $dir/scripts/install/node-packages.bash
-$dir/scripts/install/pre-commit.bash
+$dir/scripts/install/lefthook.bash
 $dir/scripts/install/shellharden.bash
-$dir/scripts/install/kube-linter.bash
 $dir/scripts/install/actionlint.bash
-$dir/scripts/install/infracost.bash
-$dir/scripts/install/terrascan.bash
 $dir/scripts/install/gitleaks.bash
-$dir/scripts/install/step.bash
-$dir/scripts/install/kube-score.bash
 $dir/frontend/scripts/install-packages.bash
 $dir/infra/scripts/install-packages.bash
-$dir/infra/flux/scripts/download-crd-schemas.bash
 $dir/misc/scripts/download-vale-styles.bash
 EOF
 cat "$joblog"
+# shellcheck disable=SC2064
+trap "rm -f '$joblog'" EXIT

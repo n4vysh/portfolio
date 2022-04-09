@@ -1,0 +1,35 @@
+# check helm chart with kube-linter
+lint-kube-linter:
+    kube-linter lint portfolio/ target-group-bindings/
+
+# check helm chart with ct
+lint-ct:
+    ct lint --all --chart-dirs .
+
+# check helm chart with kubeval
+lint-kubeval:
+    ./scripts/kubeval.bash
+
+# check helm chart with checkov
+lint-checkov:
+    ./scripts/checkov.bash
+
+# check helm chart with datree
+lint-datree:
+    ./scripts/datree.bash
+
+# check helm chart with kube-score
+lint-kube-score:
+    ./scripts/kube-score.bash
+
+# check helm chart with polaris
+lint-polaris:
+    ./scripts/polaris.bash
+
+# check helm chart with pluto
+lint-pluto:
+    ./scripts/pluto.bash
+
+# generate document of helm chart with helm-docs
+generate-docs:
+    helm-docs

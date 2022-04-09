@@ -10,7 +10,10 @@ dest=$(
 	pwd
 )
 
-cd "$(TMPDIR=/tmp/ mktemp -d)" || exit
+tmpdir="$(TMPDIR=/tmp/ mktemp -d)"
+cd "$tmpdir" || exit
 xh -F -o "$name.$ext" "$url"
-aunpack "$name.$ext"
+aunpack "$name.$ext" >/dev/null 2>&1
 cp "$name"/*.json "$dest/"
+# shellcheck disable=SC2064
+trap "rm -rf '$tmpdir'" EXIT

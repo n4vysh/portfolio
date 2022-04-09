@@ -22,14 +22,14 @@ runs:
           frontend/misc/node_modules/
           bin/
           frontend/bin/
+          infra/bin/
           infra/flux/crd-schemas/
           misc/vale-styles/
-          ~/.cache/pre-commit/
           ~/.cache/deno/
           ~/.cache/helm/
           ~/.local/share/helm/plugins/
         # yamllint disable-line rule:line-length
-        key: ${{ runner.os }}-${{ hashFiles('**/scripts/install-packages.bash', '**/scripts/install/*.bash', '.envrc', 'misc/Pipfile.lock', '**/.tool-versions', 'misc/pnpm-lock.yaml', '.pre-commit-config.yaml', 'frontend/scripts.yml', 'infra/misc/helm-plugins.yaml', 'infra/flux/scripts/download-crd-schemas.bash', 'misc/scripts/download-vale-styles.bash', 'bin/') }}
+        key: ${{ runner.os }}-${{ hashFiles('**/scripts/install-packages.bash', '**/scripts/install/*.bash', '.envrc', 'infra/Pipfile.lock', '**/.tool-versions', 'misc/pnpm-lock.yaml', 'frontend/scripts.yml', 'infra/misc/helm-plugins.yaml', 'infra/flux/scripts/download-crd-schemas.bash', 'misc/scripts/download-vale-styles.bash', '**/bin/') }}
     - name: Install packages
       if: steps.packages-cache.outputs.cache-hit != 'true'
       run: ./scripts/install-packages.bash -ie

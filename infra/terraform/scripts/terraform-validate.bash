@@ -1,6 +1,6 @@
 #!/bin/bash
 
-find infra/terraform/modules/ -mindepth 1 -maxdepth 1 |
+find modules/ -mindepth 1 -maxdepth 1 |
 	while IFS= read -r dir; do
 		(
 			cd "$dir" || exit

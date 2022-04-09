@@ -1,5 +1,11 @@
 #!/bin/bash
 
+dir=$(
+	cd "$(dirname "$0")" || exit
+	pwd
+)/../../
+cd "$dir" || exit
+
 _install() {
 	package="$1"
 	url="$2"
@@ -15,16 +21,14 @@ export -f _install
 joblog="$(TMPDIR=/tmp/ mktemp)"
 cat \
 	<(
-		awk '{print $1}' .tool-versions |
-			grep -v 'just' |
-			grep -v 'vale' |
-			grep -v 'lefthook'
+		awk '{print $1}' "$dir/.tool-versions" |
+			grep -v 'kubeval' |
+			grep -v 'linkerd'
 	) \
 	<(
 		cat <<-EOF
-			just https://github.com/heliumbrain/asdf-just
-			vale https://github.com/osg/asdf-vale
-			lefthook https://gitlab.com/jtzero/asdf-lefthook.git
+			kubeval https://github.com/stefansedich/asdf-kubeval
+			linkerd https://github.com/KazW/asdf-linkerd.git
 		EOF
 	) |
 	sort |

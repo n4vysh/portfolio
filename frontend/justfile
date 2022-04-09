@@ -41,21 +41,34 @@ take:
 test:
     lhci autorun
 
-fmt: fmt-deno fmt-css-prettier fmt-css-stylelint
-
+# format js, ts, tsx, md, and json files with deno fmt
 fmt-deno *target:
     deno fmt --config deno.json {{target}}
 
+# format css file with prettier
 fmt-css-prettier target='style/':
     prettier --parser css --write --list-different {{target}}
 
+# format css files with stylelint
 fmt-css-stylelint target='style/':
     stylelint --cache --fix {{target}}
 
-lint: lint-deno lint-css
+# check js, ts, tsx, md, and json files with deno fmt
+check-deno-fmt *target:
+    deno fmt --check --config deno.json {{target}}
 
+# check css file with prettier
+check-css-prettier target='style/':
+    prettier --parser css --check {{target}}
+
+# check ts and tsx files with deno lint
 lint-deno *target:
     deno lint --config deno.json {{target}}
 
+# check css files with stylelint
 lint-css target='style/':
     stylelint --cache {{target}}
+
+# check skaffold.yaml of skaffold
+check-config:
+    skaffold diagnose

@@ -8,34 +8,22 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install packages
         uses: ./.github/actions/install-packages
-  set-pre-commit-info:
-    runs-on: ubuntu-20.04
-    outputs:
-      hooks: ${{ steps.output-pre-commit-info.outputs.hooks }}
-    steps:
-      - uses: actions/checkout@v2
-      - id: output-pre-commit-info
-        run: .github/scripts/output-pre-commit-info.bash
-  pre-commit:
+  lefthook:
     runs-on: ubuntu-20.04
     needs:
       - install-packages
-      - set-pre-commit-info
     strategy:
       fail-fast: false
-      matrix:
-        hook: ${{ fromJson(needs.set-pre-commit-info.outputs.hooks) }}
-    permissions:
-      id-token: write
-      contents: read
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
       - name: Install packages
         uses: ./.github/actions/install-packages
-      - name: Run pre-commit hooks
+      - name: Run lefthook
         run: |
           eval "$(direnv export bash)"
-          just check ${{ matrix.hook }}
+          just check
   deploy-prd:
     # yamllint disable-line rule:line-length
     uses: n4vysh/portfolio/.github/workflows/reusable-terragrunt-workflow.yml@main
@@ -46,7 +34,7 @@ jobs:
       role-to-assume: arn:aws:iam::804137327620:role/prd-portfolio-github-actions
     needs:
       - install-packages
-      - pre-commit
+      - lefthook
     secrets:
       PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
@@ -59,7 +47,7 @@ jobs:
       role-to-assume: dummy-arn
     needs:
       - install-packages
-      - pre-commit
+      - lefthook
     secrets:
       PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
@@ -67,7 +55,7 @@ jobs:
     runs-on: ubuntu-20.04
     if: github.ref == 'refs/heads/main'
     needs:
-      - pre-commit
+      - lefthook
     steps:
       - uses: actions/checkout@v2
       - name: Install packages
@@ -96,7 +84,7 @@ jobs:
     runs-on: ubuntu-20.04
     if: github.ref == 'refs/heads/main'
     needs:
-      - pre-commit
+      - lefthook
     steps:
       - uses: actions/checkout@v2
         with:

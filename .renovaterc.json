@@ -5,8 +5,5 @@
     "schedule:quarterly",
     "group:allNonMajor"
   ],
-  "timezone": "Asia/Tokyo",
-  "pre-commit": {
-    "enabled": true
-  }
+  "timezone": "Asia/Tokyo"
 }

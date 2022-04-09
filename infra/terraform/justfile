@@ -1,0 +1,36 @@
+# check terraform config
+check-fmt *target:
+    terraform fmt -check {{ target }}
+
+# format terraform config
+fmt:
+    terraform fmt -recursive
+
+# validate terraform config
+validate:
+    ./scripts/terraform-validate.bash
+
+# check document with terraform-docs
+check-docs:
+    terraform-docs . --output-check
+
+# generate document with terraform-docs
+generate:
+    terraform-docs .
+
+# check terraform config with checkov
+lint-checkov:
+    pipenv run checkov -d modules/ --quiet --framework terraform --compact
+
+# check terraform config with terrascan
+lint-terrascan:
+    ./scripts/terrascan.bash
+
+# check terraform config with trivy
+lint-trivy:
+    trivy conf .
+
+# check terraform config with tflint
+lint-tflint:
+  tflint --init
+  tflint

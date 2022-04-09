@@ -1,7 +1,7 @@
 #!/bin/bash
 
-version=1.14.0
-prefix="kube-score_$version"
+version=0.9.19
+prefix="infracost"
 
 platform=''
 case "$OSTYPE" in
@@ -17,7 +17,6 @@ esac
 architecture=''
 case "$(uname -m)" in
 aarch64* | arm64) architecture=arm64 ;;
-armv6*) architecture=armv6 ;;
 x86_64*) architecture=amd64 ;;
 *)
 	echo "Unsupported architecture" >&2
@@ -25,17 +24,18 @@ x86_64*) architecture=amd64 ;;
 	;;
 esac
 
-ext='tar.gz'
-
-file="${prefix}_${platform}_$architecture.$ext"
-url="https://github.com/zegl/kube-score/releases/download/v$version/$file"
+file="$prefix-$platform-$architecture.tar.gz"
+url="https://github.com/infracost/infracost/releases/download/v$version/$file"
 
 dest=$(
 	cd "$(dirname "$0")/../../bin/" || exit
 	pwd
 )
 
-cd "$(TMPDIR=/tmp/ mktemp -d)" || exit
+tmpdir="$(TMPDIR=/tmp/ mktemp -d)"
+cd "$tmpdir" || exit
 xh -F -o "$file" "$url"
-aunpack "$file"
-cp "${prefix}_${platform}_$architecture/kube-score" "$dest/kube-score"
+aunpack "$file" >/dev/null 2>&1
+cp "$prefix-$platform-$architecture" "$dest/$prefix"
+# shellcheck disable=SC2064
+trap "rm -rf '$tmpdir'" EXIT

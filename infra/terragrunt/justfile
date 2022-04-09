@@ -56,6 +56,10 @@ destroy:
 render:
     (cd "{{invocation_directory()}}" && terragrunt render-json --terragrunt-json-out /dev/stdout | jq -r)
 
+# Check terragrunt config
+check-fmt:
+    terragrunt hclfmt --terragrunt-check
+
 # Format terragrunt config
 fmt:
     terragrunt hclfmt

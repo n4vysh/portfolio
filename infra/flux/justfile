@@ -21,3 +21,7 @@ generate:
         --ca infra/base/linkerd/ca.crt \
         --ca-key infra/base/linkerd/ca.key
     rm infra/base/linkerd/ca.key
+
+# check manifest files with kubeconform
+check-kubeconform:
+    ./scripts/kubeconform.bash

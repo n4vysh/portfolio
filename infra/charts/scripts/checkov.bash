@@ -7,15 +7,16 @@ ln -s /dev/stdin "$yaml"
 # shellcheck disable=SC2064
 trap "rm '$yaml'" EXIT
 
-for name in portfolio target-group-bindings; do
-	(
-		set -x
-		cd "infra/charts/$name" || exit
-		helm template -f "ci/test-values.yaml" . |
-			pipenv run checkov \
-				--quiet \
-				-f "$yaml" \
-				--framework kubernetes \
-				--compact
-	)
-done
+set -e
+name=portfolio
+
+(
+	set -x
+	cd "$name" || exit
+	helm template -f "ci/test-values.yaml" . |
+		pipenv run checkov \
+			--quiet \
+			-f "$yaml" \
+			--framework kubernetes \
+			--compact
+)

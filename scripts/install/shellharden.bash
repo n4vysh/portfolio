@@ -18,6 +18,9 @@ dest=$(
 	pwd
 )
 
-cd "$(TMPDIR=/tmp/ mktemp -d)" || exit
+tmpdir="$(TMPDIR=/tmp/ mktemp -d)"
+cd "$tmpdir" || exit
 xh -F -o "$file" "$url"
 install "$file" "$dest/shellharden"
+# shellcheck disable=SC2064
+trap "rm -rf '$tmpdir'" EXIT

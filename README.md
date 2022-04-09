@@ -70,7 +70,7 @@ them.
 ## Test
 
 Run `just check` to lint and format the source code with
-[pre-commit][pre-commit-link]. pre-commit run following tools.
+[lefthook][lefthook-link]. lefthook run following tools.
 
 | Name                                                                                                                                                                                                                                      | Target type                     |
 | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------ |
@@ -93,7 +93,7 @@ Run `just check` to lint and format the source code with
 | [terraform fmt][terraform-fmt-link] + [terraform validate][terraform-validate-link] + [terrascan][terrascan-link] + [trivy][trivy-link] + [tflint][tflint-link] + [terraform-docs][terraform-docs-link] + [checkov][checkov-link]         | tf files                        |
 | [terragrunt hclfmt][terragrunt-hclfmt-link]                                                                                                                                                                                               | terragrunt.hcl                  |
 
-[pre-commit-link]: https://pre-commit.com/
+[lefthook-link]: https://github.com/evilmartians/lefthook
 [deno-link]: https://deno.land/
 [deno-fmt-link]: https://deno.land/manual/tools/formatter
 [deno-lint-link]: https://deno.land/manual/tools/linter
@@ -142,9 +142,9 @@ Run `just build` to build docker image of [nginx][nginx-link] with skaffold and
 
 ## Update
 
-Run `just update` to update dependency packages and pre-commit hooks.
-Additionally [Renovate][renovate-link] create update pull requests every 3
-months on the first day of the month.
+Run `just update` to update dependency packages. Additionally
+[Renovate][renovate-link] create update pull requests every 3 months on the
+first day of the month.
 
 [renovate-link]: https://renovatebot.com
 
@@ -351,9 +351,9 @@ Use [GitHub Actions][github-actions-link], Flux, and Flagger.
 
 ### GitHub Actions
 
-GitHub Actions run pre-commit, skaffold, [drifctl][driftctl-link], terragrunt,
-and [chart-releaser][chart-releaser-link] in main workflow when push source code
-to GitHub repository. A main workflow use [cache action][cache-action-link],
+GitHub Actions run lefthook, skaffold, [drifctl][driftctl-link], terragrunt, and
+[chart-releaser][chart-releaser-link] in main workflow when push source code to
+GitHub repository. A main workflow use [cache action][cache-action-link],
 [composite action][composite-action-link],
 [reusable workflow][reusable-workflow-link], [build matrix][build-matrix-link],
 [OpenID Connect][oidc-link], [dependent job][dependent-job-link],

@@ -33,7 +33,10 @@ dest=$(
 	pwd
 )
 
-cd "$(TMPDIR=/tmp/ mktemp -d)" || exit
+tmpdir="$(TMPDIR=/tmp/ mktemp -d)"
+cd "$tmpdir" || exit
 xh -F -o "$file" "$url"
-aunpack "$file"
+aunpack "$file" >/dev/null 2>&1
 cp resvg "$dest"
+# shellcheck disable=SC2064
+trap "rm -rf '$tmpdir'" EXIT

@@ -4,6 +4,7 @@
       "exclude": [
         "dist",
         ".aleph/",
+        ".lighthouseci/",
         "misc/node_modules/"
       ]
     }
@@ -13,6 +14,7 @@
       "exclude": [
         "dist",
         ".aleph/",
+        ".lighthouseci/",
         "misc/node_modules/"
       ]
     }
