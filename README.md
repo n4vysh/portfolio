@@ -26,7 +26,7 @@ Need Unix-like operating system and following tools.
 | [Findutils][findutils-link]           | Directory searching utilities | ~> 4.9.0    |
 | [GNU parallel][gnu-parallel-link]     | Parallel job executor         | >= 20220322 |
 | [asdf][asdf-link]                     | Version manager               | ~> 0.9.0    |
-| [asdf-direnv][asdf-direnv-link]       | direnv plugin for asdf        | ~> 2.28.0   |
+| [asdf-direnv][asdf-direnv-link]       | direnv plugin for asdf        | ~> 0.3.0    |
 | [Docker][docker-link]                 | Virtualization software       | ~> 20.10.14 |
 | [atool][atool-link]                   | File archive manager          | ~> 0.39.0   |
 | [CCZE][ccze-link]                     | Log colorizer                 | ~> 0.2.1    |

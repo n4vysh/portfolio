@@ -3,13 +3,9 @@
 version=$(grep direnv .tool-versions | awk '{print $2}')
 
 asdf plugin add direnv
-asdf install direnv "$version"
-asdf global direnv "$version"
+asdf direnv setup --shell bash --version "$version"
 
 mkdir -p ~/.config/direnv/
-# shellcheck disable=SC2016
-grep 'source "$(asdf direnv hook asdf)"' ~/.config/direnv/direnvrc >/dev/null ||
-	echo 'source "$(asdf direnv hook asdf)"' >>~/.config/direnv/direnvrc
 grep 'export DIRENV_LOG_FORMAT=""' ~/.config/direnv/direnvrc >/dev/null ||
 	echo 'export DIRENV_LOG_FORMAT=""' >>~/.config/direnv/direnvrc
 
