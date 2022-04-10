@@ -19,16 +19,6 @@ spec:
   interval: 1m
   valuesFrom:
     - kind: Secret
-      name: linkerd-certs
-      valuesKey: ca.crt
-      targetPath: identityTrustAnchorsPEM
-    - kind: Secret
-      name: linkerd-certs
-      valuesKey: issuer.crt
-      targetPath: identity.issuer.tls.crtPEM
-    - kind: Secret
-      name: linkerd-certs
-      valuesKey: issuer.key
-      targetPath: identity.issuer.tls.keyPEM
+      name: linkerd-helm-values
   values:
     installNamespace: false

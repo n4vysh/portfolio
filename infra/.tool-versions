@@ -1,3 +1,4 @@
+age 1.0.0
 aws-vault 6.5.0
 awscli 2.4.19
 conftest v0.30.0
@@ -15,6 +16,7 @@ kubie 0.16.0
 linkerd 2.11.1
 pluto 5.7.0
 polaris 5.1.0
+sops 3.7.2
 stern 1.20.1
 terraform 1.1.7
 terraform-docs 0.16.0

@@ -22,7 +22,7 @@ inputs = {
     {
       name = "contour"
       content = templatefile(
-        "${get_terragrunt_dir()}/namespace.yaml.tftpl",
+        "${get_terragrunt_dir()}/common/namespace.yaml.tftpl",
         {
           namespace = "contour"
         }
@@ -31,7 +31,7 @@ inputs = {
     {
       name = "kube_prometheus_stack"
       content = templatefile(
-        "${get_terragrunt_dir()}/namespace.yaml.tftpl",
+        "${get_terragrunt_dir()}/common/namespace.yaml.tftpl",
         {
           namespace = "kube-prometheus-stack"
         }
@@ -40,7 +40,7 @@ inputs = {
     {
       name = "loki"
       content = templatefile(
-        "${get_terragrunt_dir()}/namespace.yaml.tftpl",
+        "${get_terragrunt_dir()}/common/namespace.yaml.tftpl",
         {
           namespace = "loki"
         }
@@ -49,9 +49,18 @@ inputs = {
     {
       name = "fluent_bit"
       content = templatefile(
-        "${get_terragrunt_dir()}/namespace.yaml.tftpl",
+        "${get_terragrunt_dir()}/common/namespace.yaml.tftpl",
         {
           namespace = "fluent-bit"
+        }
+      )
+    },
+    {
+      name = "linkerd"
+      content = templatefile(
+        "${get_terragrunt_dir()}/linkerd/namespace.yaml.tftpl",
+        {
+          namespace = "linkerd"
         }
       )
     },

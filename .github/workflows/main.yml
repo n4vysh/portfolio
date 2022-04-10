@@ -38,6 +38,7 @@ jobs:
     secrets:
       PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
   deploy-stg:
     # yamllint disable-line rule:line-length
     uses: n4vysh/portfolio/.github/workflows/reusable-terragrunt-workflow.yml@main
@@ -51,6 +52,7 @@ jobs:
     secrets:
       PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
   container-image-deploy:
     runs-on: ubuntu-20.04
     if: github.ref == 'refs/heads/main'

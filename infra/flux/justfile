@@ -1,27 +1,3 @@
-generate:
-    step \
-        certificate \
-        create \
-        root.linkerd.cluster.local \
-        infra/base/linkerd/ca.crt \
-        infra/base/linkerd/ca.key \
-        --profile root-ca \
-        --no-password \
-        --insecure
-    step \
-        certificate \
-        create \
-        identity.linkerd.cluster.local \
-        infra/base/linkerd/issuer.crt \
-        infra/base/linkerd/issuer.key \
-        --profile intermediate-ca \
-        --not-after 8760h \
-        --no-password \
-        --insecure \
-        --ca infra/base/linkerd/ca.crt \
-        --ca-key infra/base/linkerd/ca.key
-    rm infra/base/linkerd/ca.key
-
 # check manifest files with kubeconform
 check-kubeconform:
     ./scripts/kubeconform.bash
