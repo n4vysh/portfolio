@@ -13,15 +13,15 @@ install:
     ./scripts/install-packages.bash
 
 # Deploy containers to server
-deploy: init
+deploy:
     ./scripts/deploy.bash
 
 # Destroy servers
-destroy: init
+destroy:
     ./scripts/destroy.bash
 
 # Switch kubernetes context
-switch: init
+switch:
     (dir=`readlink -f "{{ kubeconfig }}"` && cd "{{invocation_directory()}}" && {{cmd}} ctx -f "$dir")
 
 # Check status of pods, nodes, and middlewares
@@ -33,11 +33,11 @@ reconcile:
     flux reconcile kustomization flux-system --with-source
 
 # Show highlighted access logs
-log: init
+log:
     ./scripts/log.bash
 
 # Analyze access logs
-analyze: init
+analyze:
     ./scripts/analyze.bash
 
 # Open monitoring system dashboard
