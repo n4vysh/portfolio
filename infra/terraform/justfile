@@ -20,7 +20,7 @@ generate:
 
 # check terraform config with checkov
 lint-checkov:
-    pipenv run checkov -d modules/ --quiet --framework terraform --compact
+    checkov -d modules/ --quiet --framework terraform --compact
 
 # check terraform config with terrascan
 lint-terrascan:

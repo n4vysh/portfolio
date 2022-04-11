@@ -1,0 +1,8 @@
+#!/bin/bash
+
+dir=$(
+  cd "$(dirname "$0")/../" || exit
+  pwd
+)
+
+"$(pnpm --prefix "$dir/misc/" bin)"/taplo "$@"

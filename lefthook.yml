@@ -12,17 +12,17 @@ pre-commit:
       tags: config
       files: ./scripts/lefthook-custom-files.bash
       glob: "*.y{,a}ml"
-      run: just check-yaml {files}
+      run: direnv exec . just check-yaml {files}
     root/taplo-format:
       tags: config
       files: ./scripts/lefthook-custom-files.bash
       glob: "*.toml"
-      run: scripts/taplo-format.bash {files}
+      run: direnv exec . just fmt-toml {files}
     root/taplo-lint:
       tags: config
       files: ./scripts/lefthook-custom-files.bash
       glob: "*.toml"
-      run: just lint-toml {files}
+      run: direnv exec . just lint-toml {files}
     root/just:
       tags: config
       files: ./scripts/lefthook-custom-files.bash
@@ -34,13 +34,13 @@ pre-commit:
       files: ./scripts/lefthook-custom-files.bash
       glob: "*.md"
       exclude: "infra/charts"
-      run: just lint-md-markdownlint {files}
+      run: direnv exec . just lint-md-markdownlint {files}
     root/markdown-link-check:
       tags: markup
       files: ./scripts/lefthook-custom-files.bash
       glob: "*.md"
       exclude: "infra/charts"
-      run: just lint-md-markdown-link-check {files}
+      run: direnv exec . just lint-md-markdown-link-check {files}
     root/vale:
       tags: markup
       files: ./scripts/lefthook-custom-files.bash
@@ -149,7 +149,7 @@ pre-commit:
       root: "infra/charts/"
       files: ./scripts/lefthook-custom-files.bash
       glob: "infra/charts/**/*.yaml"
-      run: just lint-ct
+      run: direnv exec . just lint-ct
     infra/charts/kubeval:
       tags: infra/charts
       root: "infra/charts/"
@@ -249,7 +249,7 @@ commit-msg:
     # vcs
     root/commitlint:
       tags: vcs
-      run: just lint-commit-commitlint
+      run: direnv exec . just lint-commit-commitlint
     root/gitleaks:
       tags: vcs
       run: just lint-commit-gitleaks

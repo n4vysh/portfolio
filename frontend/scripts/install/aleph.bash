@@ -6,5 +6,4 @@ dir=$(
 )
 
 cd "$dir/frontend/" || exit
-type aleph >/dev/null 2>&1 ||
-	denon install:aleph
+denon install:aleph

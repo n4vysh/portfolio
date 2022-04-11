@@ -1,0 +1,8 @@
+#!/bin/bash
+
+dir=$(
+  cd "$(dirname "$0")/../" || exit
+  pwd
+)
+
+PIPENV_PIPFILE="$dir/misc/Pipfile" pipenv run yamllint "$@"

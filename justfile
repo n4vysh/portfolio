@@ -31,7 +31,7 @@ fmt-yaml *target:
 
 # format toml files with taplo
 fmt-toml *target:
-    taplo format {{ target }}
+    ./scripts/taplo-format.bash {{ target }}
 
 # format markdown files with markdownlint
 fmt-md *target:
@@ -99,7 +99,7 @@ lint-bash *target:
 
 # check common misspellings in text files with codespell
 lint-text *target:
-    pipenv run codespell {{ target }}
+    codespell {{ target }}
 
 # check GitHub Actions workflow files with actionlint
 lint-ci *target:

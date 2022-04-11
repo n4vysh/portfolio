@@ -14,7 +14,7 @@ name=portfolio
 	set -x
 	cd "$name" || exit
 	helm template -f "ci/test-values.yaml" . |
-		pipenv run checkov \
+		checkov \
 			--quiet \
 			-f "$yaml" \
 			--framework kubernetes \
