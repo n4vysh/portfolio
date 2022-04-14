@@ -1,0 +1,32 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: linkerd-jaeger
+  namespace: linkerd-jaeger
+spec:
+  releaseName: linkerd-jaeger
+  chart:
+    spec:
+      chart: linkerd-jaeger
+      sourceRef:
+        kind: HelmRepository
+        name: linkerd
+        namespace: flux-system
+      version: "2.11.1"
+  test:
+    enable: true
+  interval: 1m
+  dependsOn:
+    - name: linkerd
+      namespace: linkerd
+    - name: tempo
+      namespace: tempo
+  values:
+    collector:
+      enabled: false
+    jaeger:
+      enabled: false
+    webhook:
+      collectorSvcAddr: tempo-tempo-distributed-distributor.tempo:55678
+      collectorSvcAccount: tempo

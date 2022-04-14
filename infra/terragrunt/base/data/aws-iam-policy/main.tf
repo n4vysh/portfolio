@@ -14,13 +14,31 @@ data "aws_iam_policy_document" "thanos" {
   }
 }
 
+data "aws_iam_policy_document" "tempo" {
+  statement {
+    actions = [
+      "s3:ListBucket",
+      "s3:GetObject",
+      "s3:DeleteObject",
+      "s3:PutObject",
+      "s3:GetObjectTagging",
+      "s3:PutObjectTagging",
+    ]
+
+    resources = [
+      "arn:aws:s3:::*-*-tempo/*",
+      "arn:aws:s3:::*-*-tempo",
+    ]
+  }
+}
+
 data "aws_iam_policy_document" "loki" {
   statement {
     actions = [
       "s3:ListBucket",
       "s3:GetObject",
       "s3:DeleteObject",
-      "s3:PutObject"
+      "s3:PutObject",
     ]
 
     resources = [

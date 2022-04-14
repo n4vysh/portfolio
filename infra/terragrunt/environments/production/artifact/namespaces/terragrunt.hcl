@@ -56,6 +56,15 @@ inputs = {
       )
     },
     {
+      name = "tempo"
+      content = templatefile(
+        "${get_terragrunt_dir()}/common/namespace.yaml.tftpl",
+        {
+          namespace = "tempo"
+        }
+      )
+    },
+    {
       name = "linkerd"
       content = templatefile(
         "${get_terragrunt_dir()}/linkerd/namespace.yaml.tftpl",

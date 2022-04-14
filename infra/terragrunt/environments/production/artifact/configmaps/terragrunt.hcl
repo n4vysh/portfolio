@@ -52,6 +52,14 @@ dependency "iam_irsa_loki" {
   }
 }
 
+dependency "iam_irsa_tempo" {
+  config_path = "../../iam/irsa/tempo"
+
+  mock_outputs = {
+    iam_role_arn = "temporary-dummy-iam-role-arn"
+  }
+}
+
 dependency "s3_bucket_thanos" {
   config_path = "../../storage/thanos"
 
@@ -63,6 +71,15 @@ dependency "s3_bucket_thanos" {
 
 dependency "s3_bucket_loki" {
   config_path = "../../storage/loki"
+
+  mock_outputs = {
+    s3_bucket_id     = "temporary-dummy-s3-bucket-id"
+    s3_bucket_region = "temporary-dummy-s3-bucket-region"
+  }
+}
+
+dependency "s3_bucket_tempo" {
+  config_path = "../../storage/tempo"
 
   mock_outputs = {
     s3_bucket_id     = "temporary-dummy-s3-bucket-id"
@@ -139,6 +156,19 @@ inputs = {
           name      = "fluent-bit-helm-values"
           namespace = "fluent-bit"
           env       = local.env.long
+        }
+      )
+    },
+    {
+      name = "tempo_helm_values"
+      content = templatefile(
+        "${get_terragrunt_dir()}/tempo/configmap.yaml.tftpl",
+        {
+          name             = "tempo-helm-values"
+          namespace        = "tempo"
+          s3_bucket_id     = dependency.s3_bucket_tempo.outputs.s3_bucket_id
+          s3_bucket_region = dependency.s3_bucket_tempo.outputs.s3_bucket_region
+          role_arn         = dependency.iam_irsa_tempo.outputs.iam_role_arn
         }
       )
     },

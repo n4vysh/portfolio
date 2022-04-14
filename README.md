@@ -200,6 +200,7 @@ Terragrunt and Flux deploy following middlewares using [Helm][helm-link] and
 | [Thanos][thanos-link]                                             | Open source, highly available Prometheus setup with long term storage capabilities                                                            |
 | [Fluent Bit][fluent-bit-link]                                     | Fast and Lightweight Logs and Metrics processor                                                                                               |
 | [Loki][loki-link]                                                 | A horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus                                         |
+| [Tempo][tempo-link]                                               | A high volume, minimal dependency distributed tracing backend                                                                                 |
 | [Contour][contour-link]                                           | High performance ingress controller for Kubernetes using [Envoy Proxy][envoy-proxy-link]                                                      |
 | [Linkerd][linkerd-link]                                           | Ultralight, security-first service mesh for Kubernetes                                                                                        |
 | [Flagger][flagger-link]                                           | Progressive Delivery Operator for Kubernetes                                                                                                  |
@@ -213,11 +214,13 @@ Flux deploy with following Helm charts and kustomization files.
 | Helm chart         | Official  | [aws-load-balancer-controller][helm-aws-load-balancer-controller-link]  |
 | Helm chart         | Official  | [fluent-bit][helm-fluent-bit-link]                                      |
 | Helm chart         | Official  | [loki][helm-loki-link]                                                  |
+| Helm chart         | Official  | [tempo-distributed][helm-tempo-distributed-link]                        |
 | Helm chart         | Official  | [contour][helm-contour-link]                                            |
 | Helm chart         | Official  | [falco][helm-falco-link]                                                |
 | Helm chart         | Official  | [falco-exporter][helm-falco-exporter-link]                              |
 | Helm chart         | Official  | [linkerd2][helm-linkerd2-link]                                          |
 | Helm chart         | Official  | [linkerd-viz][helm-linkerd-viz-link]                                    |
+| Helm chart         | Official  | [linkerd-jaeger][helm-linkerd-jaeger-link]                              |
 | Helm chart         | Official  | [metrics-server][helm-metrics-server-link]                              |
 | Helm chart         | Community | [kube-prometheus-stack][helm-kube-prometheus-stack-link]                |
 | Helm chart         | Community | [thanos][helm-thanos-link]                                              |
@@ -229,11 +232,13 @@ Flux deploy with following Helm charts and kustomization files.
 [helm-aws-load-balancer-controller-link]: https://artifacthub.io/packages/helm/aws/aws-load-balancer-controller
 [helm-fluent-bit-link]: https://artifacthub.io/packages/helm/fluent/fluent-bit
 [helm-loki-link]: https://artifacthub.io/packages/helm/grafana/loki
+[helm-tempo-distributed-link]: https://artifacthub.io/packages/helm/grafana/tempo-distributed
 [helm-contour-link]: https://artifacthub.io/packages/helm/bitnami/contour
 [helm-falco-link]: https://artifacthub.io/packages/helm/falcosecurity/falco
 [helm-falco-exporter-link]: https://artifacthub.io/packages/helm/falcosecurity/falco-exporter
 [helm-linkerd2-link]: https://artifacthub.io/packages/helm/linkerd2/linkerd2
 [helm-linkerd-viz-link]: https://artifacthub.io/packages/helm/linkerd2/linkerd-viz
+[helm-linkerd-jaeger-link]: https://artifacthub.io/packages/helm/linkerd2/linkerd-jaeger
 [helm-metrics-server-link]: https://artifacthub.io/packages/helm/metrics-server/metrics-server
 [helm-kube-prometheus-stack-link]: https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
 [helm-thanos-link]: https://artifacthub.io/packages/helm/bitnami/thanos
@@ -312,6 +317,7 @@ linkerd can check traffic status with viz extension.
 [thanos-link]: https://thanos.io/
 [fluent-bit-link]: https://fluentbit.io/
 [loki-link]: https://grafana.com/oss/loki/
+[tempo-link]: https://grafana.com/oss/tempo/
 [contour-link]: https://projectcontour.io/
 [envoy-proxy-link]: https://www.envoyproxy.io/
 [linkerd-link]: https://linkerd.io/
@@ -331,10 +337,11 @@ linkerd can check traffic status with viz extension.
 
 AWS Load Balancer Controller bind ALB target group and Kubernetes service of
 Envoy Proxy with
-[TargetGroupBinding custom resource][target-group-binding-link]. Thanos and Loki
-upload metrics and container logs to S3. AWS Load Balancer Controller, Thanos,
-and Loki access AWS resources with [IRSA][irsa-link]. Following AWS IAM entities
-can access EKS control plane by [aws-auth][aws-auth-link] ConfigMap.
+[TargetGroupBinding custom resource][target-group-binding-link]. Thanos, Loki,
+and Tempo upload metrics, container logs, and traces to S3. AWS Load Balancer
+Controller, Thanos, Loki, and Tempo access AWS resources with [IRSA][irsa-link].
+Following AWS IAM entities can access EKS control plane by
+[aws-auth][aws-auth-link] ConfigMap.
 
 - IAM user or role that creates the cluster
 - AWS Organization default created IAM role - OrganizationAccountAccessRole

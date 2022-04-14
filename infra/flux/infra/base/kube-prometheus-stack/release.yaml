@@ -46,6 +46,8 @@ spec:
           enable_gzip: true
         security:
           disable_gravatar: true
+        feature_toggles:
+          enable: tempoSearch tempoBackendSearch
       datasources:
         datasources.yaml:
           apiVersion: 1
@@ -61,6 +63,12 @@ spec:
               type: loki
               access: proxy
               url: http://loki.loki:3100
+              version: 1
+              editable: false
+            - name: Tempo
+              type: tempo
+              access: proxy
+              url: http://tempo-tempo-distributed-query-frontend.tempo:3100
               version: 1
               editable: false
       dashboardProviders:

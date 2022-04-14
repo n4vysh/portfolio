@@ -7,8 +7,10 @@ resources:
   - falco
   - linkerd
   - linkerd-viz
+  - linkerd-jaeger
   - contour
   - aws-load-balancer-controller
   - kube-prometheus-stack
   - fluent-bit
   - loki
+  - tempo
