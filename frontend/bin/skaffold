@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# avoid bug of pack
-# https://github.com/GoogleCloudPlatform/buildpacks/issues/135#issuecomment-839847373
-export TMPDIR="$HOME"/.pack
-mkdir -p "$TMPDIR"
-
 dir=$(
   cd "$(dirname "$0")" || exit
   git rev-parse --show-toplevel
