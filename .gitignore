@@ -3,3 +3,4 @@ bin/actionlint
 bin/gitleaks
 bin/shellharden
 lefthook-local.yml
+misc/~$diagram.svg.bkp
