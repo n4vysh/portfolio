@@ -23,6 +23,7 @@ runs:
           frontend/misc/node_modules/
           bin/
           frontend/bin/
+          backend/bin/
           infra/bin/
           infra/flux/crd-schemas/
           misc/vale-styles/

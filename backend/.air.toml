@@ -1,0 +1,3 @@
+[build]
+cmd = "swag init && go build -o ./tmp/main ."
+exclude_dir = ["docs"]

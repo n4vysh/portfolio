@@ -1,13 +1,11 @@
 set dotenv-load := false
 
-sha := `git rev-parse --short HEAD`
-
 # Start the web server in `development`
-dev: install
+dev:
     aleph dev
 
-# Build a static site and container image
-build: build-icon-image build-static-site build-container-image
+# Build a static site
+build: build-icon-image build-static-site
 
 # Install frontend packages
 install:
@@ -24,14 +22,7 @@ build-icon-image:
 # Build a static site
 build-static-site:
     aleph build
-
-# Build container image
-build-container-image:
-    skaffold build -t {{sha}}
-
-# Build and push container image
-build-push-container-image:
-    skaffold build -t {{sha}} --push
+    rsync -av dist/ ../backend/dist/
 
 # Take a screenshot
 take:
@@ -68,7 +59,3 @@ lint-deno *target:
 # check css files with stylelint
 lint-css target='style/':
     stylelint --cache {{target}}
-
-# check skaffold.yaml of skaffold
-check-config:
-    skaffold diagnose

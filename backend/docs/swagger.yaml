@@ -1,0 +1,72 @@
+basePath: /
+host: localhost:8081
+info:
+  contact: {}
+  license:
+    name: MIT License
+    url: https://github.com/n4vysh/portfolio/blob/main/LICENSE.txt
+  title: portfolio internal endpoints
+  version: "1.0"
+paths:
+  /healthz:
+    get:
+      description: used by Kubernetes liveness probe
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Liveness check
+      tags:
+      - Kubernetes
+  /metrics:
+    get:
+      description: used by Prometheus
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: OpenMetrics
+      tags:
+      - Prometheus
+  /panic:
+    get:
+      description: call panic function to check 500 Internal Server Error page
+      produces:
+      - text/plain
+      responses:
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Panic
+      tags:
+      - Debug
+  /readyz:
+    get:
+      description: used by Kubernetes readiness probe
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Readiness check
+      tags:
+      - Kubernetes
+  /timeout:
+    get:
+      description: call sleep function to check forced shutdown
+      produces:
+      - text/plain
+      responses: {}
+      summary: Timeout
+      tags:
+      - Debug
+swagger: "2.0"

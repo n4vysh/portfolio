@@ -1,0 +1,33 @@
+set dotenv-load := false
+
+sha := `git rev-parse --short HEAD`
+
+dev:
+    air
+
+fmt:
+    gofumpt -l -w .
+
+check: check-golangci-lint check-gofumpt
+
+check-golangci-lint:
+    ./scripts/create-dummy-files.bash
+    golangci-lint run
+
+check-gofumpt:
+    test -z $(gofumpt -l . | tee /dev/stderr)
+
+build: build-container-image
+
+# Build container image
+build-container-image:
+    skaffold build -t {{sha}}
+
+# Build and push container image
+build-push-container-image:
+    skaffold build -t {{sha}} --push
+
+# check skaffold.yaml of skaffold
+check-config:
+    ./scripts/create-dummy-files.bash
+    skaffold diagnose

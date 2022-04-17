@@ -1,10 +1,8 @@
 set dotenv-load := false
 
-dev:
-    just frontend/dev
-
 build:
-    just frontend/build
+    cd frontend/; direnv exec . just build
+    cd backend; direnv exec . just build
 
 # Check codes with hooks
 check:

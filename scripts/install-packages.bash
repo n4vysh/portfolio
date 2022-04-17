@@ -26,6 +26,7 @@ fi
 "$dir/scripts/install/asdf-packages.bash"
 "$dir/scripts/init/asdf-direnv.bash"
 "$dir/frontend/scripts/init/asdf-direnv.bash"
+"$dir/backend/scripts/init/asdf-direnv.bash"
 
 if [[ ${flag[e]} == 1 ]]; then
 	eval "$(direnv export bash)"
@@ -40,6 +41,7 @@ $dir/scripts/install/shellharden.bash
 $dir/scripts/install/actionlint.bash
 $dir/scripts/install/gitleaks.bash
 $dir/frontend/scripts/install-packages.bash
+$dir/backend/scripts/install-packages.bash
 $dir/infra/scripts/install-packages.bash
 $dir/misc/scripts/download-vale-styles.bash
 EOF

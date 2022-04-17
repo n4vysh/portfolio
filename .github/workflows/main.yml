@@ -79,7 +79,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push container image
         run: |
-          cd frontend/
+          cd backend/
           eval "$(direnv export bash)"
           just build-push-container-image
   chart-release:

@@ -1,0 +1,15 @@
+[build]
+exclude = [
+  "bin/",
+  "docs/",
+  "justfile",
+  "scripts/",
+  "tmp/",
+  "skaffold.yaml",
+  "project.toml",
+  ".git/",
+]
+
+[[build.env]]
+name = "GOOGLE_GOLDFLAGS"
+value = "-s -w"

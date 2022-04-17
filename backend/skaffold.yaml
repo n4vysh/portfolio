@@ -5,14 +5,13 @@ build:
   artifacts:
     - image: ghcr.io/n4vysh/portfolio
       buildpacks:
-        builder: paketobuildpacks/builder:base
+        builder: gcr.io/buildpacks/builder:v1
         dependencies:
           paths:
             - dist/
-            - mime.types
-            - nginx.conf
-            - buildpack.yml
-            - project.toml
+            - go.mod
+            - go.sum
+            - "*.go"
   local:
     push: false
 deploy:

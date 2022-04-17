@@ -6,6 +6,7 @@ rules:
 ignore: |
   misc/pnpm-lock.yaml
   frontend/misc/pnpm-lock.yaml
+  backend/docs/swagger.yaml
   infra/charts/*/templates/*.yaml
   infra/charts/*/templates/tests/*.yaml
   infra/flux/clusters/*/flux-system/

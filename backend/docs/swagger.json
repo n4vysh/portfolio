@@ -1,0 +1,109 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "portfolio internal endpoints",
+        "contact": {},
+        "license": {
+            "name": "MIT License",
+            "url": "https://github.com/n4vysh/portfolio/blob/main/LICENSE.txt"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8081",
+    "basePath": "/",
+    "paths": {
+        "/healthz": {
+            "get": {
+                "description": "used by Kubernetes liveness probe",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Kubernetes"
+                ],
+                "summary": "Liveness check",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/metrics": {
+            "get": {
+                "description": "used by Prometheus",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "Prometheus"
+                ],
+                "summary": "OpenMetrics",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/panic": {
+            "get": {
+                "description": "call panic function to check 500 Internal Server Error page",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "Debug"
+                ],
+                "summary": "Panic",
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/readyz": {
+            "get": {
+                "description": "used by Kubernetes readiness probe",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Kubernetes"
+                ],
+                "summary": "Readiness check",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/timeout": {
+            "get": {
+                "description": "call sleep function to check forced shutdown",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "Debug"
+                ],
+                "summary": "Timeout",
+                "responses": {}
+            }
+        }
+    }
+}

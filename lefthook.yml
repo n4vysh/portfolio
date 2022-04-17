@@ -74,6 +74,12 @@ pre-commit:
       files: ./scripts/lefthook-custom-files.bash
       glob: ".github/workflows/*.yaml"
       run: just lint-ci {files}
+    # container
+    root/build:
+      tags: container
+      files: ./scripts/lefthook-custom-files.bash
+      glob: "{frontend,backend}/{,**/}*"
+      run: just build
     # frontend
     frontend/deno-fmt:
       tags: frontend
@@ -103,13 +109,6 @@ pre-commit:
       glob: "frontend/style/*.css"
       exclude: "frontend/.aleph|frontend/dist"
       run: direnv exec . just check-css-prettier {files}
-    frontend/build-static-site:
-      tags: frontend
-      root: "frontend/"
-      files: ./scripts/lefthook-custom-files.bash
-      glob: "frontend/{,**/}*.{ts,tsx,css}"
-      exclude: "frontend/.aleph|frontend/dist|frontend/scripts"
-      run: direnv exec . just build-static-site
     frontend/lhci:
       tags: frontend
       root: "frontend/"
@@ -117,18 +116,25 @@ pre-commit:
       glob: "frontend/{,**/}*.{ts,tsx,css}"
       exclude: "frontend/.aleph|frontend/dist|frontend/scripts"
       run: direnv exec . just test
-    frontend/build-container-image:
-      tags: frontend
-      root: "frontend/"
+    # backend
+    backend/golangci-lint:
+      tags: backend
+      root: "backend/"
       files: ./scripts/lefthook-custom-files.bash
-      glob: "frontend/{,**/}*"
-      run: sh -c 'mkdir -p dist/; just build-container-image'
-    frontend/skaffold:
-      tags: frontend
-      root: "frontend/"
+      glob: "backend/{,**/}*.go"
+      run: direnv exec . just check-golangci-lint
+    backend/gofumpt:
+      tags: backend
+      root: "backend/"
       files: ./scripts/lefthook-custom-files.bash
-      glob: "frontend/skaffold.yaml"
-      run: sh -c 'mkdir -p dist/; just check-config'
+      glob: "backend/{,**/}*.go"
+      run: direnv exec . just check-gofumpt
+    backend/skaffold:
+      tags: backend
+      root: "backend/"
+      files: ./scripts/lefthook-custom-files.bash
+      glob: "backend/skaffold.yaml"
+      run: just check-config
     # infra/charts
     infra/charts/kube-linter:
       tags: infra/charts

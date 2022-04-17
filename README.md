@@ -13,6 +13,44 @@ skillsets and expertise.
 - GitOps
 - Progressive Delivery
 
+## Specifications
+
+### Frontend
+
+- Static Site Generation with [Aleph.js][alephjs-link]
+
+[alephjs-link]: https://alephjs.org/
+
+### Backend
+
+- Serve static files with [Gin][gin-link]
+- Single binary with [Go embed][go-embed-link]
+- Structured logging with [zap][zap-link]
+- [Health check][health-check-link] endpoints for Kubernetes
+- Run public and internal servers with [Goroutines][goroutines-link]
+- Graceful shutdown on interrupt signals with
+  [`Server.Shutdown` method][shutdown-method-link]
+- Instrumented with [OpenMetrics][open-metrics-link] and
+  [OpenTelemetry][open-telemetry-link]
+- [B3 Propagation][b3-propagation-link] for Linkerd
+- Generate documents with [swag][swag-link]
+- Enable gzip compression with [gin-contrib/gzip][gin-gzip-link]
+- Allow requests from specific hostname with
+  [gin-contrib/secure][gin-secure-link]
+
+[gin-link]: https://github.com/gin-gonic/gin
+[go-embed-link]: https://pkg.go.dev/embed
+[zap-link]: https://pkg.go.dev/go.uber.org/zap
+[health-check-link]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+[goroutines-link]: https://go.dev/tour/concurrency/1
+[shutdown-method-link]: https://pkg.go.dev/net/http#Server.Shutdown
+[open-metrics-link]: https://openmetrics.io/
+[open-telemetry-link]: https://opentelemetry.io/
+[b3-propagation-link]: https://github.com/openzipkin/b3-propagation
+[swag-link]: https://github.com/swaggo/swag
+[gin-gzip-link]: https://github.com/gin-contrib/gzip
+[gin-secure-link]: https://github.com/gin-contrib/secure
+
 ## Requirements
 
 Need Unix-like operating system and following tools.
@@ -55,17 +93,35 @@ Preview and edit the website on local machine as follows:
 2. Go to the project root directory of this repository in terminal
 3. Run [`./scripts/install-packages.bash`][script-link] to install packages via
    asdf
-4. Run `just` to start the server of [Aleph.js][alephjs-link] in `development`
-   mode
-5. Open <http://localhost:8080/> in browser
-6. After done with the preview, press Ctrl-C in terminal to stop the server
+
+frontend:
+
+1. Run `cd frontend/` to change frontend directory
+2. Run `just` to start the server of Aleph.js in `development` mode
+3. Open <http://localhost:8080/> in browser
+4. After done with the preview, press Ctrl-C in terminal to stop the server
 
 While the preview is running, edit tsx and css files and automatically rebuild
 them.
 
+backend:
+
+1. Run `cd backend/` to change backend directory
+2. Run `just` to start the server of Gin in `debug` mode
+3. Open <http://localhost:8080/> or <http://localhost:8081/swagger/index.html>
+   in browser
+4. After done with the preview, press Ctrl-C in terminal to stop the server
+
+While the preview is running, edit go files and automatically rebuild them with
+[air][air-link]. Suggest IDE or editor setup with [gopls][gopls-link],
+[gofumpt][gofumpt-link], [golangci-lint][golangci-lint-link] installed by asdf.
+
 [gh-clone-link]: https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories
 [script-link]: ./scripts/install-packages.bash
-[alephjs-link]: https://alephjs.org/
+[air-link]: https://github.com/cosmtrek/air
+[gopls-link]: https://pkg.go.dev/golang.org/x/tools/gopls
+[gofumpt-link]: https://github.com/mvdan/gofumpt
+[golangci-lint-link]: https://golangci-lint.run/
 
 ## Test
 
@@ -77,6 +133,7 @@ Run `just check` to lint and format the source code with
 | [deno fmt][deno-fmt-link] + [deno lint][deno-lint-link]                                                                                                                                                                                   | js, ts, tsx, md, and json files |
 | [stylelint][stylelint-link] + [prettier][prettier-link]                                                                                                                                                                                   | CSS files                       |
 | [lighthouse-ci][lighthouse-ci-link]                                                                                                                                                                                                       | frontend performance            |
+| gofumpt + golangci-lint                                                                                                                                                                                                                   | go files                        |
 | [skaffold][skaffold-link]                                                                                                                                                                                                                 | container image                 |
 | [yamllint][yamllint-link]                                                                                                                                                                                                                 | YAML files                      |
 | [taplo][taplo-link]                                                                                                                                                                                                                       | TOML files                      |
@@ -134,10 +191,9 @@ Run `just check` to lint and format the source code with
 
 ## Containerize
 
-Run `just build` to build docker image of [nginx][nginx-link] with skaffold and
+Run `just build` to build docker image with skaffold and
 [Cloud Native Buildpacks][cnb-link]
 
-[nginx-link]: https://nginx.org/en/
 [cnb-link]: https://buildpacks.io/
 
 ## Update
