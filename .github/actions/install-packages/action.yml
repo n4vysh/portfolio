@@ -18,6 +18,7 @@ runs:
           ~/.local/share/direnv/allow/
           ~/.local/share/virtualenvs/
           ~/.node/
+          ~/.pnpm-store/
           misc/node_modules/
           frontend/misc/node_modules/
           bin/
