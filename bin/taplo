@@ -5,4 +5,4 @@ dir=$(
   pwd
 )
 
-"$(pnpm --prefix "$dir/misc/" bin)"/taplo "$@"
+"$dir/misc/node_modules/.bin/taplo" "$@"

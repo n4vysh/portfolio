@@ -5,4 +5,4 @@ dir=$(
   pwd
 )
 
-"$(pnpm --prefix "$dir/misc/" bin)"/markdownlint "$@"
+"$dir/misc/node_modules/.bin/markdownlint" "$@"

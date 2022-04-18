@@ -5,4 +5,4 @@ dir=$(
   pwd
 )
 
-"$(pnpm --prefix "$dir/misc/" bin)"/stylelint "$@"
+"$dir/misc/node_modules/.bin/stylelint" "$@"

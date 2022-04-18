@@ -5,4 +5,4 @@ dir=$(
   pwd
 )
 
-"$(pnpm --prefix "$dir/misc/" bin)"/svgo "$@"
+"$dir/misc/node_modules/.bin/svgo" "$@"
