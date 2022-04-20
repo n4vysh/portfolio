@@ -12,8 +12,12 @@ spec:
       name: GET /
     - condition:
         method: GET
-        pathRegex: /status
-      name: GET /status
+        pathRegex: /healthz
+      name: GET /healthz
+    - condition:
+        method: GET
+        pathRegex: /readyz
+      name: GET /readyz
     - condition:
         method: GET
         pathRegex: /metrics

@@ -19,7 +19,7 @@ spec:
   healthChecks:
     - apiVersion: flagger.app/v1beta1
       kind: Canary
-      name: nginx
+      name: gin
       namespace: portfolio
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2

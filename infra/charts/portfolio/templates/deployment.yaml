@@ -2,35 +2,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: gin
   namespace: portfolio
   {{- with .Values.labels }}
   labels:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   annotations:
-    ignore-check.kube-linter.io/no-read-only-root-fs: paketo-buildpacks/nginx needs write access because it generate nginx.conf
     checkov.io/skip1: CKV_K8S_15=Use IfNotPresent for skaffold dev
-    checkov.io/skip2: CKV_K8S_22=paketo-buildpacks/nginx needs write access because it generate nginx.conf
-    checkov.io/skip3: CKV_K8S_38=Use mTLS of service mesh
-    checkov.io/skip4: CKV_K8S_40=paketo-buildpacks/nginx use 1000 (cnb user) and nginx-prometheus-exporter use 1001
-    kube-score/ignore: container-security-context-readonlyrootfilesystem, pod-probes, pod-networkpolicy, container-security-context-user-group-id
-    # container-security-context-readonlyrootfilesystem: paketo-buildpacks/nginx needs write access because it generate nginx.conf
-    # pod-probes: nginx-prometheus-exporter can't different readiness and liveness probe
+    checkov.io/skip2: CKV_K8S_38=Use mTLS of service mesh
+    checkov.io/skip3: CKV_K8S_40=Cloud Native Buildpacks use 1000 (cnb user)
+    kube-score/ignore: pod-networkpolicy, container-security-context-user-group-id
     # pod-networkpolicy: kind not support NetworkPolicy
     # https://github.com/kubernetes-sigs/kind/issues/842
-    # container-security-context-user-group-id: paketo-buildpacks/nginx use 1000 (cnb user) and nginx-prometheus-exporter use 1001
+    # container-security-context-user-group-id: Cloud Native Buildpacks use 1000 (cnb user)
     polaris.fairwinds.com/deploymentMissingReplicas-exempt: "true" # use HPA
-    # paketo-buildpacks/nginx needs write access because it generate nginx.conf
-    polaris.fairwinds.com/notReadOnlyRootFilesystem-exempt: "true"
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: nginx
+      app.kubernetes.io/name: gin
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: nginx
+        app.kubernetes.io/name: gin
       annotations:
         seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
     spec:
@@ -44,17 +38,17 @@ spec:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                  - nginx
+                  - gin
               topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: true # for using mTLS of service mesh
       securityContext:
         runAsNonRoot: true
       containers:
-        - name: nginx
+        - name: gin-server
           image: "{{ .Values.image.repository }}@{{ .Values.image.digest | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | default "Always" }}
           securityContext:
-            readOnlyRootFilesystem: false
+            readOnlyRootFilesystem: true
             runAsNonRoot: true
             allowPrivilegeEscalation: false
             runAsUser: 1000 # cnb
@@ -62,60 +56,32 @@ spec:
               drop:
                 - ALL
           env:
-            - name: HOST
+            - name: PORTFOLIO_HOST
               value: {{ .Values.host }}
-            - name: PORT
+            - name: PORTFOLIO_PORT
               value: "{{ .Values.port }}"
-            - name: STATUS_PORT
-              value: "{{ .Values.status.port }}"
+            - name: PORTFOLIO_INTERNAL_PORT
+              value: "{{ .Values.internal.port }}"
+            - name: GIN_MODE
+              value: "{{ .Values.mode }}"
+            {{ if .Values.trace.enabled }}
+            - name: OTEL_EXPORTER_OTLP_TRACES_PROTOCOL
+              value: "{{ .Values.trace.protocol }}"
+            - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+              value: "{{ .Values.trace.endpoint }}"
+            {{ end }}
           ports:
-            - name: root
+            - name: public
               containerPort: {{ .Values.port }}
-            - name: status
-              containerPort: {{ .Values.status.port }}
+            - name: internal
+              containerPort: {{ .Values.internal.port }}
           livenessProbe:
-            exec:
-              command:
-                - /bin/sh
-                - -c
-                - 'ps -A | grep nginx'
+            httpGet:
+              path: /healthz
+              port: {{ .Values.internal.port }}
           readinessProbe:
             httpGet:
-              path: /status
-              port: {{ .Values.status.port }}
+              path: /readyz
+              port: {{ .Values.internal.port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-        - name: nginx-prometheus-exporter
-          # nginx/nginx-prometheus-exporter:0.10.0
-          image: "nginx/nginx-prometheus-exporter@sha256:1c6eba17d7768401ba1ed056101fc56ec3e3b5c82e508fdd8968fbcd96ec9574"
-          imagePullPolicy: Always
-          args:
-            - -nginx.scrape-uri=http://localhost:{{ .Values.status.port }}/status
-          securityContext:
-            readOnlyRootFilesystem: true
-            runAsNonRoot: true
-            allowPrivilegeEscalation: false
-            runAsUser: 1001
-            capabilities:
-              drop:
-                - ALL
-          ports:
-            - name: exporter
-              containerPort: 9113
-          livenessProbe:
-            httpGet:
-              path: /metrics
-              port: 9113
-          readinessProbe:
-            httpGet:
-              path: /metrics
-              port: 9113
-          resources:
-            limits:
-              cpu: 100m
-              memory: 128Mi
-              ephemeral-storage: 1Gi
-            requests:
-              cpu: 100m
-              memory: 128Mi
-              ephemeral-storage: 1Gi

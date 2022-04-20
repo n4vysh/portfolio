@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "nginx-test-connection"
+  name: "gin-test-connection"
   namespace: portfolio
   annotations:
     "helm.sh/hook": test
@@ -27,7 +27,7 @@ spec:
           imagePullPolicy: Always
           command: ['wget']
           args:
-            - 'http://nginx:{{ .Values.status.port }}/status'
+            - 'http://gin:{{ .Values.internal.port }}/healthz'
             - '-O'
             - '-'
           securityContext:

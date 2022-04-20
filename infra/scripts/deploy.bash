@@ -20,7 +20,8 @@ if [[ $ENV == development ]]; then
 		--set 'envoy.tolerations[0].operator=Equal' \
 		--set 'envoy.tolerations[0].effect=NoSchedule'
 	(
-		cd ../frontend || exit
+		cd ../backend || exit
+		export KUBECONFIG="${KUBECONFIG:-$HOME/.kube/configs/portfolio/$ENV/config.yaml}"
 		skaffold dev
 	)
 elif [[ $ENV =~ ^(staging|production)$ ]]; then

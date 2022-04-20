@@ -1,8 +1,9 @@
 ---
 host: localhost
 port: 8080
-status:
+internal:
   port: 8081
+mode: debug
 image:
   # ghcr.io/n4vysh/portfolio:bb14505
   repository: ghcr.io/n4vysh/portfolio
@@ -11,9 +12,9 @@ image:
   pullPolicy: Always
 
 labels:
-  app.kubernetes.io/name: nginx
-  app.kubernetes.io/instance: nginx
-  app.kubernetes.io/version: 1.21.4
+  app.kubernetes.io/name: gin
+  app.kubernetes.io/instance: gin
+  app.kubernetes.io/version: 1.7.7
   app.kubernetes.io/component: web-server
   app.kubernetes.io/part-of: portfolio
   app.kubernetes.io/managed-by: helm
@@ -43,4 +44,9 @@ autoscaling:
   maxReplicas: 3
   targetCPUUtilizationPercentage: 80
 
-servicemonitor: true
+trace:
+  enabled: false
+
+metrics:
+  serviceMonitor:
+    enabled: false

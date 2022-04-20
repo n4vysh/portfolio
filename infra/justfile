@@ -36,10 +36,6 @@ reconcile:
 log:
     ./scripts/log.bash
 
-# Analyze access logs
-analyze:
-    ./scripts/analyze.bash
-
 # Open monitoring system dashboard
 viz-monitor:
     ./scripts/viz-monitor.bash

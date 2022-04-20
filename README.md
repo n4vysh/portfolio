@@ -67,8 +67,6 @@ Need Unix-like operating system and following tools.
 | [asdf-direnv][asdf-direnv-link]       | direnv plugin for asdf        | ~> 0.3.0    |
 | [Docker][docker-link]                 | Virtualization software       | ~> 20.10.14 |
 | [atool][atool-link]                   | File archive manager          | ~> 0.39.0   |
-| [CCZE][ccze-link]                     | Log colorizer                 | ~> 0.2.1    |
-| [GoAccess][goaccess-link]             | Log Analyzer                  | ~> 1.5.5    |
 | [drawio-desktop][drawio-desktop-link] | Graph drawing software        | ~> 17.2.4   |
 
 [bash-link]: https://www.gnu.org/software/bash/
@@ -81,8 +79,6 @@ Need Unix-like operating system and following tools.
 [asdf-direnv-link]: https://github.com/asdf-community/asdf-direnv/blob/4900445811e634702b3bb069cd9b8a4b717ea925/README.md#setup
 [docker-link]: https://www.docker.com/
 [atool-link]: https://www.nongnu.org/atool/
-[ccze-link]: http://freshmeat.net/projects/ccze/
-[goaccess-link]: https://goaccess.io/
 [drawio-desktop-link]: https://www.diagrams.net/
 
 ## Development setup
@@ -317,11 +313,8 @@ just check
 # Trigger a reconciliation of kubernetes sources and resources with flux
 just reconcile
 
-# Show nginx highlighted access logs with ccze
+# Show highlighted access logs with jq
 just log
-
-# Analyze nginx access logs with GoAccess
-just analyze
 
 # Open Grafana of kube-prometheus-stack
 just viz-monitor

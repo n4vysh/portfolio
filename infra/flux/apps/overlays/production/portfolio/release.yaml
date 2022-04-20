@@ -7,4 +7,10 @@ metadata:
 spec:
   values:
     host: n4vysh.dev
-    servicemonitor: true
+    metrics:
+      serviceMonitor:
+        enabled: true
+    trace:
+      enabled: true
+      protocol: http/protobuf
+      endpoint: http://tempo-tempo-distributed-distributor.tempo:55681/v1/traces

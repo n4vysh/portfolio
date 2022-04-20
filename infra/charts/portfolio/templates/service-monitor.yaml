@@ -1,9 +1,9 @@
-{{ if .Values.servicemonitor }}
+{{ if .Values.metrics.serviceMonitor.enabled }}
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: nginx-prometheus-exporter
+  name: gin
   namespace: portfolio
   {{- with .Values.labels }}
   labels:
@@ -12,7 +12,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: nginx
+      app.kubernetes.io/name: gin
   endpoints:
-    - port: exporter
+    - port: internal
 {{ end }}

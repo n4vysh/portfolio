@@ -1,18 +1,19 @@
 ---
 host: localhost
 port: 8080
-status:
+internal:
   port: 8081
+mode: release
 image:
   # ghcr.io/n4vysh/portfolio:bb14505
   repository: ghcr.io/n4vysh/portfolio
   # yamllint disable-line rule:line-length
-  digest: sha256:b721a3931efa1c1b0c5700a87403eefbc793aa0494b2a5b5b27351816ecf074f
+  digest: sha256:34817454a803d87e97d4e415bfefabde28b5a5c8b2a3d173bdf975dacef41c08
 
 labels:
-  app.kubernetes.io/name: nginx
-  app.kubernetes.io/instance: nginx
-  app.kubernetes.io/version: 1.21.4
+  app.kubernetes.io/name: gin
+  app.kubernetes.io/instance: gin
+  app.kubernetes.io/version: 1.7.7
   app.kubernetes.io/component: web-server
   app.kubernetes.io/part-of: portfolio
   app.kubernetes.io/managed-by: helm
@@ -37,4 +38,9 @@ autoscaling:
   maxReplicas: 3
   targetCPUUtilizationPercentage: 80
 
-servicemonitor: false
+trace:
+  enabled: false
+
+metrics:
+  serviceMonitor:
+    enabled: false

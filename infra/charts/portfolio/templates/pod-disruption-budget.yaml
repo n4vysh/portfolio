@@ -2,7 +2,7 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: nginx
+  name: gin
   namespace: portfolio
   {{- with .Values.labels }}
   labels:
@@ -12,4 +12,4 @@ spec:
   maxUnavailable: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: nginx
+      app.kubernetes.io/name: gin

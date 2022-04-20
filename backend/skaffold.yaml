@@ -18,6 +18,7 @@ deploy:
   helm:
     releases:
       - name: portfolio
+        namespace: portfolio
         artifactOverrides:
           image: ghcr.io/n4vysh/portfolio
         imageStrategy:

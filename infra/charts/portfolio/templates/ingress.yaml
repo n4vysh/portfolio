@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginx
+  name: gin
   namespace: portfolio
   {{- with .Values.labels }}
   labels:
@@ -21,7 +21,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: nginx
+                name: gin
                 port:
                   number: {{ .Values.port }}
   {{- if .Values.ingress.tls }}

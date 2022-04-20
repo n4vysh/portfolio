@@ -24,9 +24,34 @@ spec:
       namespace: tempo
   values:
     collector:
-      enabled: false
+      config: |
+        receivers:
+          otlp:
+            protocols:
+              grpc:
+              http:
+          opencensus:
+          zipkin:
+          jaeger:
+            protocols:
+              grpc:
+              thrift_http:
+              thrift_compact:
+              thrift_binary:
+        processors:
+          batch:
+        extensions:
+          health_check:
+        exporters:
+          jaeger:
+            endpoint: tempo-tempo-distributed-distributor.tempo:14250
+            insecure: true
+        service:
+          extensions: [health_check]
+          pipelines:
+            traces:
+              receivers: [otlp,opencensus,zipkin,jaeger]
+              processors: [batch]
+              exporters: [jaeger]
     jaeger:
       enabled: false
-    webhook:
-      collectorSvcAddr: tempo-tempo-distributed-distributor.tempo:55678
-      collectorSvcAccount: tempo

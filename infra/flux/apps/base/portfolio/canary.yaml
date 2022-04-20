@@ -8,11 +8,11 @@ spec:
   targetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: nginx
+    name: gin
   autoscalerRef:
     apiVersion: autoscaling/v1
     kind: HorizontalPodAutoscaler
-    name: nginx
+    name: gin
   progressDeadlineSeconds: 60
   service:
     port: 8080
@@ -39,10 +39,10 @@ spec:
         timeout: 30s
         metadata:
           type: bash
-          cmd: "curl -s -H 'Host:n4vysh.dev' http://nginx-canary.portfolio:8080"
+          cmd: "curl -s -H 'Host:n4vysh.dev' http://gin-canary.portfolio:8080"
       - name: load-test
         type: rollout
         url: http://flagger-loadtester.portfolio/
         metadata:
           # yamllint disable-line rule:line-length
-          cmd: "hey -z 2m -q 10 -c 2 -host n4vysh.dev http://nginx-canary.portfolio:8080"
+          cmd: "hey -z 2m -q 10 -c 2 -host n4vysh.dev http://gin-canary.portfolio:8080"
