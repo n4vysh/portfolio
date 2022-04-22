@@ -194,10 +194,6 @@ While the preview is running, edit tsx and css files and automatically rebuild
 them. Suggest IDE or editor setup with [deno lsp][deno-lsp-link],
 [stylelint][stylelint-link], and [prettier][prettier-link] installed by asdf.
 
-[deno-lsp-link]: https://deno.land/manual@v1.16.2/getting_started/setup_your_environment
-[stylelint-link]: https://stylelint.io/
-[prettier-link]: https://prettier.io/
-
 backend:
 
 1. Run `cd backend/` to change backend directory
@@ -211,12 +207,22 @@ While the preview is running, edit go files and automatically rebuild them with
 [gofumpt][gofumpt-link], and [golangci-lint][golangci-lint-link] installed by
 asdf.
 
+infra:
+
+Suggest IDE or editor setup with [terraform-ls][terraform-ls-link] and
+[yamllint][yamllint-link] installed by asdf.
+
 [gh-clone-link]: https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories
 [script-link]: ./scripts/install-packages.bash
+[deno-lsp-link]: https://deno.land/manual@v1.16.2/getting_started/setup_your_environment
+[stylelint-link]: https://stylelint.io/
+[prettier-link]: https://prettier.io/
 [air-link]: https://github.com/cosmtrek/air
 [gopls-link]: https://pkg.go.dev/golang.org/x/tools/gopls
 [gofumpt-link]: https://github.com/mvdan/gofumpt
 [golangci-lint-link]: https://golangci-lint.run/
+[terraform-ls-link]: https://github.com/hashicorp/terraform-ls
+[yamllint-link]: https://github.com/adrienverge/yamllint
 
 ## Test
 
@@ -230,7 +236,7 @@ Run `just check` to lint and format the source code with
 | [lighthouse-ci][lighthouse-ci-link]                                                                                                                                                                                                       | frontend performance            |
 | gofumpt + golangci-lint                                                                                                                                                                                                                   | go files                        |
 | [skaffold][skaffold-link]                                                                                                                                                                                                                 | container image                 |
-| [yamllint][yamllint-link]                                                                                                                                                                                                                 | YAML files                      |
+| yamllint                                                                                                                                                                                                                                  | YAML files                      |
 | [taplo][taplo-link]                                                                                                                                                                                                                       | TOML files                      |
 | [just][just-link]                                                                                                                                                                                                                         | justfile                        |
 | [markdownlint][markdownlint-link] + [markdown-link-check][markdown-link-check-link]                                                                                                                                                       | Markdown files                  |
@@ -251,7 +257,6 @@ Run `just check` to lint and format the source code with
 [deno-lint-link]: https://deno.land/manual/tools/linter
 [lighthouse-ci-link]: https://github.com/GoogleChrome/lighthouse-ci
 [lighthouse-link]: https://github.com/GoogleChrome/lighthouse
-[yamllint-link]: https://github.com/adrienverge/yamllint
 [taplo-link]: https://taplo.tamasfe.dev/
 [just-link]: https://github.com/casey/just
 [markdownlint-link]: https://github.com/DavidAnson/markdownlint
