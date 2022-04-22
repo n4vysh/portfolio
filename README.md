@@ -7,22 +7,32 @@ skillsets and expertise.
 
 ## Features
 
-- Cloud Native
-- Infrastructure as Code
-- CIOps
-- GitOps
-- Progressive Delivery
+- Immutable infrastructure with [Containerd][containerd-link]
+- Self-Healing Reconciliation Loop with [Kubernetes][kubernetes-link]
+- Infrastructure as Code with [Terraform][terraform-link],
+  [Terragrunt][terragrunt-link], [Helm][helm-link], and
+  [Kustomize][kustomize-link]
+- CIOps with Terraform, Terragrunt, and [GitHub Actions][github-actions-link]
+- GitOps with [Flux][flux-link]
+- Observable system with [Linkerd][linkerd-link]
+- Progressive Delivery with [Flagger][flagger-link]
+- Detect Configuration drift with [driftctl][driftctl-link]
 
-## Specifications
+[containerd-link]: https://containerd.io/
+[kubernetes-link]: https://kubernetes.io/
+[terraform-link]: https://www.terraform.io/
+[terragrunt-link]: https://terragrunt.gruntwork.io/
+[helm-link]: https://helm.sh
+[kustomize-link]: https://kustomize.io/
+[github-actions-link]: https://github.com/features/actions
+[flux-link]: https://fluxcd.io/
+[linkerd-link]: https://linkerd.io/
+[flagger-link]: https://flagger.app/
+[driftctl-link]: https://driftctl.com/
 
-### Frontend
+## Website specifications
 
 - Static Site Generation with [Aleph.js][alephjs-link]
-
-[alephjs-link]: https://alephjs.org/
-
-### Backend
-
 - Serve static files with [Gin][gin-link]
 - Single binary with [Go embed][go-embed-link]
 - Structured logging with [zap][zap-link]
@@ -38,6 +48,7 @@ skillsets and expertise.
 - Allow requests from specific hostname with
   [gin-contrib/secure][gin-secure-link]
 
+[alephjs-link]: https://alephjs.org/
 [gin-link]: https://github.com/gin-gonic/gin
 [go-embed-link]: https://pkg.go.dev/embed
 [zap-link]: https://pkg.go.dev/go.uber.org/zap
@@ -50,6 +61,88 @@ skillsets and expertise.
 [swag-link]: https://github.com/swaggo/swag
 [gin-gzip-link]: https://github.com/gin-contrib/gzip
 [gin-secure-link]: https://github.com/gin-contrib/secure
+
+## Architecture
+
+![Digram](./misc/diagram.svg)
+
+### Managed services
+
+| Name                                                    | Description                    |
+| :------------------------------------------------------ | :----------------------------- |
+| [Amazon Route 53][amazon-route53-link]                  | Domain Name System             |
+| [AWS KMS][aws-kms-link]                                 | Key Management Service         |
+| [AWS WAF][aws-waf-link]                                 | Web Application Firewall       |
+| [AWS Certificate Manager][aws-certificate-manager-link] | SSL certificates manager       |
+| [Elastic Load Balancing][elastic-load-balancing-link]   | Load Balancer                  |
+| [Amazon Virtual Private Cloud][amazon-vpc-link]         | Virtual Network                |
+| [AWS IAM][aws-iam-link]                                 | Identity and Access Management |
+| [Amazon EKS][amazon-eks-link]                           | Managed Kubernetes Service     |
+| [Amazon S3][amazon-s3-link]                             | Object storage                 |
+
+[amazon-route53-link]: https://aws.amazon.com/route53/
+[aws-kms-link]: https://aws.amazon.com/kms/
+[aws-waf-link]: https://aws.amazon.com/waf/
+[aws-certificate-manager-link]: https://aws.amazon.com/certificate-manager/
+[elastic-load-balancing-link]: https://aws.amazon.com/elasticloadbalancing/
+[amazon-vpc-link]: https://aws.amazon.com/vpc/
+[aws-iam-link]: https://aws.amazon.com/iam/
+[amazon-eks-link]: https://aws.amazon.com/eks/
+[amazon-s3-link]: https://aws.amazon.com/s3/
+
+### Middlewares
+
+| Name                                                              | Description                                                                                                                                   |
+| :---------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
+| [AWS Load Balancer Controller][aws-load-balancer-controller-link] | A Kubernetes controller for Elastic Load Balancers                                                                                            |
+| [kube-prometheus-stack][kube-prometheus-stack-link]               | Operate end-to-end Kubernetes cluster monitoring with [Prometheus][prometheus-link] using the [Prometheus Operator][prometheus-operator-link] |
+| [Thanos][thanos-link]                                             | Open source, highly available Prometheus setup with long term storage capabilities                                                            |
+| [Fluent Bit][fluent-bit-link]                                     | Fast and Lightweight Logs and Metrics processor                                                                                               |
+| [Loki][loki-link]                                                 | A horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus                                         |
+| [Tempo][tempo-link]                                               | A high volume, minimal dependency distributed tracing backend                                                                                 |
+| [Contour][contour-link]                                           | High performance ingress controller for Kubernetes using [Envoy Proxy][envoy-proxy-link]                                                      |
+| Linkerd                                                           | Ultralight, security-first service mesh for Kubernetes                                                                                        |
+| Flagger                                                           | Progressive Delivery Operator for Kubernetes                                                                                                  |
+| [Falco][falco-link]                                               | Cloud-Native runtime security                                                                                                                 |
+| [metrics-server][metrics-server-link]                             | Scalable and efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines                                     |
+
+EKS cluster deploy [Bottlerocket][bottlerocket-link] nodes with
+[managed node groups][managed-node-groups-link]. EKS nodes use
+[Spot Instance][spot-instance-link] for cost reduction.
+[EKS add-ons][eks-addons-link] deploy [CoreDNS][coredns-link],
+[kube-proxy][kube-proxy-link], and [vpc-cni][vpc-cni-link]. AWS Load Balancer
+Controller bind ALB target group and Kubernetes service of Envoy Proxy with
+[TargetGroupBinding custom resource][target-group-binding-link]. Thanos, Loki,
+and Tempo upload metrics, container logs, and traces to S3. AWS Load Balancer
+Controller, Thanos, Loki, and Tempo access AWS resources with [IRSA][irsa-link].
+Following AWS IAM entities can access EKS control plane by
+[aws-auth][aws-auth-link] ConfigMap.
+
+- IAM user or role that creates the cluster
+- AWS Organization default created IAM role - OrganizationAccountAccessRole
+
+[bottlerocket-link]: https://aws.amazon.com/bottlerocket/
+[managed-node-groups-link]: https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html
+[spot-instance-link]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances.html
+[eks-addons-link]: https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html
+[coredns-link]: https://coredns.io/
+[kube-proxy-link]: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/
+[vpc-cni-link]: https://github.com/aws/amazon-vpc-cni-k8s
+[target-group-binding-link]: https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/guide/targetgroupbinding/targetgroupbinding/
+[irsa-link]: https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html
+[aws-auth-link]: https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html
+[aws-load-balancer-controller-link]: https://kubernetes-sigs.github.io/aws-load-balancer-controller
+[kube-prometheus-stack-link]: https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+[prometheus-link]: https://prometheus.io/
+[prometheus-operator-link]: https://prometheus-operator.dev/
+[thanos-link]: https://thanos.io/
+[fluent-bit-link]: https://fluentbit.io/
+[loki-link]: https://grafana.com/oss/loki/
+[tempo-link]: https://grafana.com/oss/tempo/
+[contour-link]: https://projectcontour.io/
+[envoy-proxy-link]: https://www.envoyproxy.io/
+[falco-link]: https://falco.org/
+[metrics-server-link]: https://github.com/kubernetes-sigs/metrics-server
 
 ## Requirements
 
@@ -98,7 +191,12 @@ frontend:
 4. After done with the preview, press Ctrl-C in terminal to stop the server
 
 While the preview is running, edit tsx and css files and automatically rebuild
-them.
+them. Suggest IDE or editor setup with [deno lsp][deno-lsp-link],
+[stylelint][stylelint-link], and [prettier][prettier-link] installed by asdf.
+
+[deno-lsp-link]: https://deno.land/manual@v1.16.2/getting_started/setup_your_environment
+[stylelint-link]: https://stylelint.io/
+[prettier-link]: https://prettier.io/
 
 backend:
 
@@ -110,7 +208,8 @@ backend:
 
 While the preview is running, edit go files and automatically rebuild them with
 [air][air-link]. Suggest IDE or editor setup with [gopls][gopls-link],
-[gofumpt][gofumpt-link], [golangci-lint][golangci-lint-link] installed by asdf.
+[gofumpt][gofumpt-link], and [golangci-lint][golangci-lint-link] installed by
+asdf.
 
 [gh-clone-link]: https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories
 [script-link]: ./scripts/install-packages.bash
@@ -127,7 +226,7 @@ Run `just check` to lint and format the source code with
 | Name                                                                                                                                                                                                                                      | Target type                     |
 | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------ |
 | [deno fmt][deno-fmt-link] + [deno lint][deno-lint-link]                                                                                                                                                                                   | js, ts, tsx, md, and json files |
-| [stylelint][stylelint-link] + [prettier][prettier-link]                                                                                                                                                                                   | CSS files                       |
+| stylelint + prettier                                                                                                                                                                                                                      | CSS files                       |
 | [lighthouse-ci][lighthouse-ci-link]                                                                                                                                                                                                       | frontend performance            |
 | gofumpt + golangci-lint                                                                                                                                                                                                                   | go files                        |
 | [skaffold][skaffold-link]                                                                                                                                                                                                                 | container image                 |
@@ -150,8 +249,6 @@ Run `just check` to lint and format the source code with
 [deno-link]: https://deno.land/
 [deno-fmt-link]: https://deno.land/manual/tools/formatter
 [deno-lint-link]: https://deno.land/manual/tools/linter
-[stylelint-link]: https://stylelint.io/
-[prettier-link]: https://prettier.io/
 [lighthouse-ci-link]: https://github.com/GoogleChrome/lighthouse-ci
 [lighthouse-link]: https://github.com/GoogleChrome/lighthouse
 [yamllint-link]: https://github.com/adrienverge/yamllint
@@ -206,8 +303,7 @@ Run `just list` to list available commands in command runner.
 
 ## Deploy
 
-Run following commands to deploy [Kubernetes][kubernetes-link] cluster and
-resources.
+Run following commands to deploy Kubernetes cluster and resources.
 
 ```bash
 ENV=dev just deploy # development environment
@@ -217,8 +313,8 @@ ENV=prd just deploy # production environment
 
 The development environment create local Kubernetes cluster with
 [kind][kind-link] and skaffold. Other environments create Kubernetes cluster in
-[Amazon Web Services][aws-link] with [Terragrunt][terragrunt-link] and
-[Flux][flux-link]. Terragrunt use following terraform modules.
+[Amazon Web Services][aws-link] with Terragrunt and Flux. Terragrunt use
+following terraform modules.
 
 | Tier      | Name                                                                                                       |
 | :-------- | :--------------------------------------------------------------------------------------------------------- |
@@ -241,24 +337,8 @@ The development environment create local Kubernetes cluster with
 Self-made modules follow
 [Terraform Best Practices](https://www.terraform-best-practices.com/).
 Terragrunt show cost estimate with [infracost][infracost-link] and check budget
-with [conftest][conftest-link] after the call to [Terraform][terraform-link].
-Terragrunt and Flux deploy following middlewares using [Helm][helm-link] and
-[Kustomize][kustomize-link] in production environment.
-
-| Name                                                              | Description                                                                                                                                   |
-| :---------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
-| [AWS Load Balancer Controller][aws-load-balancer-controller-link] | A Kubernetes controller for Elastic Load Balancers                                                                                            |
-| [kube-prometheus-stack][kube-prometheus-stack-link]               | Operate end-to-end Kubernetes cluster monitoring with [Prometheus][prometheus-link] using the [Prometheus Operator][prometheus-operator-link] |
-| [Thanos][thanos-link]                                             | Open source, highly available Prometheus setup with long term storage capabilities                                                            |
-| [Fluent Bit][fluent-bit-link]                                     | Fast and Lightweight Logs and Metrics processor                                                                                               |
-| [Loki][loki-link]                                                 | A horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus                                         |
-| [Tempo][tempo-link]                                               | A high volume, minimal dependency distributed tracing backend                                                                                 |
-| [Contour][contour-link]                                           | High performance ingress controller for Kubernetes using [Envoy Proxy][envoy-proxy-link]                                                      |
-| [Linkerd][linkerd-link]                                           | Ultralight, security-first service mesh for Kubernetes                                                                                        |
-| [Flagger][flagger-link]                                           | Progressive Delivery Operator for Kubernetes                                                                                                  |
-| [Falco][falco-link]                                               | Cloud-Native runtime security                                                                                                                 |
-| [metrics-server][metrics-server-link]                             | Scalable and efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines                                     |
-
+with [conftest][conftest-link] after the call to Terraform. Terragrunt and Flux
+deploy following middlewares using Helm and Kustomize in production environment.
 Flux deploy with following Helm charts and kustomization files.
 
 | Type               | Tier      | Name                                                                    |
@@ -339,15 +419,11 @@ linkerd can check traffic status with viz extension.
 | :------------------------------------- | :----------------------------------------------------- | :------------------------------------------- |
 | ![Namespace list][namespace-list-link] | ![Deployment information][deployment-infromation-link] | ![Grafana dashboard][grafana-dashboard-link] |
 
-[kubernetes-link]: https://kubernetes.io/
 [kind-link]: https://kind.sigs.k8s.io
 [skaffold-link]: https://skaffold.dev/
 [aws-link]: https://aws.amazon.com
-[terragrunt-link]: https://terragrunt.gruntwork.io/
 [infracost-link]: https://www.infracost.io/
 [conftest-link]: https://www.conftest.dev/
-[terraform-link]: https://www.terraform.io/
-[flux-link]: https://fluxcd.io/
 [terraform-module-eks-link]: https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
 [terraform-module-iam-oidc-link]: https://registry.terraform.io/modules/terraform-aws-modules/iam/aws/latest/submodules/iam-assumable-role-with-oidc
 [terraform-module-iam-policy-link]: https://registry.terraform.io/modules/terraform-aws-modules/iam/aws/latest/submodules/iam-policy
@@ -357,22 +433,6 @@ linkerd can check traffic status with viz extension.
 [terraform-module-route53-zones-link]: https://registry.terraform.io/modules/terraform-aws-modules/route53/aws/latest/submodules/zones
 [terraform-module-s3-bucket-link]: https://registry.terraform.io/modules/terraform-aws-modules/s3-bucket/aws/latest
 [terraform-module-vpc-link]: https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest
-[helm-link]: https://helm.sh
-[kustomize-link]: https://kustomize.io/
-[aws-load-balancer-controller-link]: https://kubernetes-sigs.github.io/aws-load-balancer-controller
-[kube-prometheus-stack-link]: https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
-[prometheus-link]: https://prometheus.io/
-[prometheus-operator-link]: https://prometheus-operator.dev/
-[thanos-link]: https://thanos.io/
-[fluent-bit-link]: https://fluentbit.io/
-[loki-link]: https://grafana.com/oss/loki/
-[tempo-link]: https://grafana.com/oss/tempo/
-[contour-link]: https://projectcontour.io/
-[envoy-proxy-link]: https://www.envoyproxy.io/
-[linkerd-link]: https://linkerd.io/
-[flagger-link]: https://flagger.app/
-[falco-link]: https://falco.org/
-[metrics-server-link]: https://github.com/kubernetes-sigs/metrics-server
 [kubie-link]: https://github.com/sbstp/kubie
 [grafana-link]: https://grafana.com/oss/grafana/
 [dashboard-list-link]: ./misc/screenshots/kube-prometheus-stack/grafana_dashboards.png
@@ -382,32 +442,13 @@ linkerd can check traffic status with viz extension.
 [deployment-infromation-link]: ./misc/screenshots/linkerd/web_dashboard_deployment.png
 [grafana-dashboard-link]: ./misc/screenshots/linkerd/grafana_dashboard.png
 
-## Diagram
+## CI/CD pipeline
 
-AWS Load Balancer Controller bind ALB target group and Kubernetes service of
-Envoy Proxy with
-[TargetGroupBinding custom resource][target-group-binding-link]. Thanos, Loki,
-and Tempo upload metrics, container logs, and traces to S3. AWS Load Balancer
-Controller, Thanos, Loki, and Tempo access AWS resources with [IRSA][irsa-link].
-Following AWS IAM entities can access EKS control plane by
-[aws-auth][aws-auth-link] ConfigMap.
-
-- IAM user or role that creates the cluster
-- AWS Organization default created IAM role - OrganizationAccountAccessRole
-
-![Digram](./misc/diagram.svg)
-
-[irsa-link]: https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html
-[target-group-binding-link]: https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/guide/targetgroupbinding/targetgroupbinding/
-[aws-auth-link]: https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html
-
-## CI/CD Pipeline
-
-Use [GitHub Actions][github-actions-link], Flux, and Flagger.
+Use GitHub Actions, Flux, and Flagger.
 
 ### GitHub Actions
 
-GitHub Actions run lefthook, skaffold, [drifctl][driftctl-link], terragrunt, and
+GitHub Actions run lefthook, skaffold, drifctl, terragrunt, and
 [chart-releaser][chart-releaser-link] in main workflow when push source code to
 GitHub repository. A main workflow use [cache action][cache-action-link],
 [composite action][composite-action-link],
@@ -417,8 +458,6 @@ GitHub repository. A main workflow use [cache action][cache-action-link],
 
 ![main workflow](./misc/screenshots/github_actions_main_workflow.png)
 
-[github-actions-link]: https://github.com/features/actions
-[driftctl-link]: https://driftctl.com/
 [chart-releaser-link]: https://github.com/helm/chart-releaser
 [cache-action-link]: https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
 [composite-action-link]: https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
