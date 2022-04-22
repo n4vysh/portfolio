@@ -1,5 +1,4 @@
 .pnpm-debug.log
-bin/actionlint
 bin/gitleaks
 bin/shellharden
 lefthook-local.yml
