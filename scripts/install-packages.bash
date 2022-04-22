@@ -38,7 +38,6 @@ $dir/scripts/install/python-packages.bash
 $dir/scripts/install/node-packages.bash
 $dir/scripts/install/lefthook.bash
 $dir/scripts/install/shellharden.bash
-$dir/scripts/install/actionlint.bash
 $dir/scripts/install/gitleaks.bash
 $dir/frontend/scripts/install-packages.bash
 $dir/backend/scripts/install-packages.bash
