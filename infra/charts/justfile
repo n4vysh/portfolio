@@ -33,3 +33,6 @@ lint-pluto:
 # generate document of helm chart with helm-docs
 generate-docs:
     helm-docs
+
+check-docs:
+    diff -u <(helm-docs -d -l panic) <(cat */README.md)

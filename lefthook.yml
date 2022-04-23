@@ -148,8 +148,7 @@ pre-commit:
       files: ./scripts/lefthook-custom-files.bash
       # yamllint disable-line rule:line-length
       glob: "infra/charts/**/{README.md.gotmpl,{Chart,requirements,values}.yaml}"
-      # https://github.com/evilmartians/lefthook/issues/140
-      run: git stash -k && just generate-docs && git stash pop
+      run: just check-docs
     infra/charts/ct:
       tags: infra/charts
       root: "infra/charts/"
