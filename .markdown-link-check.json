@@ -1,7 +1,7 @@
 {
   "ignorePatterns": [
     {
-      "pattern": "^(http://localhost|https://n4vysh.dev|https://runterrascan.io/)"
+      "pattern": "^(http://localhost|https://n4vysh.dev|https://runterrascan.io/|https://renovatebot.com)"
     }
   ]
 }
