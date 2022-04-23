@@ -1,6 +1,6 @@
 # portfolio
 
-![Version: 0.1.12](https://img.shields.io/badge/Version-0.1.12-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.13](https://img.shields.io/badge/Version-0.1.13-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 website
 
@@ -19,7 +19,7 @@ website
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | dev.enabled | bool | `false` |  |
 | host | string | `"n4vysh.dev"` |  |
-| image.digest | string | `"sha256:1b95ae3594d1052495271459367a62cd24a745610ae0fbc42adb84e420fc700f"` |  |
+| image.digest | string | `"sha256:2bd6edd2df7d4e738fe487a300049edf0c40608b791f9d59e1e685e02420f015"` |  |
 | image.repository | string | `"ghcr.io/n4vysh/portfolio"` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.class | string | `""` |  |
