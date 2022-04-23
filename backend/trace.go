@@ -52,7 +52,7 @@ func installExportPipeline(ctx context.Context, logger *zap.Logger) func() {
 	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(
 		propagation.TraceContext{},
 		propagation.Baggage{},
-		b3.New(),
+		b3.New(b3.WithInjectEncoding(b3.B3MultipleHeader|b3.B3SingleHeader)),
 	))
 
 	return func() {
