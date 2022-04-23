@@ -31,6 +31,19 @@ entries:
   portfolio:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2022-04-23T15:35:44.251244476Z"
+    description: website
+    digest: d4d0a909b664e996bf743ee896a4084696214a999821adb14ab53e9db7cb8b51
+    icon: https://raw.githubusercontent.com/n4vysh/portfolio/4b14e1c8a9ced87ed3dcecbc12d8df6ff264ccd4/misc/icon.svg
+    maintainers:
+    - name: n4vysh
+    name: portfolio
+    type: application
+    urls:
+    - https://github.com/n4vysh/portfolio/releases/download/portfolio-0.1.11/portfolio-0.1.11.tgz
+    version: 0.1.11
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2022-04-22T13:54:21.259371813Z"
     description: website
     digest: f7e5d2fb540ab582de5bf67197674f1980056df69e9438499a2b21c83467bd16
@@ -185,4 +198,4 @@ entries:
     urls:
     - https://github.com/n4vysh/portfolio/releases/download/target-group-bindings-0.1.0/target-group-bindings-0.1.0.tgz
     version: 0.1.0
-generated: "2022-04-22T13:54:21.259420313Z"
+generated: "2022-04-23T15:35:44.251373474Z"
