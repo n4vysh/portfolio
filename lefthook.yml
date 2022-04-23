@@ -141,7 +141,7 @@ pre-commit:
       root: "infra/charts/"
       files: ./scripts/lefthook-custom-files.bash
       glob: "infra/charts/**/*.yaml"
-      run: just lint-kube-linter
+      run: direnv exec . just lint-kube-linter
     infra/charts/helm-docs:
       tags: infra/charts
       root: "infra/charts/"
