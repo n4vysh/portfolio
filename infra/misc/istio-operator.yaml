@@ -1,0 +1,35 @@
+---
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  name: istio-control-plane
+spec:
+  components:
+    ingressGateways:
+      - enabled: true
+        name: istio-ingressgateway
+        k8s:
+          nodeSelector:
+            ingress-ready: "true"
+          service:
+            type: NodePort
+          tolerations:
+            - key: node-role.kubernetes.io/master
+              operator: Equal
+              effect: NoSchedule
+          overlays:
+            - apiVersion: v1
+              kind: Service
+              name: istio-ingressgateway
+              patches:
+                - path: spec.ports
+                  value:
+                    - name: http
+                      port: 80
+                      targetPort: 8080
+                      nodePort: 30000
+                      protocol: TCP
+  meshConfig:
+    accessLogFile: "/dev/stdout"
+    accessLogEncoding: "JSON"

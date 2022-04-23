@@ -11,8 +11,3 @@ spec:
     name: flux-system
   path: ./infra/flux/infra/overlays/production/
   prune: true
-  healthChecks:
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: linkerd-proxy-injector
-      namespace: linkerd

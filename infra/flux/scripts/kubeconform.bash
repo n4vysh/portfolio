@@ -11,6 +11,7 @@ opts=(
 	-schema-location "./crd-schemas/{{ .ResourceKind }}{{ .KindSuffix }}.json"
 	-verbose
 	-strict
+	-skip Gateway
 )
 
 set -x
@@ -21,5 +22,5 @@ kubectl kustomize \
 	--reorder=legacy \
 	"./infra/overlays/production/" |
 	kubeconform "${opts[@]}"
-# need crd schemas of prometheus-operator, linkerd, and flagger
+# need crd schemas of prometheus-operator, istio, and flagger
 # kubectl kustomize apps/overlays/production/ | kubeconform "${opts[@]}"

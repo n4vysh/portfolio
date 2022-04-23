@@ -45,6 +45,8 @@ data:
                 endpoint: 0.0.0.0:55681
               grpc:
                 endpoint: 0.0.0.0:4317
+          zipkin:
+            endpoint: 0.0.0.0:9411
       querier:
         frontend_worker:
           frontend_address: {{ include "tempo.queryFrontendFullname" . }}-discovery:9095

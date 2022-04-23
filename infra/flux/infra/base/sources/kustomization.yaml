@@ -6,9 +6,9 @@ resources:
   # - portfolio.yaml
   - metrics-server.yaml
   - falcosecurity.yaml
-  - linkerd.yaml
   - bitnami.yaml
   - eks.yaml
   - prometheus-community.yaml
   - fluent.yaml
   - grafana.yaml
+  - istio.yaml

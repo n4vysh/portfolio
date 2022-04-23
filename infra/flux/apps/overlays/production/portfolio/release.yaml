@@ -6,7 +6,11 @@ metadata:
   namespace: portfolio
 spec:
   values:
-    host: n4vysh.dev
+    ingress:
+      gateway:
+        enabled: false
+      virtualService:
+        enabled: false
     metrics:
       serviceMonitor:
         enabled: true

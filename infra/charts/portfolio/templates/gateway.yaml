@@ -1,0 +1,30 @@
+{{ if .Values.ingress.gateway.enabled }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: gin
+  namespace: portfolio
+  {{- with .Values.labels }}
+  labels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.ingress.gateway.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  selector:
+    istio: {{ .Values.ingress.gateway.selector }}
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    {{- if .Values.dev.enabled }}
+    - "*"
+    {{- else }}
+    - {{ .Values.host | quote }}
+    {{- end }}
+{{ end }}

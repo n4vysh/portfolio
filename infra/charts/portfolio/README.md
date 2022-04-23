@@ -1,6 +1,6 @@
 # portfolio
 
-![Version: 0.1.10](https://img.shields.io/badge/Version-0.1.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.11](https://img.shields.io/badge/Version-0.1.11-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 website
 
@@ -23,10 +23,13 @@ website
 | image.repository | string | `"ghcr.io/n4vysh/portfolio"` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.class | string | `""` |  |
+| ingress.enabled | bool | `false` |  |
 | ingress.gateway.annotations | object | `{}` |  |
 | ingress.gateway.enabled | bool | `true` |  |
-| ingress.gateway.host | string | `"*"` |  |
+| ingress.gateway.selector | string | `"ingressgateway"` |  |
 | ingress.tls | list | `[]` |  |
+| ingress.virtualService.annotations | object | `{}` |  |
+| ingress.virtualService.enabled | bool | `true` |  |
 | internal.port | int | `8081` |  |
 | labels."app.kubernetes.io/component" | string | `"web-server"` |  |
 | labels."app.kubernetes.io/instance" | string | `"gin"` |  |

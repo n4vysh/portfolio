@@ -14,7 +14,7 @@ skillsets and expertise.
   [Kustomize][kustomize-link]
 - CIOps with Terraform, Terragrunt, and [GitHub Actions][github-actions-link]
 - GitOps with [Flux][flux-link]
-- Observable system with [Linkerd][linkerd-link]
+- Observable system with [Istio][istio-link]
 - Progressive Delivery with [Flagger][flagger-link]
 - Detect Configuration drift with [driftctl][driftctl-link]
 
@@ -26,7 +26,7 @@ skillsets and expertise.
 [kustomize-link]: https://kustomize.io/
 [github-actions-link]: https://github.com/features/actions
 [flux-link]: https://fluxcd.io/
-[linkerd-link]: https://linkerd.io/
+[istio-link]: https://istio.io/
 [flagger-link]: https://flagger.app/
 [driftctl-link]: https://driftctl.com/
 
@@ -42,7 +42,7 @@ skillsets and expertise.
   [`Server.Shutdown` method][shutdown-method-link]
 - Instrumented with [OpenMetrics][open-metrics-link] and
   [OpenTelemetry][open-telemetry-link]
-- [B3 Propagation][b3-propagation-link] for Linkerd
+- [B3 Propagation][b3-propagation-link] for service mesh
 - Generate documents with [swag][swag-link]
 - Enable gzip compression with [gin-contrib/gzip][gin-gzip-link]
 - Allow requests from specific hostname with
@@ -101,7 +101,7 @@ skillsets and expertise.
 | [Loki][loki-link]                                                 | A horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus                                         |
 | [Tempo][tempo-link]                                               | A high volume, minimal dependency distributed tracing backend                                                                                 |
 | [Contour][contour-link]                                           | High performance ingress controller for Kubernetes using [Envoy Proxy][envoy-proxy-link]                                                      |
-| Linkerd                                                           | Ultralight, security-first service mesh for Kubernetes                                                                                        |
+| Istio                                                             | An open platform to connect, manage, and secure microservices                                                                                 |
 | Flagger                                                           | Progressive Delivery Operator for Kubernetes                                                                                                  |
 | [Falco][falco-link]                                               | Cloud-Native runtime security                                                                                                                 |
 | [metrics-server][metrics-server-link]                             | Scalable and efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines                                     |
@@ -354,9 +354,9 @@ Flux deploy with following Helm charts and kustomization files.
 | Helm chart         | Official  | [contour][helm-contour-link]                                            |
 | Helm chart         | Official  | [falco][helm-falco-link]                                                |
 | Helm chart         | Official  | [falco-exporter][helm-falco-exporter-link]                              |
-| Helm chart         | Official  | [linkerd2][helm-linkerd2-link]                                          |
-| Helm chart         | Official  | [linkerd-viz][helm-linkerd-viz-link]                                    |
-| Helm chart         | Official  | [linkerd-jaeger][helm-linkerd-jaeger-link]                              |
+| Helm chart         | Official  | [istio-official/base][helm-istio-base-link]                             |
+| Helm chart         | Official  | [istio-official/istiod][helm-istio-istiod-link]                         |
+| Helm chart         | Official  | [istio-official/gateway][helm-istio-gateway-link]                       |
 | Helm chart         | Official  | [metrics-server][helm-metrics-server-link]                              |
 | Helm chart         | Community | [kube-prometheus-stack][helm-kube-prometheus-stack-link]                |
 | Helm chart         | Community | [thanos][helm-thanos-link]                                              |
@@ -372,13 +372,13 @@ Flux deploy with following Helm charts and kustomization files.
 [helm-contour-link]: https://artifacthub.io/packages/helm/bitnami/contour
 [helm-falco-link]: https://artifacthub.io/packages/helm/falcosecurity/falco
 [helm-falco-exporter-link]: https://artifacthub.io/packages/helm/falcosecurity/falco-exporter
-[helm-linkerd2-link]: https://artifacthub.io/packages/helm/linkerd2/linkerd2
-[helm-linkerd-viz-link]: https://artifacthub.io/packages/helm/linkerd2/linkerd-viz
-[helm-linkerd-jaeger-link]: https://artifacthub.io/packages/helm/linkerd2/linkerd-jaeger
+[helm-istio-base-link]: https://artifacthub.io/packages/helm/istio-official/base
+[helm-istio-istiod-link]: https://artifacthub.io/packages/helm/istio-official/istiod
+[helm-istio-gateway-link]: https://artifacthub.io/packages/helm/istio-official/gateway
 [helm-metrics-server-link]: https://artifacthub.io/packages/helm/metrics-server/metrics-server
 [helm-kube-prometheus-stack-link]: https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
 [helm-thanos-link]: https://artifacthub.io/packages/helm/bitnami/thanos
-[kustomize-flagger-link]: https://github.com/fluxcd/flagger/blob/v1.19.0/kustomize/linkerd/kustomization.yaml
+[kustomize-flagger-link]: https://github.com/fluxcd/flagger/blob/v1.19.0/kustomize/istio/kustomization.yaml
 [kustomize-flagger-loadtester-link]: https://github.com/fluxcd/flagger/blob/v1.19.0/kustomize/tester/kustomization.yaml
 
 Run following commands to change kubernetes context with [Kubie][kubie-link] and
@@ -391,7 +391,7 @@ ENV=dev just switch # development environment
 ENV=stg just switch # staging environment
 ENV=prd just switch # production environment
 
-# Check status of pods, nodes, flux, and linkerd
+# Check status of pods, nodes, flux, and istio
 just check
 
 # Trigger a reconciliation of kubernetes sources and resources with flux
@@ -403,9 +403,6 @@ just log
 # Open Grafana of kube-prometheus-stack
 just viz-monitor
 
-# Open Linkerd viz extension
-just viz-nw
-
 # Login AWS with aws-vault
 just login
 ```
@@ -416,12 +413,6 @@ dashboard.
 | Dashboard list                         | Example dashboard 1                              | Example dashboard 2                              |
 | :------------------------------------- | :----------------------------------------------- | :----------------------------------------------- |
 | ![Dashboard list][dashboard-list-link] | ![Example dashboard 1][example-dashboard-1-link] | ![Example dashboard 2][example-dashboard-2-link] |
-
-linkerd can check traffic status with viz extension.
-
-| Namespace list                         | Deployment information                                 | Grafana dashboard                            |
-| :------------------------------------- | :----------------------------------------------------- | :------------------------------------------- |
-| ![Namespace list][namespace-list-link] | ![Deployment information][deployment-infromation-link] | ![Grafana dashboard][grafana-dashboard-link] |
 
 [kind-link]: https://kind.sigs.k8s.io
 [skaffold-link]: https://skaffold.dev/
@@ -442,9 +433,6 @@ linkerd can check traffic status with viz extension.
 [dashboard-list-link]: ./misc/screenshots/kube-prometheus-stack/grafana_dashboards.png
 [example-dashboard-1-link]: ./misc/screenshots/kube-prometheus-stack/grafana_example_dashboard_1.png
 [example-dashboard-2-link]: ./misc/screenshots/kube-prometheus-stack/grafana_example_dashboard_2.png
-[namespace-list-link]: ./misc/screenshots/linkerd/web_dashboard_namespaces.png
-[deployment-infromation-link]: ./misc/screenshots/linkerd/web_dashboard_deployment.png
-[grafana-dashboard-link]: ./misc/screenshots/linkerd/grafana_dashboard.png
 
 ## CI/CD pipeline
 

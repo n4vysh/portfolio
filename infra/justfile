@@ -40,10 +40,6 @@ log:
 viz-monitor:
     ./scripts/viz-monitor.bash
 
-# Open service mesh dashboard
-viz-nw:
-    linkerd viz dashboard
-
 # Login cloud service
 login:
     aws-vault login n4vysh/{{env}}

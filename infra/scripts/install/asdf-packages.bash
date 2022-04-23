@@ -22,13 +22,11 @@ joblog="$(TMPDIR=/tmp/ mktemp)"
 cat \
 	<(
 		awk '{print $1}' "$dir/.tool-versions" |
-			grep -v 'kubeval' |
-			grep -v 'linkerd'
+			grep -v 'kubeval'
 	) \
 	<(
 		cat <<-EOF
 			kubeval https://github.com/stefansedich/asdf-kubeval
-			linkerd https://github.com/KazW/asdf-linkerd.git
 		EOF
 	) |
 	sort |

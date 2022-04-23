@@ -1,0 +1,116 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: istio-base
+  namespace: istio-system
+spec:
+  releaseName: istio-base
+  chart:
+    spec:
+      chart: base
+      sourceRef:
+        kind: HelmRepository
+        name: istio
+        namespace: flux-system
+      version: "1.13.3"
+  test:
+    enable: true
+  interval: 1m
+  dependsOn:
+    - name: kube-prometheus-stack
+      namespace: kube-prometheus-stack
+    - name: thanos
+      namespace: kube-prometheus-stack
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: istiod
+  namespace: istio-system
+spec:
+  releaseName: istiod
+  chart:
+    spec:
+      chart: istiod
+      sourceRef:
+        kind: HelmRepository
+        name: istio
+        namespace: flux-system
+      version: "1.13.3"
+  test:
+    enable: true
+  interval: 1m
+  dependsOn:
+    - name: istio-base
+      namespace: istio-system
+    - name: kube-prometheus-stack
+      namespace: kube-prometheus-stack
+    - name: thanos
+      namespace: kube-prometheus-stack
+  values:
+    pilot:
+      traceSampling: 100
+    global:
+      logAsJson: true
+    tracer:
+      zipkin:
+        address: tempo-tempo-distributed-distributor.tempo:9411
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: istio-ingress
+  namespace: istio-system
+spec:
+  releaseName: istio-ingress
+  chart:
+    spec:
+      chart: gateway
+      sourceRef:
+        kind: HelmRepository
+        name: istio
+        namespace: flux-system
+      version: "1.13.3"
+  test:
+    enable: true
+  dependsOn:
+    - name: istiod
+      namespace: istio-system
+    - name: kube-prometheus-stack
+      namespace: kube-prometheus-stack
+    - name: thanos
+      namespace: kube-prometheus-stack
+  interval: 1m
+  values:
+    service:
+      type: ClusterIP
+      externalTrafficPolicy: null
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: target-group-bindings
+  namespace: istio-system
+spec:
+  releaseName: target-group-bindings
+  chart:
+    spec:
+      chart: ./infra/charts/target-group-bindings
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  test:
+    enable: true
+  dependsOn:
+    - name: istio-ingress
+      namespace: istio-system
+  interval: 1m
+  valuesFrom:
+    - kind: ConfigMap
+      name: target-group-bindings-helm-values
+  values:
+    service:
+      name: istio-ingress
+      namespace: istio-system

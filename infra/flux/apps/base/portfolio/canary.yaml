@@ -18,6 +18,10 @@ spec:
     port: 8080
     targetPort: 8080
     portDiscovery: true
+    gateways:
+      - istio-system/public-gateway
+    hosts:
+      - "n4vysh.dev"
   analysis:
     interval: 10s
     threshold: 3

@@ -6,4 +6,3 @@ resources:
   - namespace.yaml
   - release.yaml
   - canary.yaml
-  - serviceprofile.yaml

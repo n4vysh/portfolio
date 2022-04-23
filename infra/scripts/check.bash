@@ -26,4 +26,4 @@ kubectl get nodes -o json |
 
 # middlewares
 flux check
-linkerd check
+istioctl verify-install

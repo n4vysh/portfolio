@@ -178,7 +178,7 @@ inputs = {
         "${get_terragrunt_dir()}/target_group_bindings/configmap.yaml.tftpl",
         {
           name              = "target-group-bindings-helm-values"
-          namespace         = "contour"
+          namespace         = "istio-system"
           target_group_arn  = dependency.lb.outputs.target_group_arn,
           security_group_id = dependency.lb.outputs.security_group_id,
         }

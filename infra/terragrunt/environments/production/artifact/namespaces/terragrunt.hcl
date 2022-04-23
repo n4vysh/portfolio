@@ -65,11 +65,11 @@ inputs = {
       )
     },
     {
-      name = "linkerd"
+      name = "istio_system"
       content = templatefile(
-        "${get_terragrunt_dir()}/linkerd/namespace.yaml.tftpl",
+        "${get_terragrunt_dir()}/common/namespace.yaml.tftpl",
         {
-          namespace = "linkerd"
+          namespace = "istio-system"
         }
       )
     },

@@ -8,19 +8,9 @@ ENV=$("$dir"/scripts/get-env.bash)
 
 if [[ $ENV == development ]]; then
 	just kind/create
-	helm repo add bitnami https://charts.bitnami.com/bitnami
-	helm repo update bitnami
-	helm install contour \
-		bitnami/contour \
-		--namespace contour \
-		--create-namespace \
-		--version 7.0.7 \
-		--set-string 'envoy.nodeSelector.ingress-ready=true' \
-		--set 'envoy.tolerations[0].key=node-role.kubernetes.io/master' \
-		--set 'envoy.tolerations[0].operator=Equal' \
-		--set 'envoy.tolerations[0].effect=NoSchedule'
+	export KUBECONFIG="${KUBECONFIG:-$HOME/.kube/configs/portfolio/$ENV/config.yaml}"
+	istioctl install -f misc/istio-operator.yaml
 	(
-		export KUBECONFIG="${KUBECONFIG:-$HOME/.kube/configs/portfolio/$ENV/config.yaml}"
 		cd "$dir/backend" || exit
 		skaffold dev
 	)

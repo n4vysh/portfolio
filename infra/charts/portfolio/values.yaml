@@ -20,9 +20,17 @@ labels:
   app.kubernetes.io/managed-by: helm
 
 ingress:
+  enabled: false
   annotations: {}
-  class: contour
+  class: ""
   tls: []
+  gateway:
+    enabled: true
+    annotations: {}
+    selector: ingressgateway
+  virtualService:
+    enabled: true
+    annotations: {}
 
 resources:
   limits:

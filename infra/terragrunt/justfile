@@ -63,6 +63,3 @@ check-fmt:
 # Format terragrunt config
 fmt:
     terragrunt hclfmt
-
-generate:
-    ./scripts/generate.bash

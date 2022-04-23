@@ -5,10 +5,7 @@ resources:
   - sources
   - metrics-server
   - falco
-  - linkerd
-  - linkerd-viz
-  - linkerd-jaeger
-  - contour
+  - istio-system
   - aws-load-balancer-controller
   - kube-prometheus-stack
   - fluent-bit

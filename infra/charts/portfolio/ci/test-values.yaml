@@ -24,6 +24,9 @@ ingress:
   class: contour
   tls:
     - secretName: portfolio-tls
+  gateway:
+    enabled: false
+    annotations: {}
 
 resources:
   limits:
