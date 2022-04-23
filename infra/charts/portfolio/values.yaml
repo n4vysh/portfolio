@@ -1,14 +1,15 @@
 ---
-host: localhost
+host: n4vysh.dev
 port: 8080
 internal:
   port: 8081
-mode: release
 image:
-  # ghcr.io/n4vysh/portfolio:bb14505
   repository: ghcr.io/n4vysh/portfolio
   # yamllint disable-line rule:line-length
   digest: sha256:34817454a803d87e97d4e415bfefabde28b5a5c8b2a3d173bdf975dacef41c08
+
+dev:
+  enabled: false
 
 labels:
   app.kubernetes.io/name: gin

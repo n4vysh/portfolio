@@ -289,10 +289,9 @@ Run `just check` to lint and format the source code with
 
 ## Containerize
 
-Run `just build` to build docker image with skaffold and
-[Cloud Native Buildpacks][cnb-link]
+Run `just build` to build docker image with skaffold and [ko][ko-link].
 
-[cnb-link]: https://buildpacks.io/
+[ko-link]: https://github.com/google/ko
 
 ## Update
 

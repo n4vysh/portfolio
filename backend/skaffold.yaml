@@ -4,14 +4,10 @@ kind: Config
 build:
   artifacts:
     - image: ghcr.io/n4vysh/portfolio
-      buildpacks:
-        builder: gcr.io/buildpacks/builder:v1
-        dependencies:
-          paths:
-            - dist/
-            - go.mod
-            - go.sum
-            - "*.go"
+      ko:
+        ldflags:
+          - -s
+          - -w
   local:
     push: false
 deploy:
@@ -25,3 +21,6 @@ deploy:
           helm: {}
         chartPath: ../infra/charts/portfolio/
         createNamespace: true
+        setValues:
+          dev:
+            enabled: true

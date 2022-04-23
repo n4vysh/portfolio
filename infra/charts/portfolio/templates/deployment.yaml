@@ -45,8 +45,20 @@ spec:
         runAsNonRoot: true
       containers:
         - name: gin-server
-          image: "{{ .Values.image.repository }}@{{ .Values.image.digest | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy | default "Always" }}
+          {{- if .Values.dev.enabled }}
+          # for skaffold
+          # https://skaffold.dev/docs/pipeline-stages/deployers/helm/
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          {{- else }}
+          image: "{{ .Values.image.repository }}@{{ .Values.image.digest }}"
+          {{- end }}
+          {{- if .Values.dev.enabled }}
+          # for kind
+          # https://kind.sigs.k8s.io/docs/user/quick-start/#loading-an-image-into-your-cluster
+          imagePullPolicy: "Never"
+          {{- else }}
+          imagePullPolicy: "Always"
+          {{- end }}
           securityContext:
             readOnlyRootFilesystem: true
             runAsNonRoot: true
@@ -56,14 +68,19 @@ spec:
               drop:
                 - ALL
           env:
+            {{- if .Values.dev.enabled }}
+            - name: PORTFOLIO_HOST
+              value: "localhost"
+            {{- else }}
             - name: PORTFOLIO_HOST
               value: {{ .Values.host }}
+            {{- end }}
             - name: PORTFOLIO_PORT
               value: "{{ .Values.port }}"
             - name: PORTFOLIO_INTERNAL_PORT
               value: "{{ .Values.internal.port }}"
             - name: GIN_MODE
-              value: "{{ .Values.mode }}"
+              value: "release"
             {{ if .Values.trace.enabled }}
             - name: OTEL_EXPORTER_OTLP_TRACES_PROTOCOL
               value: "{{ .Values.trace.protocol }}"

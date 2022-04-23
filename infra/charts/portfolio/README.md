@@ -17,11 +17,15 @@ website
 | autoscaling.maxReplicas | int | `3` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| host | string | `"localhost"` |  |
+| dev.enabled | bool | `false` |  |
+| host | string | `"n4vysh.dev"` |  |
 | image.digest | string | `"sha256:34817454a803d87e97d4e415bfefabde28b5a5c8b2a3d173bdf975dacef41c08"` |  |
 | image.repository | string | `"ghcr.io/n4vysh/portfolio"` |  |
 | ingress.annotations | object | `{}` |  |
-| ingress.class | string | `"contour"` |  |
+| ingress.class | string | `""` |  |
+| ingress.gateway.annotations | object | `{}` |  |
+| ingress.gateway.enabled | bool | `true` |  |
+| ingress.gateway.host | string | `"*"` |  |
 | ingress.tls | list | `[]` |  |
 | internal.port | int | `8081` |  |
 | labels."app.kubernetes.io/component" | string | `"web-server"` |  |
@@ -31,7 +35,6 @@ website
 | labels."app.kubernetes.io/part-of" | string | `"portfolio"` |  |
 | labels."app.kubernetes.io/version" | string | `"1.7.7"` |  |
 | metrics.serviceMonitor.enabled | bool | `false` |  |
-| mode | string | `"release"` |  |
 | port | int | `8080` |  |
 | resources.limits.cpu | string | `"100m"` |  |
 | resources.limits.ephemeral-storage | string | `"1Gi"` |  |
