@@ -6,7 +6,7 @@ internal:
 image:
   repository: ghcr.io/n4vysh/portfolio
   # yamllint disable-line rule:line-length
-  digest: sha256:34817454a803d87e97d4e415bfefabde28b5a5c8b2a3d173bdf975dacef41c08
+  digest: sha256:1b95ae3594d1052495271459367a62cd24a745610ae0fbc42adb84e420fc700f
 
 dev:
   enabled: false
