@@ -35,4 +35,4 @@ generate-docs:
     helm-docs
 
 check-docs:
-    diff -u <(helm-docs -d -l panic) <(cat */README.md)
+    ./scripts/check-docs.bash
