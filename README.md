@@ -110,7 +110,8 @@ EKS cluster deploy [Bottlerocket][bottlerocket-link] nodes with
 [Spot Instance][spot-instance-link] for cost reduction.
 [EKS add-ons][eks-addons-link] deploy [CoreDNS][coredns-link],
 [kube-proxy][kube-proxy-link], and [vpc-cni][vpc-cni-link]. AWS Load Balancer
-Controller bind ALB target group and Kubernetes service of Envoy Proxy with
+Controller bind ALB target group and Kubernetes service of
+[Istio Ingress Gateway][istio-ingress-gateway-link] with
 [TargetGroupBinding custom resource][target-group-binding-link]. Thanos, Loki,
 and Tempo upload metrics, container logs, and traces to S3. AWS Load Balancer
 Controller, Thanos, Loki, and Tempo access AWS resources with [IRSA][irsa-link].
@@ -138,7 +139,7 @@ Following AWS IAM entities can access EKS control plane by
 [fluent-bit-link]: https://fluentbit.io/
 [loki-link]: https://grafana.com/oss/loki/
 [tempo-link]: https://grafana.com/oss/tempo/
-[envoy-proxy-link]: https://www.envoyproxy.io/
+[istio-ingress-gateway-link]: https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/
 [falco-link]: https://falco.org/
 [metrics-server-link]: https://github.com/kubernetes-sigs/metrics-server
 
