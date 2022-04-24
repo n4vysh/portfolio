@@ -100,7 +100,6 @@ skillsets and expertise.
 | [Fluent Bit][fluent-bit-link]                                     | Fast and Lightweight Logs and Metrics processor                                                                                               |
 | [Loki][loki-link]                                                 | A horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus                                         |
 | [Tempo][tempo-link]                                               | A high volume, minimal dependency distributed tracing backend                                                                                 |
-| [Contour][contour-link]                                           | High performance ingress controller for Kubernetes using [Envoy Proxy][envoy-proxy-link]                                                      |
 | Istio                                                             | An open platform to connect, manage, and secure microservices                                                                                 |
 | Flagger                                                           | Progressive Delivery Operator for Kubernetes                                                                                                  |
 | [Falco][falco-link]                                               | Cloud-Native runtime security                                                                                                                 |
@@ -139,7 +138,6 @@ Following AWS IAM entities can access EKS control plane by
 [fluent-bit-link]: https://fluentbit.io/
 [loki-link]: https://grafana.com/oss/loki/
 [tempo-link]: https://grafana.com/oss/tempo/
-[contour-link]: https://projectcontour.io/
 [envoy-proxy-link]: https://www.envoyproxy.io/
 [falco-link]: https://falco.org/
 [metrics-server-link]: https://github.com/kubernetes-sigs/metrics-server
@@ -360,7 +358,6 @@ Flux deploy with following Helm charts and kustomization files.
 | Helm chart         | Official  | [fluent-bit][helm-fluent-bit-link]                                      |
 | Helm chart         | Official  | [loki][helm-loki-link]                                                  |
 | Helm chart         | Official  | [tempo-distributed][helm-tempo-distributed-link]                        |
-| Helm chart         | Official  | [contour][helm-contour-link]                                            |
 | Helm chart         | Official  | [falco][helm-falco-link]                                                |
 | Helm chart         | Official  | [falco-exporter][helm-falco-exporter-link]                              |
 | Helm chart         | Official  | [istio-official/base][helm-istio-base-link]                             |
@@ -378,7 +375,6 @@ Flux deploy with following Helm charts and kustomization files.
 [helm-fluent-bit-link]: https://artifacthub.io/packages/helm/fluent/fluent-bit
 [helm-loki-link]: https://artifacthub.io/packages/helm/grafana/loki
 [helm-tempo-distributed-link]: https://artifacthub.io/packages/helm/grafana/tempo-distributed
-[helm-contour-link]: https://artifacthub.io/packages/helm/bitnami/contour
 [helm-falco-link]: https://artifacthub.io/packages/helm/falcosecurity/falco
 [helm-falco-exporter-link]: https://artifacthub.io/packages/helm/falcosecurity/falco-exporter
 [helm-istio-base-link]: https://artifacthub.io/packages/helm/istio-official/base

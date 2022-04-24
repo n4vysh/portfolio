@@ -20,15 +20,6 @@ dependencies {
 inputs = {
   yaml = [
     {
-      name = "contour"
-      content = templatefile(
-        "${get_terragrunt_dir()}/common/namespace.yaml.tftpl",
-        {
-          namespace = "contour"
-        }
-      )
-    },
-    {
       name = "kube_prometheus_stack"
       content = templatefile(
         "${get_terragrunt_dir()}/common/namespace.yaml.tftpl",
