@@ -146,7 +146,7 @@ Following AWS IAM entities can access EKS control plane by
 
 ## Requirements
 
-Need Unix-like operating system and following tools.
+Need Linux (64-bit) machine and following tools.
 
 | Name                                  | Description                   | Version     |
 | :------------------------------------ | :---------------------------- | :---------- |
@@ -162,6 +162,9 @@ Need Unix-like operating system and following tools.
 | [atool][atool-link]                   | File archive manager          | ~> 0.39.0   |
 | [drawio-desktop][drawio-desktop-link] | Graph drawing software        | ~> 17.2.4   |
 
+For windows or macos user, suggest use [WSL][wsl-link] or [Lima][lima-link].
+I don't use that, however, probably it works.
+
 [bash-link]: https://www.gnu.org/software/bash/
 [grep-link]: https://www.gnu.org/software/grep/
 [sed-link]: https://www.gnu.org/software/sed/
@@ -173,6 +176,8 @@ Need Unix-like operating system and following tools.
 [docker-link]: https://www.docker.com/
 [atool-link]: https://www.nongnu.org/atool/
 [drawio-desktop-link]: https://www.diagrams.net/
+[wsl-link]: https://docs.microsoft.com/en-us/windows/wsl/
+[lima-link]: https://github.com/lima-vm/lima
 
 ## Development setup
 

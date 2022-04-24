@@ -15,8 +15,7 @@ parallel -a - --joblog "$joblog" direnv exec "$dir" <<EOF
 $dir/scripts/install/aleph.bash
 $dir/scripts/install/puppeteer.bash
 $dir/scripts/install/node-packages.bash
-$dir/scripts/install/oxipng.bash
-$dir/scripts/install/resvg.bash
+$dir/scripts/install/precompiled-packages.bash
 EOF
 cat "$joblog"
 # shellcheck disable=SC2064

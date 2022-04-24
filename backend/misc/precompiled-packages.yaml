@@ -1,0 +1,21 @@
+---
+- name: air
+  # yamllint disable-line rule:line-length
+  url: https://github.com/cosmtrek/air/releases/download/v1.29.0/air_1.29.0_linux_amd64.tar.gz
+  extract: true
+  dest: air_1.29.0_linux_amd64/air
+- name: golangci-lint
+  # yamllint disable-line rule:line-length
+  url: https://github.com/golangci/golangci-lint/releases/download/v1.45.2/golangci-lint-1.45.2-linux-amd64.tar.gz
+  extract: true
+  dest: "golangci-lint-1.45.2-linux-amd64/golangci-lint"
+- name: gofumpt
+  # yamllint disable-line rule:line-length
+  url: https://github.com/mvdan/gofumpt/releases/download/v0.3.1/gofumpt_v0.3.1_linux_amd64
+  extract: false
+  dest: "gofumpt_v0.3.1_linux_amd64"
+- name: swag
+  # yamllint disable-line rule:line-length
+  url: https://github.com/swaggo/swag/releases/download/v1.8.1/swag_1.8.1_Linux_x86_64.tar.gz
+  extract: true
+  dest: "swag_1.8.1_Linux_x86_64/swag"

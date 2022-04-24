@@ -12,6 +12,7 @@ cd "$dir" || exit
 joblog="$(TMPDIR=/tmp/ mktemp)"
 parallel -a - --joblog "$joblog" direnv exec "$dir" <<EOF
 $dir/scripts/install/go-packages.bash
+$dir/scripts/install/precompiled-packages.bash
 EOF
 cat "$joblog"
 # shellcheck disable=SC2064

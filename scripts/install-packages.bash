@@ -36,9 +36,8 @@ joblog="$(TMPDIR=/tmp/ mktemp)"
 parallel -a - --joblog "$joblog" direnv exec "$dir" <<EOF
 $dir/scripts/install/python-packages.bash
 $dir/scripts/install/node-packages.bash
+$dir/scripts/install/precompiled-packages.bash
 $dir/scripts/install/lefthook.bash
-$dir/scripts/install/shellharden.bash
-$dir/scripts/install/gitleaks.bash
 $dir/frontend/scripts/install-packages.bash
 $dir/backend/scripts/install-packages.bash
 $dir/infra/scripts/install-packages.bash

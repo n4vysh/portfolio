@@ -12,10 +12,7 @@ cd "$dir" || exit
 joblog="$(TMPDIR=/tmp/ mktemp)"
 parallel -a - --joblog "$joblog" direnv exec "$dir" <<EOF
 $dir/scripts/install/python-packages.bash
-$dir/scripts/install/kube-linter.bash
-$dir/scripts/install/infracost.bash
-$dir/scripts/install/terrascan.bash
-$dir/scripts/install/kube-score.bash
+$dir/scripts/install/precompiled-packages.bash
 $dir/scripts/install/helm-plugins.bash
 $dir/flux/scripts/download-crd-schemas.bash
 EOF
