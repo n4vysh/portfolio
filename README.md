@@ -162,8 +162,10 @@ Need Linux (64-bit) machine and following tools.
 | [atool][atool-link]                   | File archive manager          | ~> 0.39.0   |
 | [drawio-desktop][drawio-desktop-link] | Graph drawing software        | ~> 17.2.4   |
 
-For windows or macos user, suggest use [WSL][wsl-link] or [Lima][lima-link].
-I don't use that, however, probably it works.
+Additionally suggest use Editor or IDE that supports
+[EditorConfig][editorconfig-link], [LSP][lsp-link], formatter and linter. For
+windows or macos user, suggest use [WSL][wsl-link] or [Lima][lima-link]. I don't
+use that, however, probably it works.
 
 [bash-link]: https://www.gnu.org/software/bash/
 [grep-link]: https://www.gnu.org/software/grep/
@@ -178,6 +180,8 @@ I don't use that, however, probably it works.
 [drawio-desktop-link]: https://www.diagrams.net/
 [wsl-link]: https://docs.microsoft.com/en-us/windows/wsl/
 [lima-link]: https://github.com/lima-vm/lima
+[editorconfig-link]: https://editorconfig.org/
+[lsp-link]: https://microsoft.github.io/language-server-protocol/
 
 ## Development setup
 
