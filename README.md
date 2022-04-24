@@ -163,7 +163,7 @@ Need Linux (64-bit) machine and following tools.
 | [drawio-desktop][drawio-desktop-link] | Graph drawing software        | ~> 17.2.4   |
 
 Additionally suggest use Editor or IDE that supports
-[EditorConfig][editorconfig-link], [LSP][lsp-link], formatter and linter. For
+[EditorConfig][editorconfig-link], [LSP][lsp-link], formatter, and linter. For
 windows or macos user, suggest use [WSL][wsl-link] or [Lima][lima-link]. I don't
 use that, however, probably it works.
 
