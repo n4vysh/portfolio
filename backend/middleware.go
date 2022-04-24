@@ -99,3 +99,26 @@ func checkBrokenPipe(logger *zap.Logger, err interface{}) (brokenPipe bool) {
 
 	return
 }
+
+// https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/observability/tracing
+// https://istio.io/latest/docs/tasks/observability/distributed-tracing/overview/
+func injectTracingHeaders() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		headers := []string{
+			"x-request-id",
+			"x-b3-traceid",
+			"x-b3-spanid",
+			"x-b3-parentspanid",
+			"x-b3-sampled",
+			"x-b3-flags",
+		}
+		for i := range headers {
+			v := c.Request.Header.Get(headers[i])
+			if len(v) > 0 {
+				c.Writer.Header().Set(headers[i], v)
+			}
+		}
+
+		c.Next()
+	}
+}

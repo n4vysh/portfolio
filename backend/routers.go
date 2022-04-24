@@ -17,6 +17,7 @@ func publicRouter(logger *zap.Logger, host string) http.Handler {
 
 	e.Use(zapLogger(logger))
 	e.Use(zapRecovery(logger, true))
+	e.Use(injectTracingHeaders())
 	e.Use(otelgin.Middleware("portfolio"))
 	e.Use(gzip.Gzip(gzip.DefaultCompression))
 
