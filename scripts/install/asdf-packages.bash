@@ -1,5 +1,8 @@
 #!/bin/bash
 
+dir=$1
+cd "$dir" || exit
+
 _install() {
 	package="$1"
 	url="$2"
@@ -12,23 +15,10 @@ _install() {
 }
 export -f _install
 
-joblog="$(TMPDIR=/tmp/ mktemp)"
-cat \
-	<(
-		awk '{print $1}' .tool-versions |
-			grep -v 'just' |
-			grep -v 'vale' |
-			grep -v 'lefthook'
-	) \
-	<(
-		cat <<-EOF
-			just https://github.com/heliumbrain/asdf-just
-			vale https://github.com/osg/asdf-vale
-			lefthook https://gitlab.com/jtzero/asdf-lefthook.git
-		EOF
-	) |
+root_dir=$(
+	cd "$(dirname "$0")" || exit
+	git rev-parse --show-toplevel
+)
+cat - |
 	sort |
-	parallel -a - --colsep ' ' --joblog "$joblog" _install
-cat "$joblog"
-# shellcheck disable=SC2064
-trap "rm -f '$joblog'" EXIT
+	"$root_dir/scripts/execute-parallel.bash" _install

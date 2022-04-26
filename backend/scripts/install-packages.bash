@@ -1,19 +1,16 @@
 #!/bin/bash
 
 dir=$(
-	cd "$(dirname "$0")/../" || exit
-	pwd
+	cd "$(dirname "$0")" || exit
+	git rev-parse --show-toplevel
 )
 cd "$dir" || exit
 
-"$dir/scripts/init/asdf-direnv.bash"
-"$dir/scripts/install/asdf-packages.bash"
+"$dir/scripts/init/asdf-direnv.bash" "$dir/backend"
+awk '{print $1}' "$dir/backend/.tool-versions" |
+	"$dir/scripts/install/asdf-packages.bash" "$dir/backend"
 
-joblog="$(TMPDIR=/tmp/ mktemp)"
-parallel -a - --joblog "$joblog" direnv exec "$dir" <<EOF
-$dir/scripts/install/go-packages.bash
-$dir/scripts/install/precompiled-packages.bash
+"$dir/scripts/execute-parallel.bash" direnv exec "$dir/backend" <<-EOF
+	$dir/backend/scripts/install/go-packages.bash
+	$dir/scripts/install/precompiled-packages.bash $dir/backend
 EOF
-cat "$joblog"
-# shellcheck disable=SC2064
-trap "rm -f '$joblog'" EXIT

@@ -1,7 +1,9 @@
 #!/bin/bash
 
+dir=$1
+
 (
-	cd misc/ || exit
+	cd "$dir/misc/" || exit
 	corepack enable pnpm
 	corepack prepare --activate
 	asdf reshim nodejs

@@ -1,9 +1,6 @@
 #!/bin/bash
 
-dir=$(
-	cd "$(dirname "$0")/../../" || exit
-	pwd
-)
+dir=$1
 
 yaml="$dir/misc/precompiled-packages.yaml"
 max=$(yq eval 'length()' "$yaml")

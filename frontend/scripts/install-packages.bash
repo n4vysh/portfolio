@@ -1,22 +1,19 @@
 #!/bin/bash
 
 dir=$(
-	cd "$(dirname "$0")/../" || exit
-	pwd
+	cd "$(dirname "$0")" || exit
+	git rev-parse --show-toplevel
 )
 cd "$dir" || exit
 
-"$dir/scripts/init/asdf-direnv.bash"
-"$dir/scripts/install/asdf-packages.bash"
-"$dir/scripts/install/denon.bash"
+"$dir/scripts/init/asdf-direnv.bash" "$dir/frontend"
+awk '{print $1}' "$dir/frontend/.tool-versions" |
+	"$dir/scripts/install/asdf-packages.bash" "$dir/frontend"
+"$dir/frontend/scripts/install/denon.bash"
 
-joblog="$(TMPDIR=/tmp/ mktemp)"
-parallel -a - --joblog "$joblog" direnv exec "$dir" <<EOF
-$dir/scripts/install/aleph.bash
-$dir/scripts/install/puppeteer.bash
-$dir/scripts/install/node-packages.bash
-$dir/scripts/install/precompiled-packages.bash
+"$dir/scripts/execute-parallel.bash" direnv exec "$dir/frontend" <<-EOF
+	$dir/frontend/scripts/install/aleph.bash
+	$dir/frontend/scripts/install/puppeteer.bash
+	$dir/scripts/install/node-packages.bash $dir/frontend
+	$dir/scripts/install/precompiled-packages.bash $dir/frontend
 EOF
-cat "$joblog"
-# shellcheck disable=SC2064
-trap "rm -f '$joblog'" EXIT
