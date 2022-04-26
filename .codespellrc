@@ -1,2 +1,2 @@
 [codespell]
-skip = misc/diagram.svg,**/pnpm-lock.yaml
+skip = misc/diagrams/*.svg,**/pnpm-lock.yaml

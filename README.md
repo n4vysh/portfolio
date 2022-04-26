@@ -64,7 +64,8 @@ skillsets and expertise.
 
 ## Architecture
 
-![Digram](./misc/diagram.svg)
+![physical_structure](./misc/diagrams/physical_structure.svg)
+![logical_structure](./misc/diagrams/logical_structure.svg)
 
 ### Managed services
 
