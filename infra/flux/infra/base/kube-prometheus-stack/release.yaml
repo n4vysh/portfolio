@@ -38,6 +38,7 @@ spec:
             key: objstore.yml
         scrapeInterval: 1m
         serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
         replicaExternalLabelName: "__replica__"
     grafana:
       enabled: true
@@ -71,6 +72,40 @@ spec:
               url: http://tempo-tempo-distributed-query-frontend.tempo:3100
               version: 1
               editable: false
+      dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+            - name: default
+              orgId: 1
+              folder: ""
+              type: file
+              disableDeletion: true
+              editable: false
+              options:
+                path: /var/lib/grafana/dashboards/default
+      dashboards:
+        default:
+          istio-workload:
+            gnetId: 7630
+            revision: 115
+            datasource: Prometheus
+          istio-service:
+            gnetId: 7636
+            revision: 115
+            datasource: Prometheus
+          istio-mesh:
+            gnetId: 7639
+            revision: 115
+            datasource: Prometheus
+          istio-control-plane:
+            gnetId: 7645
+            revision: 115
+            datasource: Prometheus
+          istio-performance:
+            gnetId: 11829
+            revision: 115
+            datasource: Prometheus
     kube-state-metrics:
       selfMonitor:
         enabled: true

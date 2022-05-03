@@ -6,3 +6,4 @@ resources:
   - release.yaml
   - prometheus.yaml
   - zipkin.yaml
+  - monitor.yaml

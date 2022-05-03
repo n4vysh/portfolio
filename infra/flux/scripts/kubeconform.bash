@@ -11,7 +11,7 @@ opts=(
 	-schema-location "./crd-schemas/{{ .ResourceKind }}{{ .KindSuffix }}.json"
 	-verbose
 	-strict
-	-skip Gateway
+	-skip 'Gateway,PodMonitor,ServiceMonitor'
 )
 
 set -x
