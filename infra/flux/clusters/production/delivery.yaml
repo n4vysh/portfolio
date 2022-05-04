@@ -16,12 +16,12 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
 metadata:
-  name: flagger
+  name: delivery
   namespace: flux-system
 spec:
   interval: 1m
   dependsOn:
-    - name: infra
+    - name: mesh
       namespace: flux-system
   timeout: 5m
   path: "./kustomize/istio/"
@@ -39,15 +39,15 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
 metadata:
-  name: flagger-virtual-service
+  name: delivery-virtual-service
   namespace: flux-system
 spec:
   interval: 1m
   dependsOn:
-    - name: infra
+    - name: mesh
       namespace: flux-system
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./infra/flux/flagger/
+  path: ./infra/flux/kustomize/delivery/base/flagger/
   prune: true

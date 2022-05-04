@@ -16,11 +16,6 @@ spec:
       version: "1.4.0"
   test:
     enable: true
-  dependsOn:
-    - name: kube-prometheus-stack
-      namespace: kube-prometheus-stack
-    - name: thanos
-      namespace: kube-prometheus-stack
   interval: 1m
   valuesFrom:
     - kind: ConfigMap

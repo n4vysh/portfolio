@@ -17,11 +17,6 @@ spec:
   test:
     enable: true
   interval: 1m
-  dependsOn:
-    - name: kube-prometheus-stack
-      namespace: kube-prometheus-stack
-    - name: thanos
-      namespace: kube-prometheus-stack
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -44,10 +39,6 @@ spec:
   dependsOn:
     - name: istio-base
       namespace: istio-system
-    - name: kube-prometheus-stack
-      namespace: kube-prometheus-stack
-    - name: thanos
-      namespace: kube-prometheus-stack
   values:
     pilot:
       traceSampling: 100
@@ -77,10 +68,6 @@ spec:
   dependsOn:
     - name: istiod
       namespace: istio-system
-    - name: kube-prometheus-stack
-      namespace: kube-prometheus-stack
-    - name: thanos
-      namespace: kube-prometheus-stack
   interval: 1m
   values:
     service:

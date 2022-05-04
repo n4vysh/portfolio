@@ -2,16 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: apps
+  name: monitoring
   namespace: flux-system
 spec:
   interval: 1m
-  dependsOn:
-    - name: infra
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./infra/flux/apps/overlays/staging
+  path: ./infra/flux/kustomize/monitoring/overlays/production/
   prune: true
-  wait: true
-  timeout: 5m0s
