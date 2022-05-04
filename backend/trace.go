@@ -16,6 +16,9 @@ import (
 	"go.uber.org/zap"
 )
 
+// nolint: gochecknoglobals
+var tracer = otel.Tracer("gin-server")
+
 func newResource() *resource.Resource {
 	return resource.NewWithAttributes(
 		semconv.SchemaURL,
