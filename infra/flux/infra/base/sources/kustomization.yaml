@@ -12,3 +12,4 @@ resources:
   - fluent.yaml
   - grafana.yaml
   - istio.yaml
+  - kiali.yaml

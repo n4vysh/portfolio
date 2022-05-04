@@ -6,6 +6,7 @@ resources:
   - metrics-server
   - falco
   - istio-system
+  - kiali-operator
   - aws-load-balancer-controller
   - kube-prometheus-stack
   - fluent-bit
