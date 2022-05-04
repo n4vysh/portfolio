@@ -40,13 +40,47 @@ spec:
     - name: istio-base
       namespace: istio-system
   values:
-    pilot:
-      traceSampling: 100
     global:
       logAsJson: true
-    tracer:
-      zipkin:
-        address: tempo-tempo-distributed-distributor.tempo:9411
+    meshConfig:
+      enableTracing: true
+      defaultConfig:
+        tracing:
+          sampling: 100.0
+          zipkin:
+            address: tempo-tempo-distributed-distributor.tempo:9411
+      accessLogFile: /dev/stdout
+      accessLogEncoding: JSON
+      # yamllint disable rule:line-length
+      accessLogFormat: |
+        {
+          "authority": "%REQ(:AUTHORITY)%",
+          "bytes_received": "%BYTES_RECEIVED%",
+          "bytes_sent": "%BYTES_SENT%",
+          "connection_termination_details": "%CONNECTION_TERMINATION_DETAILS%",
+          "downstream_local_address": "%DOWNSTREAM_LOCAL_ADDRESS%",
+          "downstream_remote_address": "%DOWNSTREAM_REMOTE_ADDRESS%",
+          "duration": "%DURATION%",
+          "method": "%REQ(:METHOD)%",
+          "path": "%REQ(X-ENVOY-ORIGINAL-PATH?:PATH)%",
+          "protocol": "%PROTOCOL%",
+          "requested_server_name": "%REQUESTED_SERVER_NAME%",
+          "response_code": "%RESPONSE_CODE%",
+          "response_code_details": "%RESPONSE_CODE_DETAILS%",
+          "response_flags": "%RESPONSE_FLAGS%",
+          "route_name": "%ROUTE_NAME%",
+          "start_time": "%START_TIME%",
+          "upstream_cluster": "%UPSTREAM_CLUSTER%",
+          "upstream_host": "%UPSTREAM_HOST%",
+          "upstream_local_address": "%UPSTREAM_LOCAL_ADDRESS%",
+          "upstream_service_time": "%RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)%",
+          "upstream_transport_failure_reason": "%UPSTREAM_TRANSPORT_FAILURE_REASON%",
+          "user_agent": "%REQ(USER-AGENT)%",
+          "x_forwarded_for": "%REQ(X-FORWARDED-FOR)%",
+          "x_request_id": "%REQ(X-REQUEST-ID)%",
+          "x_b3_traceid": "%REQ(x-b3-traceid)%"
+        }
+      # yamllint enable rule:line-length
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
