@@ -48,7 +48,7 @@ spec:
         tracing:
           sampling: 100.0
           zipkin:
-            address: tempo-tempo-distributed-distributor.tempo:9411
+            address: otel-collector:9411
       accessLogFile: /dev/stdout
       accessLogEncoding: JSON
       # yamllint disable rule:line-length
@@ -135,3 +135,40 @@ spec:
     service:
       name: istio-ingress
       namespace: istio-system
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: opentelemetry-collector
+  namespace: istio-system
+spec:
+  releaseName: opentelemetry-collector
+  chart:
+    spec:
+      chart: opentelemetry-collector
+      sourceRef:
+        kind: HelmRepository
+        name: open-telemetry
+        namespace: flux-system
+      version: "0.15.1"
+  test:
+    enable: true
+  dependsOn:
+    - name: istio-ingress
+      namespace: istio-system
+  interval: 1m
+  values:
+    config:
+      receivers:
+        zipkin:
+          endpoint: 0.0.0.0:9411
+      exporters:
+        otlp:
+          endpoint: tempo-tempo-distributed-distributor.tempo:4317
+          tls:
+            insecure: true
+      service:
+        pipelines:
+          traces:
+            receivers: [zipkin]
+            exporters: [otlp]
