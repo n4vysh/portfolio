@@ -163,10 +163,9 @@ spec:
         zipkin:
           endpoint: 0.0.0.0:9411
       exporters:
-        otlp:
-          endpoint: tempo-tempo-distributed-distributor.tempo:4317
-          tls:
-            insecure: true
+        otlphttp:
+          # yamllint disable rule:line-length
+          endpoint: http://tempo-tempo-distributed-distributor.tempo:55681/v1/traces
       service:
         pipelines:
           traces:

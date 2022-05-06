@@ -84,8 +84,8 @@ spec:
             {{ if .Values.trace.enabled }}
             - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
               value: "{{ .Values.trace.endpoint }}"
-            - name: OTEL_EXPORTER_OTLP_TRACES_INSECURE
-              value: "{{ .Values.trace.insecure }}"
+            - name: OTEL_EXPORTER_OTLP_TRACES_PROTOCOL
+              value: "{{ .Values.trace.protocol }}"
             {{ end }}
           ports:
             - name: public
