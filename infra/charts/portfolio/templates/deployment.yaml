@@ -82,10 +82,10 @@ spec:
             - name: GIN_MODE
               value: "release"
             {{ if .Values.trace.enabled }}
-            - name: OTEL_EXPORTER_OTLP_TRACES_PROTOCOL
-              value: "{{ .Values.trace.protocol }}"
             - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
               value: "{{ .Values.trace.endpoint }}"
+            - name: OTEL_EXPORTER_OTLP_TRACES_INSECURE
+              value: "{{ .Values.trace.insecure }}"
             {{ end }}
           ports:
             - name: public

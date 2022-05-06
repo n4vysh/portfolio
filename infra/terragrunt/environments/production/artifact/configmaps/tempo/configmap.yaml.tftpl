@@ -10,16 +10,8 @@ data:
       annotations:
         eks.amazonaws.com/role-arn: ${role_arn}
     traces:
-      jaeger:
-        grpc: true
-        thriftBinary: true
-        thriftCompact: true
-        thriftHttp: true
-      opencensus: true
       otlp:
         grpc: true
-        http: true
-      zipkin: true
     config: |
       search_enabled: true
       compactor:
@@ -27,26 +19,10 @@ data:
           block_retention: 24h
       distributor:
         receivers:
-          jaeger:
-            protocols:
-              thrift_compact:
-                endpoint: 0.0.0.0:6831
-              thrift_binary:
-                endpoint: 0.0.0.0:6832
-              thrift_http:
-                endpoint: 0.0.0.0:14268
-              grpc:
-                endpoint: 0.0.0.0:14250
-          opencensus:
-            endpoint: 0.0.0.0:55678
           otlp:
             protocols:
-              http:
-                endpoint: 0.0.0.0:55681
               grpc:
                 endpoint: 0.0.0.0:4317
-          zipkin:
-            endpoint: 0.0.0.0:9411
       querier:
         frontend_worker:
           frontend_address: {{ include "tempo.queryFrontendFullname" . }}-discovery:9095
