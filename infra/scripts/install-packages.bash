@@ -7,17 +7,7 @@ dir=$(
 cd "$dir" || exit
 
 "$dir/scripts/init/asdf-direnv.bash" "$dir/infra"
-cat \
-	<(
-		awk '{print $1}' "$dir/infra/.tool-versions" |
-			grep -v 'kubeval'
-	) \
-	<(
-		cat <<-EOF
-			kubeval https://github.com/stefansedich/asdf-kubeval
-		EOF
-	) |
-	"$dir/scripts/install/asdf-packages.bash" "$dir/infra"
+"$dir/scripts/install/asdf-packages.bash" "$dir/infra"
 
 "$dir/scripts/execute-parallel.bash" direnv exec "$dir/infra" <<-EOF
 	$dir/scripts/install/python-packages.bash $dir/infra

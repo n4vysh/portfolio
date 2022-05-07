@@ -7,8 +7,7 @@ dir=$(
 cd "$dir" || exit
 
 "$dir/scripts/init/asdf-direnv.bash" "$dir/frontend"
-awk '{print $1}' "$dir/frontend/.tool-versions" |
-	"$dir/scripts/install/asdf-packages.bash" "$dir/frontend"
+"$dir/scripts/install/asdf-packages.bash" "$dir/frontend"
 "$dir/frontend/scripts/install/denon.bash"
 
 "$dir/scripts/execute-parallel.bash" direnv exec "$dir/frontend" <<-EOF

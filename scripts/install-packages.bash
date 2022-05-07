@@ -23,21 +23,7 @@ if [[ ${flag[i]} == 1 ]]; then
 	"$dir/scripts/init/asdf-direnv-integration.bash"
 fi
 
-cat \
-	<(
-		awk '{print $1}' .tool-versions |
-			grep -v 'just' |
-			grep -v 'vale' |
-			grep -v 'lefthook'
-	) \
-	<(
-		cat <<-EOF
-			just https://github.com/heliumbrain/asdf-just
-			vale https://github.com/osg/asdf-vale
-			lefthook https://gitlab.com/jtzero/asdf-lefthook.git
-		EOF
-	) |
-	"$dir/scripts/install/asdf-packages.bash" "$dir"
+"$dir/scripts/install/asdf-packages.bash" "$dir"
 "$dir/scripts/init/asdf-direnv.bash" "$dir"
 "$dir/scripts/init/asdf-direnv.bash" "$dir/frontend"
 "$dir/scripts/init/asdf-direnv.bash" "$dir/backend"

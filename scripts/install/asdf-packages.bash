@@ -19,6 +19,26 @@ root_dir=$(
 	cd "$(dirname "$0")" || exit
 	git rev-parse --show-toplevel
 )
-cat - |
-	sort |
-	"$root_dir/scripts/execute-parallel.bash" _install
+
+config="$dir/.tool-versions"
+yaml="$dir/misc/unofficial-asdf-plugins.yaml"
+if [[ -e $yaml ]]; then
+	cat \
+		<(
+			(
+				awk '{print $1}' "$config"
+				yq eval '.[].name' "$yaml"
+			) |
+				sort |
+				uniq -u
+		) \
+		<(
+			yq eval '.[] | .name + " " + .url' "$yaml"
+		) |
+		sort |
+		"$root_dir/scripts/execute-parallel.bash" _install
+else
+	awk '{print $1}' "$config" |
+		sort |
+		"$root_dir/scripts/execute-parallel.bash" _install
+fi

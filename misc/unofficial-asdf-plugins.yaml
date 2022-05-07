@@ -1,0 +1,7 @@
+---
+- name: just
+  url: https://github.com/heliumbrain/asdf-just
+- name: vale
+  url: https://github.com/osg/asdf-vale
+- name: lefthook
+  url: https://gitlab.com/jtzero/asdf-lefthook.git
