@@ -9,4 +9,6 @@ if [[ $CI == true ]]; then
 		dist/images \
 		dist/keys
 	touch dist/{,404/,_aleph/{,pages/},images/,keys/}dummy
+	touch dist/{,404/}index.html
+	touch dist/robots.txt
 fi

@@ -122,3 +122,12 @@ func injectTracingHeaders() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+func otelSetSpan(span string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		_, span := tracer.Start(c.Request.Context(), span+"Handler")
+		defer span.End()
+
+		c.Next()
+	}
+}

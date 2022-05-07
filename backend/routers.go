@@ -36,10 +36,8 @@ func publicRouter(logger *zap.Logger, host string) http.Handler {
 	// nolint: errcheck
 	e.SetTrustedProxies(nil) // for using ALB, EnvoyProxy, and Linkerd
 
-	e.GET("/", indexHandler())
-	e.StaticFS("/_aleph/", convertFS("dist/_aleph"))
-	e.StaticFS("/images/", convertFS("dist/images"))
-	e.StaticFS("/keys/", convertFS("dist/keys"))
+	g := e.Group("/", otelSetSpan("index"))
+	g.StaticFS("/", convertToHFS(indexEFS, "dist"))
 
 	e.NoRoute(noRouteHandler())
 

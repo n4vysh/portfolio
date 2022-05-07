@@ -6,16 +6,19 @@ import (
 	"net/http"
 )
 
-//go:embed dist
-//go:embed dist/404
+//go:embed dist/index.html
+//go:embed dist/robots.txt
 //go:embed dist/_aleph
 //go:embed dist/_aleph/pages
 //go:embed dist/images
 //go:embed dist/keys
-var staticFS embed.FS
+var indexEFS embed.FS
 
-func convertFS(path string) http.FileSystem {
-	sub, err := fs.Sub(staticFS, path)
+//go:embed dist/404/index.html
+var noRouteEFS embed.FS
+
+func convertToHFS(efs embed.FS, path string) http.FileSystem {
+	sub, err := fs.Sub(efs, path)
 	if err != nil {
 		panic(err)
 	}
