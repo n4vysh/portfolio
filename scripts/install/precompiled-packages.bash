@@ -3,9 +3,9 @@
 dir=$1
 
 yaml="$dir/misc/precompiled-packages.yaml"
-max=$(yq eval 'length()' "$yaml")
+max=$(yq eval -N 'length' "$yaml")
 
-for ((i = 0; i < max; i++)); do
+for ((i = 0; i < "$max"; i++)); do
 	url=$(yq eval ".[$i].url" "$yaml")
 	file="${url##*/}"
 	dest=$(yq eval ".[$i].dest" "$yaml")
