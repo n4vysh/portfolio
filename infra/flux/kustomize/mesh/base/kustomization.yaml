@@ -4,5 +4,4 @@ kind: Kustomization
 resources:
   - sources
   - istio-system
-  - kiali-operator
   - aws-load-balancer-controller
