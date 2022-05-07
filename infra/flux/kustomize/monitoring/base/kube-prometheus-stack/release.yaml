@@ -49,6 +49,11 @@ spec:
           disable_gravatar: true
         feature_toggles:
           enable: tempoSearch tempoBackendSearch
+        auth:
+          disable_login_form: true
+        auth.anonymous:
+          enabled: true
+          org_role: Admin
       datasources:
         datasources.yaml:
           apiVersion: 1
