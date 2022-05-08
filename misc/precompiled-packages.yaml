@@ -1,11 +1,15 @@
 ---
 - name: gitleaks
-  # yamllint disable-line rule:line-length
+  # yamllint disable rule:line-length
   url: https://github.com/zricethezav/gitleaks/releases/download/v8.5.1/gitleaks_8.5.1_linux_x64.tar.gz
+  b2sum: a8b0fa21196d163fa87668f1621b71eb0dd01568a622b73a5b7e622bd528a5957997acbfc41f8ab5dda815ac8c173fded495aeedb5970d365277b411df318e5a
+  # yamllint enable rule:line-length
   extract: true
   dest: gitleaks_8.5.1_linux_x64/gitleaks
 - name: shellharden
-  # yamllint disable-line rule:line-length
+  # yamllint disable rule:line-length
   url: https://github.com/anordal/shellharden/releases/download/v4.1.1/shellharden-4.1.1-x86_64-linux-gnu
+  b2sum: 678d9ac60462815a9ee1b49a669efef7db4e0c49cb5e4582fc02615a2f2b779fa2e390a9a5821949a557fbad97e996976969fbbf5c426403e20370f8beb04a63
+  # yamllint enable rule:line-length
   extract: true
   dest: shellharden-4.1.1-x86_64-linux-gnu

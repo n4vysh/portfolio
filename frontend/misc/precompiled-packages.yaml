@@ -1,11 +1,15 @@
 ---
 - name: oxipng
-  # yamllint disable-line rule:line-length
+  # yamllint disable rule:line-length
   url: https://github.com/shssoichiro/oxipng/releases/download/v5.0.1/oxipng-5.0.1-x86_64-unknown-linux-musl.tar.gz
+  b2sum: a23febe2254198e6b7fca50e8c3aebdbe6d01ea5f710a19905785a9a21af18737c65e55d3fc38c0f7f30441b507c429da9ecf575fb6c849885fa9ebd0cce2e7d
+  # yamllint enable rule:line-length
   extract: true
   dest: oxipng-5.0.1-x86_64-unknown-linux-musl/oxipng
 - name: resvg
-  # yamllint disable-line rule:line-length
+  # yamllint disable rule:line-length
   url: https://github.com/RazrFalcon/resvg/releases/download/v0.20.0/resvg-linux-x86_64.tar.gz
+  b2sum: 2891fdffcca4be0c2a44f44520aad0f0008e269b430ae134e7aac5dbd6bb0b512546868442ccc1d3e61afed153ed9a22ba99507bc6a7e1992d64342bbde2ca61
+  # yamllint enable rule:line-length
   extract: true
   dest: resvg

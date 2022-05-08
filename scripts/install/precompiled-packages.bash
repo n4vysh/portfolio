@@ -10,11 +10,13 @@ for ((i = 0; i < "$max"; i++)); do
 	file="${url##*/}"
 	dest=$(yq eval ".[$i].dest" "$yaml")
 	name=$(yq eval ".[$i].name" "$yaml")
+	b2sum=$(yq eval ".[$i].b2sum" "$yaml")
 	extract=$(yq eval ".[$i].extract" "$yaml")
 
 	tmpdir="$(TMPDIR=/tmp/ mktemp -d)"
 	cd "$tmpdir" || exit
 	xh -F -o "$file" "$url"
+	b2sum --quiet -c <(echo "$b2sum $file") || exit 1
 	if [[ $extract == "true" ]]; then
 		aunpack "$file" >/dev/null 2>&1
 	fi

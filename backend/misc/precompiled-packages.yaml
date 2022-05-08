@@ -1,21 +1,29 @@
 ---
 - name: air
-  # yamllint disable-line rule:line-length
+  # yamllint disable rule:line-length
   url: https://github.com/cosmtrek/air/releases/download/v1.29.0/air_1.29.0_linux_amd64.tar.gz
+  b2sum: 3f86cc27fec83c86f2e542b22ff964993c55f00b9ff2dcff3db10d7d99b0dc4585208e8cf0ff84c71c4a6e8a840baa6978d74096e3787952bcdddc2b9c5d1afe
+  # yamllint enable rule:line-length
   extract: true
   dest: air_1.29.0_linux_amd64/air
 - name: golangci-lint
-  # yamllint disable-line rule:line-length
+  # yamllint disable rule:line-length
   url: https://github.com/golangci/golangci-lint/releases/download/v1.45.2/golangci-lint-1.45.2-linux-amd64.tar.gz
+  b2sum: 5034efb3c6af9d2aae56b052306ca5be6be11cbd28caf47d62e41f80d43319ab839f420ccc981474e1cc6fea1a079be6df42edee832683e70f2f7b5987eb8851
+  # yamllint enable rule:line-length
   extract: true
   dest: "golangci-lint-1.45.2-linux-amd64/golangci-lint"
 - name: gofumpt
-  # yamllint disable-line rule:line-length
+  # yamllint disable rule:line-length
   url: https://github.com/mvdan/gofumpt/releases/download/v0.3.1/gofumpt_v0.3.1_linux_amd64
+  b2sum: 8f47bb6d977b32ea6b7582b5159994199969aa84a801a1f1e917f94d390093cc7ac02fe233eb333f58947421c3689df250ae5f68c1ac42beba4b72f31d4d907f
+  # yamllint enable rule:line-length
   extract: false
   dest: "gofumpt_v0.3.1_linux_amd64"
 - name: swag
-  # yamllint disable-line rule:line-length
+  # yamllint disable rule:line-length
   url: https://github.com/swaggo/swag/releases/download/v1.8.1/swag_1.8.1_Linux_x86_64.tar.gz
+  b2sum: 32447ee7b29ac62da2dd431ed0278257c006b31d091338449e7fa85da10fb68243283960523b052d50d0d05353e6ac6b5d16773d4749e892ec60e438e02ee011
+  # yamllint enable rule:line-length
   extract: true
   dest: "swag_1.8.1_Linux_x86_64/swag"

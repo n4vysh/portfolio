@@ -1,21 +1,29 @@
 ---
 - name: infracost
-  # yamllint disable-line rule:line-length
+  # yamllint disable rule:line-length
   url: https://github.com/infracost/infracost/releases/download/v0.9.19/infracost-linux-amd64.tar.gz
+  b2sum: e886b30c6f67b53d62aa57d701356ab12d80392f752a7afff980cdec288b90a500be645ab7935628ca5db168d4dd2457bf15e75b3dda9bcfd77ed3b0089617cc
+  # yamllint enable rule:line-length
   extract: true
   dest: infracost-linux-amd64
 - name: kube-linter
-  # yamllint disable-line rule:line-length
+  # yamllint disable rule:line-length
   url: https://github.com/stackrox/kube-linter/releases/download/0.2.5/kube-linter-linux.tar.gz
+  b2sum: 23507982eb671a5c488844e6a9a35efccb0f65358b2ae97b977e81fe932e85862e347e5c1aad382cbab975dd5235c4fbc39b02cbc20be7f4574a4d2c01076b4c
+  # yamllint enable rule:line-length
   extract: true
   dest: kube-linter
 - name: kube-score
-  # yamllint disable-line rule:line-length
+  # yamllint disable rule:line-length
   url: https://github.com/zegl/kube-score/releases/download/v1.14.0/kube-score_1.14.0_linux_amd64.tar.gz
+  b2sum: f8b230bc4e87168c283aa1ee31b1baeb0d49631e6917fdd8443d2cc301c475c51c985df0cacbac2b5ab429adef09f4849f50ca152b67fd5348747609585c6c3a
+  # yamllint enable rule:line-length
   extract: true
   dest: kube-score_1.14.0_linux_amd64/kube-score
 - name: terrascan
-  # yamllint disable-line rule:line-length
+  # yamllint disable rule:line-length
   url: https://github.com/accurics/terrascan/releases/download/v1.13.2/terrascan_1.13.2_Linux_x86_64.tar.gz
+  b2sum: 6be4d176cf654aeeb2573c103139ef7c361ed7882be9e1774077acbd2832cc8fd078c48afb0df6eea0f7a3157db3cc4fee3c7cb8aeb95af08c7d9fe43afd5310
+  # yamllint enable rule:line-length
   extract: true
   dest: terrascan_1.13.2_Linux_x86_64/terrascan

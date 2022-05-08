@@ -154,6 +154,7 @@ Need Linux (64-bit) machine and following tools.
 | [Grep][grep-link]                     | Line-oriented search tool     | >= 3.7      |
 | [sed][sed-link]                       | Stream editor                 | >= 4.8      |
 | [Gawk][gawk-link]                     | Pattern scanning tool         | ~> 5.1.1    |
+| [Coreutils][coreutils-link]           | Basic utilities               | >= 9.1      |
 | [Findutils][findutils-link]           | Directory searching utilities | ~> 4.9.0    |
 | [GNU parallel][gnu-parallel-link]     | Parallel job executor         | >= 20220322 |
 | [asdf][asdf-link]                     | Version manager               | ~> 0.9.0    |
@@ -171,6 +172,7 @@ use that, however, probably it works.
 [grep-link]: https://www.gnu.org/software/grep/
 [sed-link]: https://www.gnu.org/software/sed/
 [gawk-link]: https://www.gnu.org/software/gawk/
+[coreutils-link]: https://www.gnu.org/software/coreutils/
 [findutils-link]: https://www.gnu.org/software/findutils/
 [gnu-parallel-link]: https://www.gnu.org/software/parallel/
 [asdf-link]: https://asdf-vm.com/
