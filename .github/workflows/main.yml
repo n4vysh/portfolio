@@ -5,7 +5,7 @@ jobs:
   install-packages:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install packages
         uses: ./.github/actions/install-packages
   lefthook:
@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 2
       - name: Install packages
@@ -59,7 +59,7 @@ jobs:
     needs:
       - lefthook
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install packages
         uses: ./.github/actions/install-packages
       - name: Build icon image
@@ -88,7 +88,7 @@ jobs:
     needs:
       - lefthook
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - run: |

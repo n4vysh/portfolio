@@ -31,7 +31,7 @@ jobs:
     outputs:
       dirs: ${{ steps.output-terragrunt-info.outputs.dirs }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: output-terragrunt-info
         run: .github/scripts/output-terragrunt-info.bash ${{inputs.environment}}
   terragrunt-plan:
@@ -51,7 +51,7 @@ jobs:
       id-token: write
       contents: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install packages
         uses: ./.github/actions/install-packages
       - name: Configure AWS Credentials
@@ -110,7 +110,7 @@ jobs:
       id-token: write
       contents: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install packages
         uses: ./.github/actions/install-packages
       - name: Configure AWS Credentials
