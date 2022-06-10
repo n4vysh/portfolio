@@ -12,8 +12,11 @@ skillsets and expertise.
 - Infrastructure as Code with [Terraform][terraform-link],
   [Terragrunt][terragrunt-link], [Helm][helm-link], and
   [Kustomize][kustomize-link]
+- Policy as Code with [Rego][rego-link]
 - CIOps with Terraform, Terragrunt, and [GitHub Actions][github-actions-link]
 - GitOps with [Flux][flux-link]
+- DevSecOps with [terrascan][terrascan-link], [Trivy][trivy-link] and
+  [checkov][checkov-link]
 - Observable system with [Istio][istio-link]
 - Progressive Delivery with [Flagger][flagger-link]
 - Detect Configuration drift with [driftctl][driftctl-link]
@@ -24,8 +27,12 @@ skillsets and expertise.
 [terragrunt-link]: https://terragrunt.gruntwork.io/
 [helm-link]: https://helm.sh
 [kustomize-link]: https://kustomize.io/
+[rego-link]: https://www.openpolicyagent.org/docs/latest/policy-language/
 [github-actions-link]: https://github.com/features/actions
 [flux-link]: https://fluxcd.io/
+[terrascan-link]: https://runterrascan.io/
+[trivy-link]: https://aquasecurity.github.io/trivy/
+[checkov-link]: https://www.checkov.io/
 [istio-link]: https://istio.io/
 [flagger-link]: https://flagger.app/
 [driftctl-link]: https://driftctl.com/
@@ -163,10 +170,9 @@ Need Linux (64-bit) machine and following tools.
 | [atool][atool-link]                   | File archive manager          | ~> 0.39.0   |
 | [drawio-desktop][drawio-desktop-link] | Graph drawing software        | ~> 17.2.4   |
 
-Additionally suggest use Editor or IDE that supports
-[EditorConfig][editorconfig-link], [LSP][lsp-link], formatter, and linter. For
-windows or macos user, suggest use [WSL][wsl-link] or [Lima][lima-link]. I don't
-use that, however, probably it works.
+Suggest use Editor or IDE that supports [EditorConfig][editorconfig-link],
+[LSP][lsp-link], formatter, and linter. For windows or macos user, suggest use
+[WSL][wsl-link] or [Lima][lima-link]. Probably it works.
 
 [bash-link]: https://www.gnu.org/software/bash/
 [grep-link]: https://www.gnu.org/software/grep/
@@ -223,6 +229,10 @@ infra:
 Suggest IDE or editor setup with [terraform-ls][terraform-ls-link] and
 [yamllint][yamllint-link] installed by asdf.
 
+---
+
+Use [Conventional Commits 1.0.0][conventional-commit-link] when create commits.
+
 [gh-clone-link]: https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories
 [script-link]: ./scripts/install-packages.bash
 [deno-lsp-link]: https://deno.land/manual@v1.16.2/getting_started/setup_your_environment
@@ -234,33 +244,34 @@ Suggest IDE or editor setup with [terraform-ls][terraform-ls-link] and
 [golangci-lint-link]: https://golangci-lint.run/
 [terraform-ls-link]: https://github.com/hashicorp/terraform-ls
 [yamllint-link]: https://github.com/adrienverge/yamllint
+[conventional-commit-link]: https://www.conventionalcommits.org/en/v1.0.0/
 
 ## Test
 
 Run `just check` to lint and format the source code with
 [lefthook][lefthook-link]. lefthook run following tools.
 
-| Name                                                                                                                                                                                                                                      | Target type                     |
-| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------ |
-| [deno fmt][deno-fmt-link] + [deno lint][deno-lint-link]                                                                                                                                                                                   | js, ts, tsx, md, and json files |
-| stylelint + prettier                                                                                                                                                                                                                      | CSS files                       |
-| [lighthouse-ci][lighthouse-ci-link]                                                                                                                                                                                                       | frontend performance            |
-| gofumpt + golangci-lint                                                                                                                                                                                                                   | go files                        |
-| [skaffold][skaffold-link]                                                                                                                                                                                                                 | container image                 |
-| yamllint                                                                                                                                                                                                                                  | YAML files                      |
-| [taplo][taplo-link]                                                                                                                                                                                                                       | TOML files                      |
-| [just][just-link]                                                                                                                                                                                                                         | justfile                        |
-| [markdownlint][markdownlint-link] + [markdown-link-check][markdown-link-check-link]                                                                                                                                                       | Markdown files                  |
-| [vale][vale-link]                                                                                                                                                                                                                         | prose                           |
-| [shfmt][shfmt-link] + [shellharden][shellharden-link] + [shellcheck][shellcheck-link]                                                                                                                                                     | shell scripts                   |
-| [commitlint][commitlint-link]                                                                                                                                                                                                             | commit messages                 |
-| [gitleaks][gitleaks-link]                                                                                                                                                                                                                 | secrets                         |
-| [codespell][codespell-link]                                                                                                                                                                                                               | misspellings                    |
-| [actionlint][actionlint-link]                                                                                                                                                                                                             | GitHub Actions workflow files   |
-| [kubeconform][kubeconform-link]                                                                                                                                                                                                           | Kubernetes manifest files       |
-| [kube-linter][kube-linter-link] + [ct][ct-link] + [kubeval][kubeval-link] + [datree][datree-link] + [kube-score][kube-score-link] + [polaris][polaris-link] + [pluto][pluto-link] + [helm-docs][helm-docs-link] + [checkov][checkov-link] | Helm charts                     |
-| [terraform fmt][terraform-fmt-link] + [terraform validate][terraform-validate-link] + [terrascan][terrascan-link] + [trivy][trivy-link] + [tflint][tflint-link] + [terraform-docs][terraform-docs-link] + [checkov][checkov-link]         | tf files                        |
-| [terragrunt hclfmt][terragrunt-hclfmt-link]                                                                                                                                                                                               | terragrunt.hcl                  |
+| Name                                                                                                                                                                                                                      | Target type                     |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------ |
+| [deno fmt][deno-fmt-link] + [deno lint][deno-lint-link]                                                                                                                                                                   | js, ts, tsx, md, and json files |
+| stylelint + prettier                                                                                                                                                                                                      | CSS files                       |
+| [lighthouse-ci][lighthouse-ci-link]                                                                                                                                                                                       | frontend performance            |
+| gofumpt + golangci-lint                                                                                                                                                                                                   | go files                        |
+| [skaffold][skaffold-link]                                                                                                                                                                                                 | container image                 |
+| yamllint                                                                                                                                                                                                                  | YAML files                      |
+| [taplo][taplo-link]                                                                                                                                                                                                       | TOML files                      |
+| [just][just-link]                                                                                                                                                                                                         | justfile                        |
+| [markdownlint][markdownlint-link] + [markdown-link-check][markdown-link-check-link]                                                                                                                                       | Markdown files                  |
+| [vale][vale-link]                                                                                                                                                                                                         | prose                           |
+| [shfmt][shfmt-link] + [shellharden][shellharden-link] + [shellcheck][shellcheck-link]                                                                                                                                     | shell scripts                   |
+| [commitlint][commitlint-link]                                                                                                                                                                                             | commit messages                 |
+| [gitleaks][gitleaks-link]                                                                                                                                                                                                 | secrets                         |
+| [codespell][codespell-link]                                                                                                                                                                                               | misspellings                    |
+| [actionlint][actionlint-link]                                                                                                                                                                                             | GitHub Actions workflow files   |
+| [kubeconform][kubeconform-link]                                                                                                                                                                                           | Kubernetes manifest files       |
+| [kube-linter][kube-linter-link] + [ct][ct-link] + [kubeval][kubeval-link] + [datree][datree-link] + [kube-score][kube-score-link] + [polaris][polaris-link] + [pluto][pluto-link] + [helm-docs][helm-docs-link] + checkov | Helm charts                     |
+| [terraform fmt][terraform-fmt-link] + [terraform validate][terraform-validate-link] + terrascan + trivy + [tflint][tflint-link] + [terraform-docs][terraform-docs-link] + checkov                                         | tf files                        |
+| [terragrunt hclfmt][terragrunt-hclfmt-link]                                                                                                                                                                               | terragrunt.hcl                  |
 
 [lefthook-link]: https://github.com/evilmartians/lefthook
 [deno-link]: https://deno.land/
@@ -285,15 +296,12 @@ Run `just check` to lint and format the source code with
 [helm-docs-link]: https://github.com/norwoodj/helm-docs
 [ct-link]: https://github.com/helm/chart-testing
 [kubeval-link]: https://www.kubeval.com/
-[checkov-link]: https://www.checkov.io/
 [datree-link]: https://www.datree.io/
 [kube-score-link]: https://github.com/zegl/kube-score
 [polaris-link]: https://www.fairwinds.com/polaris
 [pluto-link]: https://github.com/FairwindsOps/Pluto
 [terraform-fmt-link]: https://www.terraform.io/cli/commands/fmt
 [terraform-validate-link]: https://www.terraform.io/cli/commands/validate
-[terrascan-link]: https://runterrascan.io/
-[trivy-link]: https://aquasecurity.github.io/trivy/
 [tflint-link]: https://github.com/terraform-linters/tflint
 [terraform-docs-link]: https://github.com/terraform-docs/terraform-docs
 [terragrunt-hclfmt-link]: https://terragrunt.gruntwork.io/docs/reference/cli-options/#hclfmt
@@ -306,9 +314,8 @@ Run `just build` to build docker image with skaffold and [ko][ko-link].
 
 ## Update
 
-Run `just update` to update dependency packages. Additionally
-[Renovate][renovate-link] create update pull requests every 3 months on the
-first day of the month.
+Run `just update` to update dependency packages. [Renovate][renovate-link]
+create update pull requests every 3 months on the first day of the month.
 
 [renovate-link]: https://renovatebot.com
 
@@ -469,11 +476,14 @@ GitHub repository. A main workflow use [cache action][cache-action-link],
 [environments-link]: https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment
 [secrets-link]: https://docs.github.com/en/actions/security-guides/encrypted-secrets
 
-### Flux + Flagger
+### Flux
 
-Flux keep Kubernetes clusters in sync with Git repository, and Flagger introduce
-by gradually shifting traffic to the new portfolio version while measuring
-metrics like HTTP request success rate and latency.
+Flux keep Kubernetes clusters in sync with Git repository.
+
+### Flagger
+
+Flagger introduce by gradually shifting traffic to the new portfolio version
+while measuring metrics like HTTP request success rate and latency.
 
 ## License
 
