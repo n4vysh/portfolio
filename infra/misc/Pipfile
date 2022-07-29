@@ -4,9 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-checkov = "==2.0.710"
+checkov = "==2.1.82"
 yamale = "==4.0.2"
-yamllint = "==1.26.3"
+yamllint = "==1.27.1"
 
 [dev-packages]
 
