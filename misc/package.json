@@ -1,11 +1,11 @@
 {
-  "packageManager": "pnpm@6.26.1",
+  "packageManager": "pnpm@6.33.1",
   "devDependencies": {
     "@commitlint/cli": "15.0.0",
     "@commitlint/config-conventional": "15.0.0",
-    "@taplo/cli": "0.3.2",
-    "markdown-link-check": "3.8.7",
-    "markdownlint-cli": "0.30.0",
-    "prettier": "2.5.1"
+    "@taplo/cli": "0.4.2",
+    "markdown-link-check": "3.10.2",
+    "markdownlint-cli": "0.32.1",
+    "prettier": "2.7.1"
   }
 }
